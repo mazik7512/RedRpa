@@ -50,7 +50,12 @@ class STDSyntaxTokens:
     SCENARIO = STDTokenTypes.SCENARIO
 
 
-class STDLinkerTokens:
+class STDNameResolverTokens:
     API_FUNC_CALL = STDTokenTypes.API_FUNC_CALL
     USER_FUNC_CALL = STDTokenTypes.USER_FUNC_CALL
     FUNC_CALL = STDTokenTypes.FUNC_CALL
+    FUNC_DEF = STDTokenTypes.FUNC_DEFINITION
+
+
+class STDTranslatorTokens:
+    LINE = STDTokenTypes.LINE

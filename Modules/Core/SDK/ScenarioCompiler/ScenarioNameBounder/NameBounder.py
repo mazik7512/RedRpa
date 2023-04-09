@@ -1,4 +1,4 @@
-from Modules.Core.Abstract.SDK.ScenarioCompiler.ScenarioNameResolver.NameResolver import AbstractNameResolver
+from Modules.Core.Abstract.SDK.ScenarioCompiler.ScenarioNameBounder.NameBounder import AbstractNameBounder
 from Modules.Core.Abstract.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.SyntaxTree import AbstractSyntaxTree
 from Modules.Core.SDK.ScenarioCompiler.ScenarioTokens.Tokens import STDNameResolverTokens
 from Modules.Core.SDK.ScenarioExecutable.Sections.ImportsSection import STDImportsSection
@@ -6,7 +6,7 @@ from Modules.Core.SDK.ScenarioExecutable.Sections.InitializationSection import S
 from Modules.Core.Logger.Logger import Logger
 
 
-MODULE_PREFIX = "[Name Resolver]"
+MODULE_PREFIX = "[Name Bounder]"
 
 
 def get_func_calls(func_call_node, api_calls_list, func_calls_list,  func_def_list, api_funcs):
@@ -22,7 +22,7 @@ def get_func_calls(func_call_node, api_calls_list, func_calls_list,  func_def_li
         func_def_list.append(func_call_node.get_data())
 
 
-class STDRSLNameResolver(AbstractNameResolver):
+class STDRSLNameBounder(AbstractNameBounder):
     def __init__(self, syntax_tree: AbstractSyntaxTree, api_funcs_collection, logger=Logger):
         self._tree = syntax_tree
         self._stdlib = api_funcs_collection

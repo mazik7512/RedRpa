@@ -3,8 +3,10 @@ from Modules.Core.Abstract.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.Sy
 from Modules.Core.General.DataStructures.Stack import STDStack
 
 
-def translate_unit(syntax_node, result, current_condition):
-    pass
+def get_translation_units(syntax_node, result, current_state):
+    data = syntax_node.get_data()
+    if data:
+        result.append(data)
 
 
 class STDRSLTranslator(AbstractTranslator):
@@ -14,5 +16,6 @@ class STDRSLTranslator(AbstractTranslator):
     def translate(self):
         result = []
         current_condition = STDStack()
-        self._tree.traverse("inorder", translate_unit, result, current_condition)
+        self._tree.traverse("inorder", get_translation_units, result, current_condition)
+        print(result)
         return result

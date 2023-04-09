@@ -145,7 +145,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
         return node
 
     def _create_assigment_node(self, parent_node, lvalue):
-        assigment_node = STDRSLSyntaxNode(STDSyntaxTokens.ASSIGMENT_OPERATION, None)
+        assigment_node = STDRSLSyntaxNode(STDSyntaxTokens.ASSIGMENT_OPERATION, self._token_value)
         assigment_node.set_parent(parent_node)
         lvalue_node = self._create_object_node(assigment_node, lvalue)
         assigment_node.set_right_node(lvalue_node)

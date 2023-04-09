@@ -5,6 +5,7 @@ from Modules.Core.SDK.ScenarioCompiler.ScenarioSyntaxAnalyzer.Parser import STDR
 from win32 import win32gui
 from Modules.Core.Crypto.AESRSACryptographer import STDCryptographer
 from AppData.Configs.ObjectDetectionConfig import MODEL_PATH
+from Modules.Core.SDK.ScenarioCompiler.ScenarioTranslator.Translator import STDRSLTranslator
 from Modules.ObjectDetection.ObjectFinder import ObjFinder
 from Modules.ObjectDetection.OpenCVTemplateMatcher import OpenCVTemplateMatcher
 from Modules.ObjectDetection.TFObjectDetector import TFObjectDetector
@@ -22,7 +23,7 @@ import inspect
 from inspect import getmembers, isfunction
 import importlib
 from Modules.Core.SDK.APICollector.APICollector import STDAPICollector
-from Modules.Core.SDK.ScenarioCompiler.ScenarioNameResolver.NameResolver import STDRSLNameResolver
+from Modules.Core.SDK.ScenarioCompiler.ScenarioNameBounder.NameBounder import STDRSLNameBounder
 
 
 def client_test(_client):
@@ -85,7 +86,7 @@ if __name__ == "__main__":
     #scenario = "a=x=test();" # работает
     #scenario = "loop(a){ loop(5){test();} test(test(test()), test()); test(); a=test(); } a=test();"
     scenario = "b=z=2;function test(){ a=5; test();} loop(a){ loop(5){test();} test(test(test()), test()); test(); q=z=test(); } a=test();"
-    scenario = "CV_scan(); click_on_object(); loop(a){ loop(b){ inner_loop(); inner_loop_1(); } outer_loop_1(); outer_loop2(); } outside_loop();"
+    scenario = "function inner_loop(a, b){ a = b; }CV_scan(); click_on_object(); loop(a){ loop(b){ inner_loop(); inner_loop_1(); } outer_loop_1(); outer_loop2(); } outside_loop();"
     lexer = STDRSLLexer(scenario)
     lexems = lexer.get_token_list()
     parser = STDRSLSyntaxParser(lexems)
@@ -95,8 +96,10 @@ if __name__ == "__main__":
     res.traverse("preorder", print)
     api_names = STDAPICollector("Modules\\Core\\SDK\\ScenarioAPI\\")
     STDAPICollector.collect_all_api_methods(api_names)
-    linker = STDRSLNameResolver(res, api_names)
+    linker = STDRSLNameBounder(res, api_names)
     print(*linker.link_names())
+    translator = STDRSLTranslator(res)
+    translator.translate()
     #node = res.get_next()
     #while node:
     #    print(node)
