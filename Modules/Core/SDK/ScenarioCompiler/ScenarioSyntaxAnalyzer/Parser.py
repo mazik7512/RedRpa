@@ -80,7 +80,10 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
         return line_node
 
     def _create_expr_node(self, parent_node, expr_object):
-        expr_node = self._specify_and_create_object_node(parent_node, expr_object)
+        expr_node = STDRSLSyntaxNode(STDSyntaxTokens.EXPR, None)
+        expr_node.set_parent(parent_node)
+        expr = self._specify_and_create_object_node(expr_node, expr_object)
+        expr_node.set_left_node(expr)
         self._next_token()
         if self._token_type == STDSyntaxTokens.ENDLINE:
             return expr_node
