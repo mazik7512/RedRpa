@@ -1,6 +1,7 @@
 from Modules.Core.Abstract.Policies.CompilerPolicies.TranslatorPolicies.TranslationPolicy import AbstractTranslationPolicy
 from Modules.Core.SDK.ScenarioCompiler.ScenarioTokens.Tokens import STDSyntaxTokens
 from Modules.Core.Policies.CompilerPolicies.TranslatorPolicies.NameTranslationPolicy import STDRSLNameTranslationPolicy
+from Modules.Core.Policies.CompilerPolicies.TranslatorPolicies.OffsetTranslationPolicy import STDRSLOffsetTranslationPolicy
 
 
 class STDRSLTranslationPolicy(AbstractTranslationPolicy):
@@ -8,7 +9,7 @@ class STDRSLTranslationPolicy(AbstractTranslationPolicy):
     @staticmethod
     def translate_expr(node):
         result_init, result = node.get_left_node().deserialize()
-        res = result_init + "\n" + result
+        res = result_init + result
         return res
 
     @staticmethod
@@ -22,28 +23,27 @@ class STDRSLTranslationPolicy(AbstractTranslationPolicy):
     @staticmethod
     def translate_loop_header(node):
         loop_arg_name = STDRSLNameTranslationPolicy.generate_loop_arg_name()
-        result = loop_arg_name + " in range(1, " + node.get_left_node().deserialize() + "):"
+        result = loop_arg_name + " in range(1, " + node.get_left_node().deserialize() + ")"
         return result
 
     @staticmethod
     def translate_func_def(node):
         func_def_args = node.get_left_node().deserialize()
-        result = "def " + node.get_data() + func_def_args + ":\n"
+        result = "def " + node.get_data() + "(" + func_def_args + "):\n"
         func_def_body = node.get_right_node().deserialize()
         result += func_def_body
         return result
 
     @staticmethod
     def translate_func_def_arg_list(node):
-        result = "("
+        result = ""
         arg = node.get_left_node()
         if arg:
             result += arg.deserialize()
             other_args = node.get_right_node()
             if other_args:
-                result += ","
+                result += ", "
                 result += other_args.deserialize()
-        result += ")"
         return result
 
     @staticmethod
@@ -53,9 +53,13 @@ class STDRSLTranslationPolicy(AbstractTranslationPolicy):
 
     @staticmethod
     def translate_func_call(node):
-        call_args_init, call_args = node.get_left_node().deserialize()
+        func_args = node.get_left_node()
+        call_args_init = ""
+        call_args = ""
+        if func_args:
+            call_args_init, call_args = func_args.deserialize()
         result_init = call_args_init
-        result = node.get_data() + "(" + call_args + ")\n"
+        result = node.get_data() + "(" + call_args + ")"
         return result_init, result
 
     @staticmethod
@@ -70,8 +74,8 @@ class STDRSLTranslationPolicy(AbstractTranslationPolicy):
             other_args = node.get_right_node()
             if other_args:
                 arg_init, arg = other_args.deserialize()
-                result_init += + arg_init + "\n"
-                result += "," + arg
+                result_init += arg_init + "\n"
+                result += ", " + arg
         return result_init, result
 
     @staticmethod
@@ -104,24 +108,31 @@ class STDRSLTranslationPolicy(AbstractTranslationPolicy):
 
     @staticmethod
     def translate_body(node):
+        STDRSLOffsetTranslationPolicy.add_offset_level()
         result = node.get_left_node().deserialize()
+        STDRSLOffsetTranslationPolicy.remove_offset_level()
         return result
 
     @staticmethod
     def translate_body_line(node):
-        offset = "\t"
+        offset = STDRSLOffsetTranslationPolicy.get_current_offset()
         result = ""
-        line_expr = node.get_left_node().deserialize()
-        result += offset + line_expr + "\n"
-        next_line = node.get_right_node().deserialize()
-        result += next_line
+        line_expr = node.get_left_node()
+        if line_expr:
+            result += offset + line_expr.deserialize()
+            if not result.endswith("\n"):
+                result += "\n"
+            next_line = node.get_right_node().deserialize()
+            result += next_line
         return result
 
     @staticmethod
     def translate_line(node):
         result = ""
         line = node.get_left_node().deserialize()
-        result += line + "\n"
+        result += line
+        if not result.endswith('\n'):
+            result += '\n'
         next_line = node.get_right_node()
         if next_line:
             result += next_line.deserialize()

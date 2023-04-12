@@ -14,10 +14,8 @@ def get_func_calls(func_call_node, api_calls_list, func_calls_list,  func_def_li
     if _type == STDNameResolverTokens.FUNC_CALL:
         if func_call_node.get_data() in api_funcs:
             api_calls_list.append(func_call_node)
-            func_call_node.set_type(STDNameResolverTokens.API_FUNC_CALL)
         else:
             func_calls_list.append(func_call_node)
-            func_call_node.set_type(STDNameResolverTokens.USER_FUNC_CALL)
     elif _type == STDNameResolverTokens.FUNC_DEF:
         func_def_list.append(func_call_node.get_data())
 

@@ -14,8 +14,11 @@ class STDRSLTranslator(AbstractTranslator):
         self._tree = syntax_tree
 
     def translate(self):
-        result = []
-        current_condition = STDStack()
-        self._tree.traverse("inorder", get_translation_units, result, current_condition)
+        result = self._tree.get_head().deserialize()
+        print("\tТРАНСЛЯЦИЯ:")
         print(result)
-        return result
+        #result = []
+        #current_condition = STDStack()
+        #self._tree.traverse("inorder", get_translation_units, result, current_condition)
+        #print(result)
+        #return result

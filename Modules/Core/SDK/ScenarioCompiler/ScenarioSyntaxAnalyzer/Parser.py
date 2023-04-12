@@ -2,6 +2,7 @@ from Modules.Core.Abstract.SDK.ScenarioCompiler.SyntaxAnalyzer.Parser import Abs
 from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.SyntaxNode import STDRSLSyntaxNode
 from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.SyntaxTree import STDRSLSyntaxTree
 from Modules.Core.SDK.ScenarioCompiler.ScenarioTokens.Tokens import STDSyntaxTokens
+from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyntaxNode import *
 
 
 class STDRSLSyntaxParser(AbstractSyntaxParser):
@@ -31,9 +32,9 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
         return self._ast
 
     def _generate_ast(self):
-        header_node = STDRSLSyntaxNode(STDSyntaxTokens.SCENARIO, None)
+        header_node = STDRSLScenarioNode(None)
         header_node.set_left_node(self._create_line_node())
-        cur_node = header_node
+        cur_node = header_node.get_left_node()
         while self._cur_token_pos < len(self._tokens):
             next_node = self._create_line_node()
             next_node.set_parent(cur_node)
@@ -50,23 +51,23 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
         return node
 
     def _create_str_literal_node(self, parent_node, value):
-        node = STDRSLSyntaxNode(STDSyntaxTokens.STR_LITERAL, value)
+        node = STDRSLStrLiteralNode(value)
         node.set_parent(parent_node)
         return node
 
     def _create_number_literal_node(self, parent_node, value):
-        node = STDRSLSyntaxNode(STDSyntaxTokens.NUMBER_LITERAL, value)
+        node = STDRSLNumberLiteralNode(value)
         node.set_parent(parent_node)
         return node
 
     def _create_object_node(self, parent_node, value):
-        node = STDRSLSyntaxNode(STDSyntaxTokens.OBJECT, value)
+        node = STDRSLObjectNode(value)
         node.set_parent(parent_node)
         return node
 
     def _create_line_node(self):
         self._next_token()
-        line_node = STDRSLSyntaxNode(STDSyntaxTokens.LINE, None)
+        line_node = STDRSLLineNode(None)
         if self._token_type == STDSyntaxTokens.SPECIAL_INSTRUCTION:
             node = self._create_special_instruction_node(line_node, self._token_value)
         elif self._token_type == STDSyntaxTokens.FUNC_DEF:
@@ -80,7 +81,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
         return line_node
 
     def _create_expr_node(self, parent_node, expr_object):
-        expr_node = STDRSLSyntaxNode(STDSyntaxTokens.EXPR, None)
+        expr_node = STDRSLExprNode(None)
         expr_node.set_parent(parent_node)
         expr = self._specify_and_create_object_node(expr_node, expr_object)
         expr_node.set_left_node(expr)
@@ -102,7 +103,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
             return self._create_object_node(parent_node, object_name)
 
     def _create_func_call_node(self, parent_node, func_name):
-        func_call_node = STDRSLSyntaxNode(STDSyntaxTokens.FUNC_CALL, func_name)
+        func_call_node = STDRSLFuncCallNode(func_name)
         func_call_node.set_parent(parent_node)
         self._next_token()
         if self._token_type != STDSyntaxTokens.SUBEXPR_END:
@@ -111,7 +112,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
         return func_call_node
 
     def _create_func_call_arg_list_node(self, parent_node):
-        func_call_arg_list_node = STDRSLSyntaxNode(STDSyntaxTokens.FUNC_CALL_ARG_LIST, None)
+        func_call_arg_list_node = STDRSLFuncCallArgListNode(None)
         func_call_arg_list_node.set_parent(parent_node)
         left = self._specify_and_create_func_call_arg_node(func_call_arg_list_node)
         func_call_arg_list_node.set_left_node(left)
@@ -122,7 +123,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
         return func_call_arg_list_node
 
     def _specify_and_create_func_call_arg_node(self, parent_node):
-        func_call_arg = STDRSLSyntaxNode(STDSyntaxTokens.FUNC_CALL_ARG, None)
+        func_call_arg = STDRSLFuncCallArgNode(None)
         func_call_arg.set_parent(parent_node)
         if self._token_type == STDSyntaxTokens.OBJECT:
             node = self._specify_and_create_func_call_object_arg_node(func_call_arg, self._token_value)
@@ -148,7 +149,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
         return node
 
     def _create_assigment_node(self, parent_node, lvalue):
-        assigment_node = STDRSLSyntaxNode(STDSyntaxTokens.ASSIGMENT_OPERATION, self._token_value)
+        assigment_node = STDRSLAssigmentNode(self._token_value)
         assigment_node.set_parent(parent_node)
         lvalue_node = self._create_object_node(assigment_node, lvalue)
         assigment_node.set_right_node(lvalue_node)
@@ -177,7 +178,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
             return self._create_error_node(parent_node, spec_inst)
 
     def _create_loop_node(self, parent_node):
-        loop_node = STDRSLSyntaxNode(STDSyntaxTokens.SPECIAL_INSTRUCTION, "loop")
+        loop_node = STDRSLLoopNode("loop")
         loop_node.set_parent(parent_node)
         self._next_token()
         if self._token_type == STDSyntaxTokens.SUBEXPR_START:
@@ -192,7 +193,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
 
     def _create_loop_header_node(self, parent_node):
         self._next_token()
-        loop_arg_node = STDRSLSyntaxNode(STDSyntaxTokens.LOOP_ARG, None)
+        loop_arg_node = STDRSLLoopHeaderNode(None)
         loop_arg_node.set_parent(parent_node)
         if self._token_type == STDSyntaxTokens.OBJECT:
             node = self._specify_and_create_loop_header_object_node(loop_arg_node, self._token_value)
@@ -224,7 +225,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
 
     def _create_body_node(self, parent_node):
         self._next_token()
-        body_node = STDRSLSyntaxNode(STDSyntaxTokens.BODY, None)
+        body_node = STDRSLBodyNode(None)
         body_node.set_parent(parent_node)
         if self._token_type == STDSyntaxTokens.BODY_START:
             node = self._create_body_lines_node(body_node)
@@ -236,12 +237,12 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
 
     def _create_body_lines_node(self, parent_node):
         self._next_token()
-        head_body_line_node = STDRSLSyntaxNode(STDSyntaxTokens.BODY_LINE, None)
+        head_body_line_node = STDRSLBodyLineNode(None)
         head_body_line_node.set_parent(parent_node)
         body_line_node = head_body_line_node
         while self._token_type != STDSyntaxTokens.BODY_END:
             left_node = self._create_body_line_node(parent_node)
-            right_node = STDRSLSyntaxNode(STDSyntaxTokens.BODY_LINE, None)
+            right_node = STDRSLBodyLineNode(None)
             right_node.set_parent(body_line_node)
             body_line_node.set_left_node(left_node)
             body_line_node.set_right_node(right_node)
@@ -261,7 +262,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
 
     def _create_func_def_node(self, parent_node):
         self._next_token()
-        func_def_node = STDRSLSyntaxNode(STDSyntaxTokens.FUNC_DEF, self._token_value)
+        func_def_node = STDRSLFuncDefNode(self._token_value)
         func_def_node.set_parent(parent_node)
         func_def_header_node = self._create_func_def_header_node(func_def_node)
         func_def_body_node = self._create_func_def_body_node(func_def_node)
@@ -283,7 +284,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
             return self._create_error_node(parent_node, self._token_value)
 
     def _create_func_def_arg_list_node(self, parent_node):
-        func_def_arg_list_node = STDRSLSyntaxNode(STDSyntaxTokens.FUNC_DEF_ARG_LIST, None)
+        func_def_arg_list_node = STDRSLFuncDefArgListNode(None)
         func_def_arg_list_node.set_parent(parent_node)
         left_node = self._create_func_def_arg_node(func_def_arg_list_node)
         func_def_arg_list_node.set_left_node(left_node)
@@ -294,7 +295,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
         return func_def_arg_list_node
 
     def _create_func_def_arg_node(self, parent_node):
-        func_def_arg_node = STDRSLSyntaxNode(STDSyntaxTokens.FUNC_DEF_ARG, None)
+        func_def_arg_node = STDRSLFuncDefArgNode(None)
         func_def_arg_node.set_parent(parent_node)
         if self._token_type == STDSyntaxTokens.OBJECT:
             node = self._create_object_node(func_def_arg_node, self._token_value)

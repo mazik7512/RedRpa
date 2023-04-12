@@ -86,7 +86,7 @@ if __name__ == "__main__":
     #scenario = "a=x=test();" # работает
     #scenario = "loop(a){ loop(5){test();} test(test(test()), test()); test(); a=test(); } a=test();"
     scenario = "b=z=2;function test(){ a=5; test();} loop(a){ loop(5){test();} test(test(test()), test()); test(); q=z=test(); } a=test();"
-    scenario = "function inner_loop(a, b){ a = b; }CV_scan(); click_on_object(); loop(a){ loop(b){ inner_loop(); inner_loop_1(); } outer_loop_1(); outer_loop2(); } outside_loop();"
+    scenario = "function inner_loop(a, b){ a = b; }CV_scan(get_window(get_name()), \"button\"); click_on_object(); loop(a){ loop(b){ inner_loop(); inner_loop_1(); } outer_loop_1(); outer_loop2(); } outside_loop();"
     lexer = STDRSLLexer(scenario)
     lexems = lexer.get_token_list()
     parser = STDRSLSyntaxParser(lexems)
