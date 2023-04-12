@@ -18,7 +18,3 @@ class AbstractSectionContainer(ABC):
     @abstractmethod
     def deserialize(self):
         pass
-
-    @abstractmethod
-    def generate(self):
-        pass

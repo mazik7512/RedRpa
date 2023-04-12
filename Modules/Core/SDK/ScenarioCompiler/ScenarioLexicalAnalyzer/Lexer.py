@@ -1,12 +1,22 @@
 from Modules.Core.Abstract.SDK.ScenarioCompiler.LexicalAnalyzer.Lexer import AbstractLexer
 from Modules.Core.SDK.ScenarioCompiler.ScenarioTokens.Tokens import STDLexerTokens
 from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.LexicalObjects.Lexeme import STDLexema
+from Modules.Core.Logger.Logger import Logger
 
 
 class STDRSLLexer(AbstractLexer):
 
-    def __init__(self, scenario: str):
-        self._scenario = scenario.strip()
+    def __init__(self, scenario=None, logger=Logger):
+        self._logger = logger
+        self.set_data(scenario)
+
+    def _prepare_scenario_text(self, data):
+        if data:
+            return data.strip()
+        return data
+
+    def set_data(self, data):
+        self._scenario = self._prepare_scenario_text(data)
         self._last_scenario_pos = 0
 
     def __str_literal_check(self, token_value: str):

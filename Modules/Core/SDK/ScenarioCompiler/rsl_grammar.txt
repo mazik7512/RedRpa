@@ -1,10 +1,3 @@
-/*
-
-Контексто-свободная LL(1) грамматика для языка сценариев RedScenarioLanguage(RSL)
-
-*/
-
-
 SCENARIO := LINES
 LINES := {LINE}
 LINE := SPECIAL_INSTRUCTION | FUNC_DEFINITION | EXPR, ENDLINE

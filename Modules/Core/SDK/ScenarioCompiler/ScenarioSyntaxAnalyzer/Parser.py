@@ -3,11 +3,21 @@ from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.SyntaxNode 
 from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.SyntaxTree import STDRSLSyntaxTree
 from Modules.Core.SDK.ScenarioCompiler.ScenarioTokens.Tokens import STDSyntaxTokens
 from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyntaxNode import *
+from Modules.Core.Logger.Logger import Logger
 
 
 class STDRSLSyntaxParser(AbstractSyntaxParser):
 
-    def __init__(self, tokens):
+    def __init__(self, tokens=None, logger=Logger):
+        self._logger = logger
+        self._ast = None
+        self._token_value = None
+        self._token_type = None
+        self._tokens = None
+        self._cur_token_pos = None
+        self.set_tokens(tokens)
+
+    def set_tokens(self, tokens):
         self._tokens = tokens
         self._cur_token_pos = 0
         self._token_type = None

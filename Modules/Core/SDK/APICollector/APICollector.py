@@ -3,11 +3,12 @@ from Modules.Core.SDK.APICollector.APICollection import STDAPICollection
 import inspect
 import os
 import importlib
+from Modules.Core.Logger.Logger import Logger
 
 
 class STDAPICollector(AbstractAPICollector):
 
-    def __init__(self, path):
+    def __init__(self, path, logger=Logger):
         self._path = path
         self._api_functions = []
 

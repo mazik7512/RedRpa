@@ -1,7 +1,4 @@
 from Modules.Core.Abstract.SDK.ScenarioExecutable.SectionsContainer import AbstractSectionContainer
-from Modules.Core.SDK.ScenarioExecutable.Sections.ExecutableSection import STDExecSection
-from Modules.Core.SDK.ScenarioExecutable.Sections.ImportsSection import STDImportsSection
-from Modules.Core.SDK.ScenarioExecutable.Sections.InfoSection import STDInfoSection
 
 
 class STDSectionContainer(AbstractSectionContainer):
@@ -20,12 +17,8 @@ class STDSectionContainer(AbstractSectionContainer):
 
     def deserialize(self):
         result = "sections:{"
-        for key, section in self._sections:
-            result.join(section.deserialize()).join("\n")
-        result.join("}")
+        for key in self._sections:
+            result += self._sections[key].deserialize() + "\n"
+        result += "}"
         return result
 
-    def generate(self):
-        self.add_section('info', STDInfoSection())
-        self.add_section('import', STDImportsSection())
-        self.add_section('user_code', STDExecSection())

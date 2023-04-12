@@ -1,29 +1,11 @@
-import os
-import time
 from Modules.Core.SDK.ScenarioCompiler.ScenarioLexicalAnalyzer.Lexer import STDRSLLexer
 from Modules.Core.SDK.ScenarioCompiler.ScenarioSyntaxAnalyzer.Parser import STDRSLSyntaxParser
-from win32 import win32gui
-from Modules.Core.Crypto.AESRSACryptographer import STDCryptographer
-from AppData.Configs.ObjectDetectionConfig import MODEL_PATH
 from Modules.Core.SDK.ScenarioCompiler.ScenarioTranslator.Translator import STDRSLTranslator
-from Modules.ObjectDetection.ObjectFinder import ObjFinder
-from Modules.ObjectDetection.OpenCVTemplateMatcher import OpenCVTemplateMatcher
-from Modules.ObjectDetection.TFObjectDetector import TFObjectDetector
-from Modules.Windows.Actions.ObjectActions import ObjectActionizer
-from Modules.Core.Descriptors.TemplateDescriptor import TemplateDescriptor
 from Modules.Core.Logger.Logger import Logger
 from AppData.Configs.CoreConfig import LOGS_PATH
-from Modules.Windows.Manager.Window import STDWindow
-from Modules.Windows.Manager.WindowManager import STDWindowManager
-from Modules.Core.Network.Managers.ManagerGenerator import STDManagerGenerator
-from Modules.Core.Crypto.StribogHasher import STDHasher
-import threading
-from abc import ABC, abstractmethod
-import inspect
-from inspect import getmembers, isfunction
-import importlib
 from Modules.Core.SDK.APICollector.APICollector import STDAPICollector
 from Modules.Core.SDK.ScenarioCompiler.ScenarioNameBounder.NameBounder import STDRSLNameBounder
+from Modules.Core.SDK.ScenarioCompiler.CompilerGenerator import STDRSLCompilerGenerator
 
 
 def client_test(_client):
@@ -99,7 +81,10 @@ if __name__ == "__main__":
     linker = STDRSLNameBounder(res, api_names)
     print(*linker.link_names())
     translator = STDRSLTranslator(res)
-    translator.translate()
+    print(translator.translate())
+    compiler = STDRSLCompilerGenerator.generate_compiler()
+    rex = compiler.compile(scenario)
+    print(rex)
     #node = res.get_next()
     #while node:
     #    print(node)

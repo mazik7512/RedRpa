@@ -10,3 +10,7 @@ class AbstractLexer(ABC):
     @abstractmethod
     def get_token_list(self):
         pass
+
+    @abstractmethod
+    def set_data(self, data):
+        pass

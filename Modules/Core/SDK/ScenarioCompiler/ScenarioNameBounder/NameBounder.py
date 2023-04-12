@@ -21,19 +21,22 @@ def get_func_calls(func_call_node, api_calls_list, func_calls_list,  func_def_li
 
 
 class STDRSLNameBounder(AbstractNameBounder):
-    def __init__(self, syntax_tree: AbstractSyntaxTree, api_funcs_collection, logger=Logger):
+
+    def __init__(self, syntax_tree=None, api_funcs_collection=None, logger=Logger):
         self._tree = syntax_tree
         self._stdlib = api_funcs_collection
         self._logger = logger
         self._errors = []
 
+    def set_ast(self, ast):
+        self._tree = ast
+
+    def set_apis(self, apis):
+        self._stdlib = apis
+
     def link_names(self):
         api_imports, api_inits = self._link_funcs()
-        imports = STDImportsSection()
-        imports.add("api", api_imports)
-        inits = STDInitSection()
-        inits.add("init", api_inits)
-        return imports, inits
+        return api_imports, api_inits
 
     def _error(self, error_data):
         self._logger.error(MODULE_PREFIX, "Ошибка связывания имён:", error_data)
