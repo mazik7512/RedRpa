@@ -53,9 +53,13 @@ class STDRSLNameBounder(AbstractNameBounder):
         api_imports, api_inits = self._generate_api_sections(api_calls)
         return api_imports, api_inits
 
+    def _generate_std_os_tools(self, section_data):
+        section_data['STDOSTools'] = 'from {} import STDOSTools'.format(self._os_utils)
+
     def _generate_api_sections(self, api_calls):
-        api_imports = {'STDOSTools': 'from {} import STDOSTools'.format(self._os_utils)}
+        api_imports = {}
         api_inits = {}
+        self._generate_std_os_tools(api_imports)
         for func in api_calls:
             api_name = self._stdlib.get_api_name_by_func_name(func.get_data())
             self._generate_import_section(api_name, api_imports)
