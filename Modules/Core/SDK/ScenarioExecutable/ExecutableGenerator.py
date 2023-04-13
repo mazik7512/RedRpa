@@ -4,6 +4,7 @@ from Modules.Core.SDK.ScenarioExecutable.Sections.InfoSection import STDInfoSect
 from Modules.Core.SDK.ScenarioExecutable.Sections.ImportSection import STDImportSection
 from Modules.Core.SDK.ScenarioExecutable.Sections.InitializationSection import STDInitSection
 from Modules.Core.SDK.ScenarioExecutable.Sections.ExecutableSection import STDExecSection
+from Modules.Core.Crypto.StribogHasher import STDHasher
 
 
 class STDREXGenerator(AbstractExecutableGenerator):
@@ -23,6 +24,8 @@ class STDREXGenerator(AbstractExecutableGenerator):
 
     def _add_info_section(self):
         info_section = STDInfoSection()
+        hasher = STDHasher()
+        info_section.add('executable_hash', hasher.hash_string(self._get_all_sections_data()))
         self._sections.add_section("info_section", info_section)
 
     def _add_user_code_section(self, user_code):
@@ -34,6 +37,12 @@ class STDREXGenerator(AbstractExecutableGenerator):
         func_name = "_add_" + section_type + "_section"
         section_adder = getattr(self, func_name)
         section_adder(section_data)
+
+    def _get_all_sections_data(self):
+        result = ""
+        for key in self._sections.get_keys():
+            result += self._sections.get_section(key).get_section_data()
+        return result
 
     def generate_executable_sections(self):
         self._add_info_section()

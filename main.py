@@ -101,22 +101,3 @@ if __name__ == "__main__":
     #    print(node)
     #    node = res.get_next()
 
-    """
-    window = "PyCharm";
-    CV_scan(window);
-    loop(5) {
-        click_on_object(window, "File");
-    }
-    close_window(window);
-    """
-
-
-    """
-    pycharm_str_literal = "PyCharm"
-    file_str_literal = "File"
-    STDScenarioAPI.CV_scan(pycharm_str_literal)
-    loop_arg_1 = 5
-    while(loop_arg_1 > 0):
-        STDScenarioAPI.click_on_object(pycharm_str_literal, file_str_literal)
-        loop_arg_1 -= 1
-    """
