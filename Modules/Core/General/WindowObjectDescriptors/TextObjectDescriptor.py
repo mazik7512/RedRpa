@@ -1,5 +1,5 @@
-from Modules.Core.Descriptors.ObjectDescriptor import ObjectDescriptor
-from Modules.Core.Descriptors.TemplateDescriptor import TemplateDescriptor
+from Modules.Core.General.WindowObjectDescriptors.ObjectDescriptor import ObjectDescriptor
+from Modules.Core.General.WindowObjectDescriptors.TemplateDescriptor import TemplateDescriptor
 
 
 class TextObjectDescriptor(ObjectDescriptor):

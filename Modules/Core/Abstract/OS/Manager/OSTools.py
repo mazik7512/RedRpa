@@ -3,7 +3,7 @@ from Modules.Core.Abstract.OS.Manager.Window import AbstractWindow
 from Modules.Core.Abstract.OS.Manager.WindowManager import AbstractWindowManager
 
 
-class AbstractWindowsTools(ABC):
+class AbstractOSTools(ABC):
 
     @staticmethod
     @abstractmethod

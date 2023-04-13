@@ -1,3 +1,4 @@
+from Modules.Core.SDK.RedVirtualMachine.RVM import STDRedVirtualMachine
 from Modules.Core.SDK.ScenarioCompiler.ScenarioLexicalAnalyzer.Lexer import STDRSLLexer
 from Modules.Core.SDK.ScenarioCompiler.ScenarioSyntaxAnalyzer.Parser import STDRSLSyntaxParser
 from Modules.Core.SDK.ScenarioCompiler.ScenarioTranslator.Translator import STDRSLTranslator
@@ -6,6 +7,8 @@ from AppData.Configs.CoreConfig import LOGS_PATH
 from Modules.Core.SDK.APICollector.APICollector import STDAPICollector
 from Modules.Core.SDK.ScenarioCompiler.ScenarioNameBounder.NameBounder import STDRSLNameBounder
 from Modules.Core.SDK.ScenarioCompiler.CompilerGenerator import STDRSLCompilerGenerator
+from Modules.Core.SDK.ScenarioExecutable.Executable import STDRedExecutable
+from Modules.Core.SDK.ScenarioExecutable.SectionsContainer import STDSectionContainer
 
 
 def client_test(_client):
@@ -84,7 +87,15 @@ if __name__ == "__main__":
     print(translator.translate())
     compiler = STDRSLCompilerGenerator.generate_compiler()
     rex = compiler.compile(scenario)
-    print(rex)
+    with open("scenario.rex", "w+") as red_executable:
+        red_executable.write(rex.deserialize())
+    load_rex = STDRedExecutable()
+    with open("scenario.rex", "r") as red_executable:
+        load_rex.serialize(red_executable.read())
+    print("loaded_rex\n", load_rex)
+    rvm = STDRedVirtualMachine()
+    rvm.execute(rex)
+
     #node = res.get_next()
     #while node:
     #    print(node)

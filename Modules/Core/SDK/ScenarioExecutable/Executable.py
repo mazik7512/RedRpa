@@ -1,17 +1,21 @@
 from Modules.Core.Abstract.SDK.ScenarioExecutable.Executable import AbstractExecutable
 from Modules.Core.Abstract.SDK.ScenarioExecutable.SectionsContainer import AbstractSectionContainer
+from Modules.Core.SDK.ScenarioExecutable.SectionsContainer import STDSectionContainer
 
 
 class STDRedExecutable(AbstractExecutable):
 
-    def __init__(self, sections: AbstractSectionContainer):
+    def __init__(self, sections: AbstractSectionContainer = STDSectionContainer()):
         self._sections = sections
 
-    def serialization(self):
-        pass
+    def serialize(self, data: str):
+        self._sections.serialize(data)
 
-    def deserialization(self) -> bytes:
+    def deserialize(self):
         return self._sections.deserialize()
 
+    def get_sections(self):
+        return self._sections
+
     def __str__(self):
-        return self.deserialization()
+        return self.deserialize()

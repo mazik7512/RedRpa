@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 class AbstractSection(ABC):
 
     @abstractmethod
-    def get_data_by_name(self, name: str):
+    def get_section_data(self):
         pass
 
     @abstractmethod
@@ -13,4 +13,7 @@ class AbstractSection(ABC):
 
     @abstractmethod
     def deserialize(self):
+        pass
+
+    def get_data_by_name(self, name: str):
         pass

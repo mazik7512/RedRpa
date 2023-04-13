@@ -1,5 +1,5 @@
 from AppData.Configs.ObjectDetectionConfig import OBJECT_TYPES
-from Modules.Core.Descriptors.TemplateDescriptor import TemplateDescriptor
+from Modules.Core.General.WindowObjectDescriptors.TemplateDescriptor import TemplateDescriptor
 
 
 class ObjectDescriptor(TemplateDescriptor):

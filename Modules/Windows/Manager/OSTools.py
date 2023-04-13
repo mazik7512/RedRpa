@@ -1,10 +1,10 @@
-from Modules.Core.Abstract.OS.Manager.WindowsTools import AbstractWindowsTools
+from Modules.Core.Abstract.OS.Manager.OSTools import AbstractOSTools
 from Modules.Windows.Manager.Window import STDWindow
 from Modules.Windows.Manager.WindowManager import STDWindowManager
 from win32 import win32gui
 
 
-class STDWindowsTools(AbstractWindowsTools):
+class STDOSTools(AbstractOSTools):
 
     @staticmethod
     def create_window(win_desc):

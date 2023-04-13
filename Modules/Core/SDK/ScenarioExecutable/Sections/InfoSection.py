@@ -8,9 +8,8 @@ class STDInfoSection(STDSection):
         self.add("executable_standart", "STD")
         self.add("executable_version", "1.0")
 
+    def serialize(self, data):
+        self._table_data = data
+
     def deserialize(self):
-        result = "@info_section:{"
-        for key in self._table_data:
-            result += key + ":{ " + self._table_data[key] + " } " + ";"
-        result += "}"
-        return result
+        return self._table_data

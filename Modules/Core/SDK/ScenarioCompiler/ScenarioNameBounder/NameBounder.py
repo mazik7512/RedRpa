@@ -1,7 +1,7 @@
 from Modules.Core.Abstract.SDK.ScenarioCompiler.ScenarioNameBounder.NameBounder import AbstractNameBounder
 from Modules.Core.Abstract.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.SyntaxTree import AbstractSyntaxTree
 from Modules.Core.SDK.ScenarioCompiler.ScenarioTokens.Tokens import STDNameResolverTokens
-from Modules.Core.SDK.ScenarioExecutable.Sections.ImportsSection import STDImportsSection
+from Modules.Core.SDK.ScenarioExecutable.Sections.ImportSection import STDImportSection
 from Modules.Core.SDK.ScenarioExecutable.Sections.InitializationSection import STDInitSection
 from Modules.Core.Logger.Logger import Logger
 
@@ -22,7 +22,8 @@ def get_func_calls(func_call_node, api_calls_list, func_calls_list,  func_def_li
 
 class STDRSLNameBounder(AbstractNameBounder):
 
-    def __init__(self, syntax_tree=None, api_funcs_collection=None, logger=Logger):
+    def __init__(self, syntax_tree=None, api_funcs_collection=None, os_utils=None, logger=Logger):
+        self._os_utils = os_utils
         self._tree = syntax_tree
         self._stdlib = api_funcs_collection
         self._logger = logger
@@ -53,7 +54,7 @@ class STDRSLNameBounder(AbstractNameBounder):
         return api_imports, api_inits
 
     def _generate_api_sections(self, api_calls):
-        api_imports = {}
+        api_imports = {'STDOSTools': 'from {} import STDOSTools'.format(self._os_utils)}
         api_inits = {}
         for func in api_calls:
             api_name = self._stdlib.get_api_name_by_func_name(func.get_data())
@@ -73,6 +74,6 @@ class STDRSLNameBounder(AbstractNameBounder):
 
     def _generate_init_section(self, api_name, section_data):
         api_init_name = "api_init_" + api_name.lower()
-        init_string = api_init_name + " = " + api_name + "()"
-        init_section = {'api_init_name': api_init_name, 'api_init': init_string}
+        init_string = api_init_name + " = " + api_name + "(STDOSTools)"
+        init_section = {'api_init_name': api_init_name, 'api_init_code': init_string}
         section_data[api_name] = init_section

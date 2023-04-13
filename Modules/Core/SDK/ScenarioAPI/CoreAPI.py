@@ -1,11 +1,11 @@
 from Modules.Core.Abstract.SDK.ScenarioAPI.CoreAPI import AbstractScenarioAPI
 from Modules.Core.Abstract.OS.Manager.WindowManager import AbstractWindowManager
-from Modules.Core.Abstract.OS.Manager.WindowsTools import AbstractWindowsTools
+from Modules.Core.Abstract.OS.Manager.OSTools import AbstractOSTools
 
 
 class STDScenarioAPI(AbstractScenarioAPI):
 
-    def __init__(self, win_helper: AbstractWindowsTools):
+    def __init__(self, win_helper: AbstractOSTools):
         self._WINDOWS_POOL = {}
         self._win_helper = win_helper
 

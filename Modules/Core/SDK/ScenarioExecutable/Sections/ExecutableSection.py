@@ -6,9 +6,8 @@ class STDExecSection(STDSection):
     def __init__(self):
         super().__init__()
 
+    def serialize(self, data):
+        self._table_data = data
+
     def deserialize(self):
-        result = "@user_code_section:{ "
-        for key in self._table_data:
-            result += key + ":{ " + self._table_data[key] + " } " + ";"
-        result += "}"
-        return result
+        return self._table_data

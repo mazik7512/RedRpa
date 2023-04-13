@@ -1,6 +1,6 @@
 from typing import Tuple
-from Modules.Core.Descriptors.TemplateDescriptor import TemplateDescriptor
-from Modules.Core.Descriptors.TextObjectDescriptor import TextObjectDescriptor
+from Modules.Core.General.WindowObjectDescriptors.TemplateDescriptor import TemplateDescriptor
+from Modules.Core.General.WindowObjectDescriptors.TextObjectDescriptor import TextObjectDescriptor
 import win32con
 import win32gui
 import win32api

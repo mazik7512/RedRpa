@@ -1,5 +1,5 @@
 from Modules.Core.Abstract.OS.Manager.ObjectWrapper import WindowObject
-from Modules.Core.Descriptors.ObjectDescriptor import ObjectDescriptor
+from Modules.Core.General.WindowObjectDescriptors.ObjectDescriptor import ObjectDescriptor
 from Modules.Windows.Actions.ObjectActions import ObjectActionizer
 
 

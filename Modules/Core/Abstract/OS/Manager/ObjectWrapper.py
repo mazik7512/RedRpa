@@ -1,5 +1,4 @@
-from abc import ABC, abstractmethod
-from Modules.Core.Descriptors.ObjectDescriptor import ObjectDescriptor
+from Modules.Core.General.WindowObjectDescriptors.ObjectDescriptor import ObjectDescriptor
 from Modules.Core.Abstract.OS.Manager.Window import AbstractWindow
 
 

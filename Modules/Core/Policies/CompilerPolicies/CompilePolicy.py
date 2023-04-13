@@ -13,7 +13,8 @@ from AppData.Configs.CompilerConfig import API_PATH
 
 class STDRSLCompilePolicy(AbstractCompilePolicy):
 
-    def __init__(self):
+    def __init__(self, os_utils):
+        self._os_utils = os_utils
         compiler_buffer = self._generate_compiler_components()
         self._lexer = compiler_buffer['lexer']
         self._parser = compiler_buffer['parser']
@@ -64,7 +65,7 @@ class STDRSLCompilePolicy(AbstractCompilePolicy):
         components['logger'] = logger
         components['lexer'] = STDRSLLexer(logger=logger)
         components['parser'] = STDRSLSyntaxParser(logger=logger)
-        components['name_bounder'] = STDRSLNameBounder(logger=logger)
+        components['name_bounder'] = STDRSLNameBounder(os_utils=self._os_utils, logger=logger)
         components['translator'] = STDRSLTranslator(logger=logger)
         components['api_collector'] = STDAPICollector(API_PATH, logger=logger)
         return components

@@ -1,6 +1,6 @@
 import cv2
 from Modules.Core.Abstract.ObjectDetection.TemplateMatcher import TemplateMatcher
-from Modules.Core.Descriptors.TemplateDescriptor import TemplateDescriptor
+from Modules.Core.General.WindowObjectDescriptors.TemplateDescriptor import TemplateDescriptor
 
 
 class OpenCVTemplateMatcher(TemplateMatcher):

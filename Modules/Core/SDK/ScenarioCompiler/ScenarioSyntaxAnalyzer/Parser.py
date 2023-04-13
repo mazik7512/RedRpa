@@ -6,6 +6,9 @@ from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyn
 from Modules.Core.Logger.Logger import Logger
 
 
+MODULE_PREFIX = "[Syntax Analyzer]"
+
+
 class STDRSLSyntaxParser(AbstractSyntaxParser):
 
     def __init__(self, tokens=None, logger=Logger):
@@ -15,6 +18,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
         self._token_type = None
         self._tokens = None
         self._cur_token_pos = None
+        self._errors = []
         self.set_tokens(tokens)
 
     def set_tokens(self, tokens):
@@ -53,7 +57,8 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
         return header_node
 
     def _error(self, error_data):
-        print(error_data)
+        self._logger.success(MODULE_PREFIX, error_data)
+        self._errors.append(error_data)
 
     def _create_error_node(self, parent_node, value):
         node = STDRSLSyntaxNode(STDSyntaxTokens.UNKNOWN, value)

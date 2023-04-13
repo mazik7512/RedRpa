@@ -1,8 +1,7 @@
 from Modules.Core.Abstract.ObjectDetection.ObjectFinder import ObjectFinder
 from Modules.Core.Abstract.ObjectDetection.TemplateMatcher import TemplateMatcher
 from Modules.Core.Abstract.ObjectDetection.ObjectDetector import ObjectDetector
-from Modules.Core.Descriptors.ObjectDescriptor import ObjectDescriptor
-import cv2
+from Modules.Core.General.WindowObjectDescriptors.ObjectDescriptor import ObjectDescriptor
 
 
 class ObjFinder(ObjectFinder):
