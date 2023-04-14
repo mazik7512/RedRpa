@@ -28,10 +28,14 @@ class STDRSLTranslationPolicy(AbstractTranslationPolicy):
 
     @staticmethod
     def translate_func_def(node):
-        func_def_args = node.get_left_node().deserialize()
+        func_def_args = node.get_left_node()
+        if func_def_args:
+            func_def_args = func_def_args.deserialize()
+        else:
+            func_def_args = ""
         result = "def " + node.get_data() + "(" + func_def_args + "):\n"
         func_def_body = node.get_right_node().deserialize()
-        result += func_def_body
+        result += func_def_body + "\n"
         return result
 
     @staticmethod
@@ -100,6 +104,8 @@ class STDRSLTranslationPolicy(AbstractTranslationPolicy):
         rvalue = node.get_left_node()
         if rvalue.get_type() == STDSyntaxTokens.FUNC_CALL:
             result_init, _result = rvalue.deserialize()
+        elif rvalue.get_type() == STDSyntaxTokens.ASSIGMENT_OPERATION:
+            result_init, _result = rvalue.deserialize()
         else:
             _result += rvalue.deserialize()
         lvalue = node.get_right_node().deserialize()
@@ -110,6 +116,8 @@ class STDRSLTranslationPolicy(AbstractTranslationPolicy):
     def translate_body(node):
         STDRSLOffsetTranslationPolicy.add_offset_level()
         result = node.get_left_node().deserialize()
+        if result == "":
+            result = STDRSLOffsetTranslationPolicy.get_current_offset() + "pass"
         STDRSLOffsetTranslationPolicy.remove_offset_level()
         return result
 

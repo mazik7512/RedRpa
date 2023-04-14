@@ -57,7 +57,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
         return header_node
 
     def _error(self, error_data):
-        self._logger.success(MODULE_PREFIX, error_data)
+        self._logger.error(MODULE_PREFIX, error_data)
         self._errors.append(error_data)
 
     def _create_error_node(self, parent_node, value):
@@ -90,7 +90,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
         elif self._token_type == STDSyntaxTokens.OBJECT:
             node = self._create_expr_node(line_node, self._token_value)
         else:
-            self._error("Line Node")
+            self._error("Ожидалось {SPEC_INST, FUNC_DEF, EXPR}, а пришло: " + self._token_value)
             node = self._create_error_node(line_node, self._token_value)
         line_node.set_left_node(node)
         return line_node
@@ -104,7 +104,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
         if self._token_type == STDSyntaxTokens.ENDLINE:
             return expr_node
         else:
-            self._error("Expr")
+            self._error("Ожидалось ;, а пришло: " + self._token_value)
             return self._create_error_node(expr_node, expr_object)
 
     def _specify_and_create_object_node(self, parent_node, object_name):
@@ -149,7 +149,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
             node = self._create_number_literal_node(func_call_arg, self._token_value)
             self._next_token()
         else:
-            self._error("Func_arg")
+            self._error("Ожидалось имя, строка или число, а пришло: " + self._token_value)
             node = self._create_error_node(func_call_arg, self._token_value)
         func_call_arg.set_left_node(node)
         return func_call_arg
@@ -181,7 +181,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
         elif self._token_type == STDSyntaxTokens.OBJECT:
             node = self._specify_and_create_object_node(parent_node, self._token_value)
         else:
-            self._error("assigment rvalue")
+            self._error("Ожидалась строка, число или имя, а пришло: " + self._token_value)
             node = self._create_error_node(parent_node, self._token_value)
         return node
 
@@ -189,7 +189,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
         if spec_inst == "loop":
             return self._create_loop_node(parent_node)
         else:
-            self._error("Spec inst")
+            self._error("Ожидалось SPEC_INST, а пришло: " + spec_inst)
             return self._create_error_node(parent_node, spec_inst)
 
     def _create_loop_node(self, parent_node):
@@ -203,7 +203,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
             loop_node.set_right_node(loop_body_node)
             return loop_node
         else:
-            self._error("loop node")
+            self._error("Ожидалось (, а пришло: " + self._token_value)
             return self._create_error_node(loop_node, "loop")
 
     def _create_loop_header_node(self, parent_node):
@@ -216,7 +216,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
             node = self._create_number_literal_node(loop_arg_node, self._token_value)
             self._next_token()
         else:
-            self._error(self._token_value)
+            self._error("Ожидалось имя или число, а пришло: " + self._token_value)
             node = self._create_error_node(loop_arg_node, self._token_value)
             self._next_token()
         loop_arg_node.set_left_node(node)
@@ -229,7 +229,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
             self._next_token()
         elif self._token_type == STDSyntaxTokens.ASSIGMENT_OPERATION:
             node = self._create_error_node(parent_node, object_name)
-            self._error(object_name)
+            self._error("Ожидалось ( или имя, а пришло: =")
         else:
             node = self._create_object_node(parent_node, object_name)
         return node
@@ -246,7 +246,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
             node = self._create_body_lines_node(body_node)
         else:
             node = self._create_error_node(body_node, self._token_value)
-            self._error(self._token_value)
+            self._error("Ожидалось выражение, а пришло: " + self._token_value)
         body_node.set_left_node(node)
         return body_node
 
@@ -272,7 +272,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
             node = self._create_special_instruction_node(parent_node, self._token_value)
         else:
             node = self._create_error_node(parent_node, self._token_value)
-            self._error("body line")
+            self._error("Ожидалось тело инструкции, а пришло: " + self._token_value)
         return node
 
     def _create_func_def_node(self, parent_node):
@@ -295,7 +295,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
             else:
                 return None
         else:
-            self._error("func def arg list")
+            self._error("Ожидалось (, а пришло: " + self._token_value)
             return self._create_error_node(parent_node, self._token_value)
 
     def _create_func_def_arg_list_node(self, parent_node):
@@ -315,7 +315,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
         if self._token_type == STDSyntaxTokens.OBJECT:
             node = self._create_object_node(func_def_arg_node, self._token_value)
         else:
-            self._error(self._token_value)
+            self._error("Ожидалось имя, а пришло: " + self._token_value)
             node = self._create_error_node(func_def_arg_node, self._token_value)
         self._next_token()
         func_def_arg_node.set_left_node(node)
