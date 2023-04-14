@@ -46,8 +46,8 @@ class STDRedVirtualMachine(AbstractVirtualMachine):
     def _execute(self, source_code):
         try:
             exec(source_code)
-        except:
-            print("RUNTIME ERROR")
+        except Exception as e:
+            self._error("Runtime Error: " + str(e))
 
     def _dump_section(self, section):
         result = ""
