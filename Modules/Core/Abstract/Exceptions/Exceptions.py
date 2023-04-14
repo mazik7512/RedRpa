@@ -2,4 +2,8 @@ from abc import abstractmethod
 
 
 class AbstractException(Exception):
-    pass
+
+    @abstractmethod
+    def get_exception_data(self):
+        pass
+

@@ -2,68 +2,89 @@ from Modules.Core.Abstract.Exceptions.Exceptions import AbstractException
 
 
 class STDException(AbstractException):
-    pass
+    def __init__(self, exception_data, *args):
+        super().__init__(args)
+        self._exception_data = exception_data
+
+    def get_exception_data(self):
+        return self._exception_data
 
 
 class STDCompileException(STDException):
-    pass
+    def __init__(self, exception_data, *args):
+        super().__init__(exception_data, args)
 
 
 class STDLexicalException(STDException):
-    pass
+    def __init__(self, exception_data, *args):
+        super().__init__(exception_data, args)
 
 
 class STDSyntaxException(STDException):
-    pass
+    def __init__(self, exception_data, *args):
+        super().__init__(exception_data, args)
 
 
 class STDNameBoundException(STDException):
-    pass
+    def __init__(self, exception_data, *args):
+        super().__init__(exception_data, args)
 
 
 class STDTranslationException(STDException):
-    pass
+    def __init__(self, exception_data, *args):
+        super().__init__(exception_data, args)
 
 
 class STDHasherException(STDException):
-    pass
+    def __init__(self, exception_data, *args):
+        super().__init__(exception_data, args)
 
 
 class STDEncryptException(STDException):
-    pass
+    def __init__(self, exception_data, *args):
+        super().__init__(exception_data, args)
 
 
 class STDDecryptException(STDException):
-    pass
+    def __init__(self, exception_data, *args):
+        super().__init__(exception_data, args)
 
 
 class STDObjectNotFoundException(STDException):
-    pass
+    def __init__(self, exception_data, *args):
+        super().__init__(exception_data, args)
 
 
 class STDREXCorruptionException(STDException):
-    pass
+    def __init__(self, exception_data, *args):
+        super().__init__(exception_data, args)
 
 
 class STDRVMRuntimeException(STDException):
-    pass
+    def __init__(self, exception_data, *args):
+        super().__init__(exception_data, args)
 
 
 class STDConnectionException(STDException):
-    pass
+    def __init__(self, exception_data, *args):
+        super().__init__(exception_data, args)
 
 
 class STDCorruptedDataException(STDException):
-    pass
+    def __init__(self, exception_data, *args):
+        super().__init__(exception_data, args)
 
 
 class STDServerInitializingException(STDException):
-    pass
+    def __init__(self, exception_data, *args):
+        super().__init__(exception_data, args)
 
 
 class STDClientInitializingException(STDException):
-    pass
+    def __init__(self, exception_data, *args):
+        super().__init__(exception_data, args)
 
 
 class STDOSManagerException(STDException):
-    pass
+    def __init__(self, exception_data, *args):
+        super().__init__(exception_data, args)
