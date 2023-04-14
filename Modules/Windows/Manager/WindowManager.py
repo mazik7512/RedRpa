@@ -20,9 +20,9 @@ class STDWindowManager(AbstractWindowManager):
 
     def _add_objects(self, objects):
         for obj in objects:
-            if obj.type == 0:
+            if obj._type == 0:
                 self.objects.append(STDButton(self.window.get_window(), obj))
-            elif obj.type == 1:
+            elif obj._type == 1:
                 self.objects.append(STDInputField(self.window.get_window(), obj))
 
     def os_scan_for_object(self):

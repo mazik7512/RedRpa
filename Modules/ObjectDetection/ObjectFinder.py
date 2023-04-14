@@ -1,7 +1,7 @@
 from Modules.Core.Abstract.ObjectDetection.ObjectFinder import ObjectFinder
 from Modules.Core.Abstract.ObjectDetection.TemplateMatcher import TemplateMatcher
 from Modules.Core.Abstract.ObjectDetection.ObjectDetector import ObjectDetector
-from Modules.Core.General.WindowObjectDescriptors.ObjectDescriptor import ObjectDescriptor
+from Modules.Core.General.WindowObjectsDescriptors.ObjectDescriptor import STDObjectDescriptor
 
 
 class ObjFinder(ObjectFinder):
@@ -16,7 +16,7 @@ class ObjFinder(ObjectFinder):
             x, xw, y, yh = template.get_points()
             template_image = image[y:yh, x:xw]
             template_type = self.detector.detect_object_type(template_image)
-            obj = ObjectDescriptor(template, template_type)
+            obj = STDObjectDescriptor(template, template_type)
             objects.append(obj)
         return objects
 

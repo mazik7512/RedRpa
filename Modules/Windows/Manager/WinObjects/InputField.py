@@ -1,11 +1,11 @@
 from Modules.Core.Abstract.OS.Manager.ObjectWrapper import WindowObject
-from Modules.Core.General.WindowObjectDescriptors.ObjectDescriptor import ObjectDescriptor
+from Modules.Core.General.WindowObjectsDescriptors.ObjectDescriptor import STDObjectDescriptor
 from Modules.Windows.Actions.ObjectActions import ObjectActionizer
 
 
 class STDInputField(WindowObject):
 
-    def __init__(self, hwnd, object_desc: ObjectDescriptor):
+    def __init__(self, hwnd, object_desc: STDObjectDescriptor):
         super().__init__(hwnd, object_desc)
 
     def click(self):

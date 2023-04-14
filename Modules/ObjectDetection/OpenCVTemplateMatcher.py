@@ -1,6 +1,6 @@
 import cv2
 from Modules.Core.Abstract.ObjectDetection.TemplateMatcher import TemplateMatcher
-from Modules.Core.General.WindowObjectDescriptors.TemplateDescriptor import TemplateDescriptor
+from Modules.Core.General.WindowObjectsDescriptors.TemplateDescriptor import STDTemplateDescriptor
 
 
 class OpenCVTemplateMatcher(TemplateMatcher):
@@ -19,7 +19,7 @@ class OpenCVTemplateMatcher(TemplateMatcher):
         for cnt in contours:
             x, y, w, h = cv2.boundingRect(cnt)
             temp = [x, x + w, y, y + h]
-            obj = TemplateDescriptor(temp)
+            obj = STDTemplateDescriptor(temp)
             templates.append(obj)
             #cropped = im2[y:y + h, x:x + w]
             #templates.append(cropped)
