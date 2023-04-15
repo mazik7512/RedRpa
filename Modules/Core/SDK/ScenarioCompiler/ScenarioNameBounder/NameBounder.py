@@ -1,9 +1,7 @@
 from Modules.Core.Abstract.SDK.ScenarioCompiler.ScenarioNameBounder.NameBounder import AbstractNameBounder
-from Modules.Core.Abstract.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.SyntaxTree import AbstractSyntaxTree
 from Modules.Core.SDK.ScenarioCompiler.ScenarioTokens.Tokens import STDNameResolverTokens
-from Modules.Core.SDK.ScenarioExecutable.Sections.ImportSection import STDImportSection
-from Modules.Core.SDK.ScenarioExecutable.Sections.InitializationSection import STDInitSection
 from Modules.Core.Logger.Logger import Logger
+from Modules.Core.General.DataStructures.WorkResult import STDWorkResult
 
 
 MODULE_PREFIX = "[Name Bounder]"
@@ -37,7 +35,10 @@ class STDRSLNameBounder(AbstractNameBounder):
 
     def link_names(self):
         api_imports, api_inits = self._link_funcs()
-        return api_imports, api_inits
+        work_res = STDWorkResult()
+        work_res.push((api_imports, api_inits))
+        work_res.push_errors(self._errors)
+        return work_res
 
     def _error(self, error_data):
         self._logger.error(MODULE_PREFIX, "Ошибка связывания имён:", error_data)

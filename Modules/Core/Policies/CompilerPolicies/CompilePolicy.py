@@ -7,6 +7,7 @@ from Modules.Core.SDK.ScenarioCompiler.ScenarioLogger.Logger import STDCompilerL
 from Modules.Core.SDK.APICollector.APICollector import STDAPICollector
 from Modules.Core.SDK.ScenarioExecutable.ExecutableGenerator import STDREXGenerator
 from Modules.Core.SDK.ScenarioExecutable.Executable import STDRedExecutable
+from Modules.Core.Policies.CompilerPolicies.CompileErrorsProcessingPolicy import STDCompileErrorsProcessingPolicy
 from AppData.Configs.CompilerConfig import LOGS_PATH
 from AppData.Configs.CompilerConfig import API_PATH
 
@@ -41,23 +42,31 @@ class STDRSLCompilePolicy(AbstractCompilePolicy):
 
     def _lex_analyze(self, scenario):
         self._lexer.set_data(scenario)
-        return self._lexer.get_token_list()
+        lex_result = self._lexer.get_token_list()
+        STDCompileErrorsProcessingPolicy.process_errors("lex", lex_result.get_errors())
+        return lex_result.get_data()
 
     def _syntax_analyze(self, tokens):
         self._parser.set_tokens(tokens)
-        return self._parser.generate_ast()
+        syntax_result = self._parser.generate_ast()
+        STDCompileErrorsProcessingPolicy.process_errors("syntax", syntax_result.get_errors())
+        return syntax_result.get_data()
 
     def _name_bounding(self, ast):
         self._name_bounder.set_ast(ast)
         self._name_bounder.set_apis(self._api_collector)
-        return self._name_bounder.link_names()
+        name_bounder_result = self._name_bounder.link_names()
+        STDCompileErrorsProcessingPolicy.process_errors("name_bounding", name_bounder_result.get_errors())
+        return name_bounder_result.get_data()
 
     def _collect_apis(self):
         self._api_collector.collect_all_api_methods()
 
     def _translate(self, ast):
         self._translator.set_data(ast)
-        return self._translator.translate()
+        translator_result = self._translator.translate()
+        STDCompileErrorsProcessingPolicy.process_errors("translation", translator_result.get_errors())
+        return translator_result.get_data()
 
     def _generate_compiler_components(self):
         components = {}

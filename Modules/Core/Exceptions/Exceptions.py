@@ -9,6 +9,9 @@ class STDException(AbstractException):
     def get_exception_data(self):
         return self._exception_data
 
+    def __str__(self):
+        return super().__str__() + str(self._exception_data)
+
 
 class STDCompileException(STDException):
     def __init__(self, exception_data, *args):

@@ -73,18 +73,18 @@ if __name__ == "__main__":
     scenario = "b=z=2;function test(){ a=5; test();} loop(a){ loop(5){test();} test(test(test()), test()); test(); q=z=test(); } a=test();"
     scenario = "function inner_loop(a, b){ a = b = 5; } loop(5){} CV_scan(get_window(get_name()), \"button\"); click_on_object(); loop(a){ loop(b){ inner_loop(); inner_loop_1(); } outer_loop_1(); outer_loop2(); } outside_loop();"
     lexer = STDRSLLexer(scenario)
-    lexems = lexer.get_token_list()
+    lexems = lexer.get_token_list().get_data()
     parser = STDRSLSyntaxParser(lexems)
     for lex in lexems:
         print(lex)
-    res = parser.generate_ast()
+    res = parser.generate_ast().get_data()
     res.traverse("preorder", print)
     api_names = STDAPICollector("Modules\\Core\\SDK\\ScenarioAPI\\")
     STDAPICollector.collect_all_api_methods(api_names)
     linker = STDRSLNameBounder(res, api_names)
-    print(*linker.link_names())
+    print(*linker.link_names().get_data())
     translator = STDRSLTranslator(res)
-    print(translator.translate())
+    print(translator.translate().get_data())
     compiler = STDRSLCompilerGenerator.generate_compiler()
     rex = compiler.compile(scenario)
     with open("scenario.rex", "w+") as red_executable:

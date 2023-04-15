@@ -2,7 +2,24 @@ from Modules.Core.Abstract.SDK.ScenarioCompiler.SyntaxAnalyzer.Parser import Abs
 from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.SyntaxNode import STDRSLSyntaxNode
 from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.SyntaxTree import STDRSLSyntaxTree
 from Modules.Core.SDK.ScenarioCompiler.ScenarioTokens.Tokens import STDSyntaxTokens
-from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyntaxNode import *
+from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyntaxNode import STDRSLStrLiteralNode
+from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyntaxNode import STDRSLNumberLiteralNode
+from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyntaxNode import STDRSLBodyNode
+from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyntaxNode import STDRSLFuncDefNode
+from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyntaxNode import STDRSLFuncDefArgListNode
+from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyntaxNode import STDRSLFuncDefArgNode
+from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyntaxNode import STDRSLFuncCallNode
+from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyntaxNode import STDRSLFuncCallArgListNode
+from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyntaxNode import STDRSLFuncCallArgNode
+from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyntaxNode import STDRSLExprNode
+from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyntaxNode import STDRSLAssigmentNode
+from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyntaxNode import STDRSLBodyLineNode
+from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyntaxNode import STDRSLLoopNode
+from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyntaxNode import STDRSLLoopHeaderNode
+from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyntaxNode import STDRSLScenarioNode
+from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyntaxNode import STDRSLLineNode
+from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyntaxNode import STDRSLObjectNode
+from Modules.Core.General.DataStructures.WorkResult import STDWorkResult
 from Modules.Core.Logger.Logger import Logger
 
 
@@ -43,7 +60,10 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
     def generate_ast(self):
         ast = self._generate_ast()
         self._ast = STDRSLSyntaxTree(ast)
-        return self._ast
+        work_res = STDWorkResult()
+        work_res.push(self._ast)
+        work_res.push_errors(self._errors)
+        return work_res
 
     def _generate_ast(self):
         header_node = STDRSLScenarioNode(None)

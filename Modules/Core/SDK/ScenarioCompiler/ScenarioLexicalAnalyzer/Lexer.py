@@ -1,6 +1,7 @@
 from Modules.Core.Abstract.SDK.ScenarioCompiler.LexicalAnalyzer.Lexer import AbstractLexer
 from Modules.Core.SDK.ScenarioCompiler.ScenarioTokens.Tokens import STDLexerTokens
 from Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.LexicalObjects.Lexeme import STDLexema
+from Modules.Core.General.DataStructures.WorkResult import STDWorkResult
 from Modules.Core.Logger.Logger import Logger
 
 
@@ -8,7 +9,9 @@ class STDRSLLexer(AbstractLexer):
 
     def __init__(self, scenario=None, logger=Logger):
         self._logger = logger
-        self.set_data(scenario)
+        self._scenario = scenario
+        self._last_scenario_pos = 0
+        self._errors = []
 
     def _prepare_scenario_text(self, data):
         if data:
@@ -16,6 +19,7 @@ class STDRSLLexer(AbstractLexer):
         return data
 
     def set_data(self, data):
+        self._errors.clear()
         self._scenario = self._prepare_scenario_text(data)
         self._last_scenario_pos = 0
 
@@ -85,4 +89,7 @@ class STDRSLLexer(AbstractLexer):
         tokens = []
         while self._last_scenario_pos < len(self._scenario):
             tokens.append(self.get_next_token())
-        return tokens
+        work_res = STDWorkResult()
+        work_res.push(tokens)
+        work_res.push_errors(self._errors)
+        return work_res
