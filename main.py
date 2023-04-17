@@ -1,14 +1,13 @@
-from Modules.Core.SDK.RedVirtualMachine.RVM import STDRedVirtualMachine
-from Modules.Core.SDK.ScenarioCompiler.ScenarioLexicalAnalyzer.Lexer import STDRSLLexer
-from Modules.Core.SDK.ScenarioCompiler.ScenarioSyntaxAnalyzer.Parser import STDRSLSyntaxParser
-from Modules.Core.SDK.ScenarioCompiler.ScenarioTranslator.Translator import STDRSLTranslator
-from Modules.Core.Logger.Logger import Logger
-from AppData.Configs.CoreConfig import LOGS_PATH
-from Modules.Core.SDK.APICollector.APICollector import STDAPICollector
-from Modules.Core.SDK.ScenarioCompiler.ScenarioNameBounder.NameBounder import STDRSLNameBounder
-from Modules.Core.SDK.ScenarioCompiler.CompilerGenerator import STDRSLCompilerGenerator
-from Modules.Core.SDK.ScenarioExecutable.Executable import STDRedExecutable
-from Modules.Core.SDK.ScenarioExecutable.SectionsContainer import STDSectionContainer
+from RRPA.Modules.Core.SDK.RedVirtualMachine.RVM import STDRedVirtualMachine
+from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioLexicalAnalyzer.Lexer import STDRSLLexer
+from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioSyntaxAnalyzer.Parser import STDRSLSyntaxParser
+from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioTranslator.Translator import STDRSLTranslator
+from RRPA.Modules.Core.Logger.Logger import Logger
+from RRPA.AppData.Configs.CoreConfig import LOGS_PATH
+from RRPA.Modules.Core.SDK.APICollector.APICollector import STDAPICollector
+from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioNameBounder.NameBounder import STDRSLNameBounder
+from RRPA.Modules.Core.SDK.ScenarioCompiler.CompilerGenerator import STDRSLCompilerGenerator
+from RRPA.Modules.Core.SDK.ScenarioExecutable.Executable import STDRedExecutable
 
 
 def client_test(_client):
@@ -79,7 +78,7 @@ if __name__ == "__main__":
         print(lex)
     res = parser.generate_ast().get_data()
     res.traverse("preorder", print)
-    api_names = STDAPICollector("Modules\\Core\\SDK\\ScenarioAPI\\")
+    api_names = STDAPICollector("RRPA\\Modules\\Core\\SDK\\ScenarioAPI\\")
     STDAPICollector.collect_all_api_methods(api_names)
     linker = STDRSLNameBounder(res, api_names)
     print(*linker.link_names().get_data())
