@@ -1,3 +1,7 @@
+import threading
+import time
+
+from RRPA.Modules.Core.Network.Managers.ManagerGenerator import STDManagerGenerator
 from RRPA.Modules.Core.SDK.RedVirtualMachine.RVM import STDRedVirtualMachine
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioLexicalAnalyzer.Lexer import STDRSLLexer
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioSyntaxAnalyzer.Parser import STDRSLSyntaxParser
@@ -47,7 +51,7 @@ if __name__ == "__main__":
     wm.scan_for_objects()
     #Actionizer.move(wnd, TemplateDescriptor([sv0, 30, sv0, 30]))
     """
-    """
+
     generator = STDManagerGenerator("127.0.0.1", 5551)
     server = generator.generate_server()
     client = generator.generate_client()
@@ -99,4 +103,5 @@ if __name__ == "__main__":
     #while node:
     #    print(node)
     #    node = res.get_next()
+    """
 

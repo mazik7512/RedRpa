@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 class AbstractManagerGenerator(ABC):
 
     @abstractmethod
-    def generate_app_level_policies(self, key):
+    def generate_app_level_policies(self):
         pass
 
     @abstractmethod

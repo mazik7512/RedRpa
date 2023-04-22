@@ -7,7 +7,7 @@ from RRPA.Modules.Core.Policies.NetworkPolicies.TransportLevel.SendPolicy import
 from RRPA.Modules.Core.Network.Managers.ServerManager import STDServerManager
 from RRPA.Modules.Core.Network.Managers.ClientManager import STDClientManager
 from RRPA.Modules.Core.Network.Managers.NetworkManager import STDNetworkManager
-from RRPA.Modules.Core.Crypto.AESRSACryptographer import STDCryptographer
+from RRPA.Modules.Core.Crypto.AESRSACryptographer import STDAESRSACryptographer
 from RRPA.Modules.Core.Network.Utils.Logger import STDNetworkLogger
 from RRPA.AppData.Configs.CoreConfig import LOGS_PATH
 from RRPA.AppData.Configs.NetworkConfig import NETWORK_LOG_FILE
@@ -18,7 +18,7 @@ class STDManagerGenerator(AbstractManagerGenerator):
     def __init__(self, host: str, port: int):
         self._logger = STDNetworkLogger(LOGS_PATH + NETWORK_LOG_FILE)
         self._pt_object = STDPTObject(host, port)
-        self._cryptographer = STDCryptographer()
+        self._cryptographer = STDAESRSACryptographer()
 
     def generate_app_level_policies(self):
         tl_send_policy, tl_receive_policy = self.generate_transport_level_policies()
