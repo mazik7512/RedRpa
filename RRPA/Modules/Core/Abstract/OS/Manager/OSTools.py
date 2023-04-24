@@ -24,3 +24,13 @@ class AbstractOSTools(ABC):
     @abstractmethod
     def create_window_manager(window) -> AbstractWindowManager:
         pass
+
+    @staticmethod
+    @abstractmethod
+    def get_os_tools_name():
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def get_os_tools_import_path():
+        pass

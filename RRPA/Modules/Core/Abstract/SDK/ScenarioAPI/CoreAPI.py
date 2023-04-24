@@ -8,7 +8,7 @@ class AbstractScenarioAPI(ABC):
         pass
 
     @abstractmethod
-    def OS_scan(self,window):
+    def OS_scan(self, window):
         pass
 
     @abstractmethod

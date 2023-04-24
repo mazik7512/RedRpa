@@ -23,3 +23,6 @@ class AbstractNetworkManager(ABC):
     def serve(self, info=None):
         pass
 
+    @abstractmethod
+    def get_info_data(self):
+        pass

@@ -17,6 +17,7 @@ class STDNetworkManager(AbstractNetworkManager):
     def __init__(self, manager: AbstractManager, logger):
         super().__init__(manager)
         self._logger = logger
+        self._info = []
 
     def start(self):
         self._logger.debug(MODULE_PREFIX, "Запуск сетевой службы")
@@ -72,7 +73,13 @@ class STDNetworkManager(AbstractNetworkManager):
                 self._manager.reset_connection()
                 return op_type, None
             elif op_type == STDOperationsCodes.INFO_DATA:
+                self._info.append(data)
                 return op_type, data
 
     def _specify_protocol(self, decrypted_data):
         return STDRDTReceiveProtocol(decrypted_data)
+
+    def get_info_data(self):
+        info_data = self._info.copy()
+        self._info.clear()
+        return info_data

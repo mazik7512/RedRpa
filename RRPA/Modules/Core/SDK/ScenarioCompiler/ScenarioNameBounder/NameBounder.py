@@ -3,11 +3,10 @@ from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioTokens.Tokens import STDName
 from RRPA.Modules.Core.Logger.Logger import Logger
 from RRPA.Modules.Core.General.DataStructures.WorkResult import STDWorkResult
 
-
 MODULE_PREFIX = "[Name Bounder]"
 
 
-def get_func_calls(func_call_node, api_calls_list, func_calls_list,  func_def_list, api_funcs):
+def get_func_calls(func_call_node, api_calls_list, func_calls_list, func_def_list, api_funcs):
     _type = func_call_node.get_type()
     if _type == STDNameResolverTokens.FUNC_CALL:
         if func_call_node.get_data() in api_funcs:
@@ -55,7 +54,8 @@ class STDRSLNameBounder(AbstractNameBounder):
         return api_imports, api_inits
 
     def _generate_std_os_tools(self, section_data):
-        section_data['STDOSTools'] = 'from {} import STDOSTools'.format(self._os_utils)
+        section_data['STDOSTools'] = 'from {} import {}'.format(self._os_utils.get_os_tools_import_path(),
+                                                                self._os_utils.get_os_tools_name())
 
     def _generate_api_sections(self, api_calls):
         api_imports = {}

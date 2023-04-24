@@ -1,6 +1,14 @@
+import inspect
+import os
+import pathlib
+import sys
 import threading
 import time
 
+import PySide2
+from PySide2.QtCore import Qt
+import PySide2.QtWidgets
+from Apps.ClientApp.ClientMainView import Ui_MainWindow
 from RRPA.Modules.Core.Network.Managers.ManagerGenerator import STDManagerGenerator
 from RRPA.Modules.Core.SDK.RedVirtualMachine.RVM import STDRedVirtualMachine
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioLexicalAnalyzer.Lexer import STDRSLLexer
@@ -12,6 +20,7 @@ from RRPA.Modules.Core.SDK.APICollector.APICollector import STDAPICollector
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioNameBounder.NameBounder import STDRSLNameBounder
 from RRPA.Modules.Core.SDK.ScenarioCompiler.CompilerGenerator import STDRSLCompilerGenerator
 from RRPA.Modules.Core.SDK.ScenarioExecutable.Executable import STDRedExecutable
+from RRPA.Modules.Windows.Manager.OSTools import STDOSTools
 
 
 def client_test(_client):
@@ -28,6 +37,17 @@ def server_test(_server):
 
 
 if __name__ == "__main__":
+    dirname = os.path.dirname(PySide2.__file__)
+    plugin_path = os.path.join(dirname, 'plugins', 'platforms')
+    os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = plugin_path
+    #app = PySide2.QtWidgets.QApplication(sys.argv)
+    #Form = PySide2.QtWidgets.QMainWindow()
+    #client = Ui_MainWindow(Form)
+    #Form.setWindowFlags(Qt.CustomizeWindowHint | Qt.WindowCloseButtonHint |
+    #                    Qt.WindowMinimizeButtonHint | Qt.MSWindowsFixedSizeDialogHint)
+    #Form.show()
+    #ret = app.exec_()
+    #sys.exit(ret)
     log_file = LOGS_PATH + "logs.txt"
     Logger.add_output_file(log_file)
     Logger.success("Приложение запущено")
@@ -62,7 +82,7 @@ if __name__ == "__main__":
     server_thread.start()
     client_thread.join()
     server_thread.join()
-    """
+
     #scenario = "c=5; function \ntest_func(a, b){ \nreturn(a); }loop(5){ click(\"accept\"); " \
                #"hover(1234.5); }" \
                #"user_object = test(3, 4); test_func(1,\n2);\n \n"
@@ -84,11 +104,11 @@ if __name__ == "__main__":
     res.traverse("preorder", print)
     api_names = STDAPICollector("RRPA\\Modules\\Core\\SDK\\ScenarioAPI\\")
     STDAPICollector.collect_all_api_methods(api_names)
-    linker = STDRSLNameBounder(res, api_names)
+    linker = STDRSLNameBounder(res, api_names, STDOSTools)
     print(*linker.link_names().get_data())
     translator = STDRSLTranslator(res)
     print(translator.translate().get_data())
-    compiler = STDRSLCompilerGenerator.generate_compiler()
+    compiler = STDRSLCompilerGenerator.generate_compiler(STDOSTools)
     rex = compiler.compile(scenario)
     with open("scenario.rex", "w+") as red_executable:
         red_executable.write(rex.deserialize())
@@ -103,5 +123,5 @@ if __name__ == "__main__":
     #while node:
     #    print(node)
     #    node = res.get_next()
-    """
+
 

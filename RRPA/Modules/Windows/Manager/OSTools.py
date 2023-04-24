@@ -26,3 +26,10 @@ class STDOSTools(AbstractOSTools):
     def get_window_by_name(win_name):
         return win32gui.FindWindow(None, win_name)
 
+    @staticmethod
+    def get_os_tools_name():
+        return STDOSTools.__name__
+
+    @staticmethod
+    def get_os_tools_import_path():
+        return "RRPA.Modules.Windows.Manager.OSTools"
