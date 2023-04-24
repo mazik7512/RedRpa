@@ -42,4 +42,12 @@ class ClientModel:
         self._rvm.execute(compiled_scenario)
 
     def refresh_client_data(self, host, port):
+        self._net_manager.end()
         self.__init_network_manager(host, port)
+        self._net_manager.start()
+
+    def load_scenario(self, scenario_path):
+        scenario_data = ""
+        with open(scenario_path, "r") as scenario:
+            scenario_data = scenario.read()
+        return scenario_data

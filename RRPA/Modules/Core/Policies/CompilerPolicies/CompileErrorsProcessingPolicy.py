@@ -31,5 +31,5 @@ class STDCompileErrorsProcessingPolicy(AbstractCompileErrorsProcessingPolicy):
 
     @staticmethod
     def _process_translation_errors(errors):
-        translation_exception = STDTranslationException()
+        translation_exception = STDTranslationException(errors)
         raise translation_exception
