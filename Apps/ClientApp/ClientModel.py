@@ -41,4 +41,5 @@ class ClientModel:
     def execute_scenario(self, compiled_scenario):
         self._rvm.execute(compiled_scenario)
 
-
+    def refresh_client_data(self, host, port):
+        self.__init_network_manager(host, port)
