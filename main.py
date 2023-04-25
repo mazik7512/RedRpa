@@ -8,6 +8,8 @@ import time
 import PySide2
 from PySide2.QtCore import Qt
 import PySide2.QtWidgets
+
+from Apps.ClientApp.Client import ClientApp
 from Apps.ClientApp.ClientMainView import Ui_MainWindow
 from RRPA.Modules.Core.Network.Managers.ManagerGenerator import STDManagerGenerator
 from RRPA.Modules.Core.SDK.RedVirtualMachine.RVM import STDRedVirtualMachine
@@ -37,17 +39,10 @@ def server_test(_server):
 
 
 if __name__ == "__main__":
-    dirname = os.path.dirname(PySide2.__file__)
-    plugin_path = os.path.join(dirname, 'plugins', 'platforms')
-    os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = plugin_path
-    #app = PySide2.QtWidgets.QApplication(sys.argv)
-    #Form = PySide2.QtWidgets.QMainWindow()
-    #client = Ui_MainWindow(Form)
-    #Form.setWindowFlags(Qt.CustomizeWindowHint | Qt.WindowCloseButtonHint |
-    #                    Qt.WindowMinimizeButtonHint | Qt.MSWindowsFixedSizeDialogHint)
-    #Form.show()
-    #ret = app.exec_()
-    #sys.exit(ret)
+
+    client = ClientApp()
+    client.start_app()
+
     log_file = LOGS_PATH + "logs.txt"
     Logger.add_output_file(log_file)
     Logger.success("Приложение запущено")

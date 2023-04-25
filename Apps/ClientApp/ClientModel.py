@@ -1,3 +1,8 @@
+import os
+from inspect import getsourcefile
+from os.path import abspath
+
+from RRPA.Modules.Core.Crypto.StribogHasher import STDHasher
 from RRPA.Modules.Core.SDK.ScenarioCompiler.CompilerGenerator import STDRSLCompilerGenerator
 from RRPA.Modules.Windows.Manager.OSTools import STDOSTools
 from RRPA.Modules.Core.Network.Managers.ManagerGenerator import STDManagerGenerator
@@ -10,6 +15,7 @@ class ClientModel:
         self.__init_os_tools(os)
         self.__init_network_manager(host, port)
         self.__init_compiler()
+        self.__init_hasher()
 
     def __init_compiler(self):
         self._compiler = STDRSLCompilerGenerator.generate_compiler(self._os_tools)
@@ -17,11 +23,14 @@ class ClientModel:
     def __init_network_manager(self, host, port):
         self._net_manager = STDManagerGenerator(host, port).generate_client()
 
-    def __init_os_tools(self, os):
-        self._os_tools = os
+    def __init_os_tools(self, _os):
+        self._os_tools = _os
 
     def __init_rvm(self):
         self._rvm = STDRedVirtualMachine()
+
+    def __init_hasher(self):
+        self._hasher = STDHasher(32)
 
     def compile(self, scenario):
         self._compiler.compile(scenario)
@@ -51,3 +60,29 @@ class ClientModel:
         with open(scenario_path, "r") as scenario:
             scenario_data = scenario.read()
         return scenario_data
+
+    def hash_app(self, client_path):
+        client_app_files = self.__get_client_app_files(client_path)
+        client_app_files_data = self.__get_client_app_files_data(client_app_files)
+        return hex(self._hasher.hash_string(client_app_files_data))[2:]
+
+    def __get_client_app_files_data(self, app_files):
+        data = ""
+        for file in app_files:
+            with open(file, "r") as client_file:
+                data += client_file.readline()
+        data = self.__preprocess_data(data)
+        return data
+
+    def __preprocess_data(self, data: str):
+        replace_symbols = ['\t', '\n', '\r']
+        for symbol in replace_symbols:
+            data = data.replace(symbol, "")
+        return data
+
+    def __get_client_app_files(self, path):
+        app_files = []
+        for file in os.listdir(path):
+            if file.endswith(".py"):
+                app_files.append(path + "\\" + file)
+        return app_files

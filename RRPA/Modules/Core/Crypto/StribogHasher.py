@@ -5,14 +5,14 @@ from RRPA.AppData.Configs.CryptoConfig import HASH_SIZE
 
 
 class STDHasher(AbstractHasher):
-    def __init__(self):
+    def __init__(self, hash_size=HASH_SIZE):
         self._lib_path = STRIBOG_DLL_PATH
-        self._hash_size = HASH_SIZE
+        self._hash_size = hash_size
         self._hasher = ctypes.CDLL(self._lib_path)
         if self._hash_size == 64:
             self._hash_func = self._hasher.StribogHash512
         elif self._hash_size == 32:
-            self._hash_func = self._hasher.StrinbogHash256
+            self._hash_func = self._hasher.StribogHash256
 
     def _get_empty_string(self):
         return '0' * self._hash_size
