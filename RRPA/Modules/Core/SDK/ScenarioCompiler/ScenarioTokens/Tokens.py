@@ -4,6 +4,8 @@ from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioTokens.TokenTypes import STD
 class STDLexerTokens:
     TERMINATE_SYMBOLS = ["=", "(", ")", ";", "{", "}", ","]
     WHITESPACE_SYMBOLS = ['\n', '\t', '\r', " "]
+    NEW_LINE_SYMBOLS = ['\n']
+    COMMENTARY_SYMBOLS = ['#']
     # обычные токены
     TOKENS = {
         'function': STDTokenTypes.FUNC_DEFINITION,

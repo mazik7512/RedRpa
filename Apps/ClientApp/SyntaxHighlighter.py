@@ -19,13 +19,15 @@ def formatting(color, style=''):
 # Синтаксические стили, которые могут использоваться
 STYLES = {
     'special_instruction': formatting('blue', 'bold'),
-    'operator': formatting('red', 'bold'),
+    'operator': formatting('Indigo', 'bold'),
     'body': formatting('Maroon', 'bold'),
-    'function_definition': formatting('black', 'underline'),
+    'function_definition': formatting('black', 'underline bold'),
     'object': formatting('DarkKhaki', 'bold'),
-    'string': formatting('magenta'),
-    'numbers': formatting('green', 'bold'),
-    'sub_expr': formatting('violet', 'bold')
+    'string': formatting('DarkOliveGreen', 'italic'),
+    'numbers': formatting('Teal', 'bold'),
+    'sub_expr': formatting('violet', 'bold'),
+    'comment': formatting('DarkCyan', 'italic'),
+    'function_call': formatting('Crimson', 'bold'),
 }
 
 
@@ -65,6 +67,7 @@ class RSLHighlighter(QSyntaxHighlighter):
             (r'"[^"\\]*(\\.[^"\\]*)*"', 0, STYLES['string']),
             (r'\b(function)\b', 0, STYLES['function_definition']),
             (r'\b[+-]?[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\b', 0, STYLES['numbers']),
+            (r'(#)(.)+', 0, STYLES['comment']),
         ]
 
         rules += [(r'\b%s\b' % w, 0, STYLES['special_instruction'])

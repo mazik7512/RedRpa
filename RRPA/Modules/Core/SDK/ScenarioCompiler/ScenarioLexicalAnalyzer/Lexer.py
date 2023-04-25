@@ -65,9 +65,16 @@ class STDRSLLexer(AbstractLexer):
     def __get_token_value(self):
         buffer = ""
         cur_char = ""
+        commentary = ""
         while self._last_scenario_pos < len(self._scenario):
             cur_char = self._scenario[self._last_scenario_pos]
-            if cur_char not in STDLexerTokens.TERMINATE_SYMBOLS + STDLexerTokens.WHITESPACE_SYMBOLS:
+            if cur_char in STDLexerTokens.COMMENTARY_SYMBOLS:
+                while self._last_scenario_pos < len(self._scenario) and cur_char not in STDLexerTokens.NEW_LINE_SYMBOLS:
+                    commentary += cur_char
+                    self._last_scenario_pos += 1
+                    cur_char = self._scenario[self._last_scenario_pos]
+                self._last_scenario_pos += 1
+            elif cur_char not in STDLexerTokens.TERMINATE_SYMBOLS + STDLexerTokens.WHITESPACE_SYMBOLS:
                 buffer += cur_char
                 self._last_scenario_pos += 1
             else:
