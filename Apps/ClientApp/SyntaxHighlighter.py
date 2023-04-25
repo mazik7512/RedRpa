@@ -2,10 +2,14 @@ from PySide2.QtCore import QRegExp
 from PySide2.QtGui import QColor, QTextCharFormat, QFont, QSyntaxHighlighter
 
 
-def formatting(color, style=''):
+def formatting(color, style='', font_size=None, font_family=None):
     _color = QColor()
     _color.setNamedColor(color)
     _format = QTextCharFormat()
+    if font_family:
+        _format.setFontFamily(font_family)
+    if font_size:
+        _format.setFontPointSize(font_size)
     _format.setForeground(_color)
     if 'bold' in style:
         _format.setFontWeight(QFont.Bold)
@@ -22,12 +26,13 @@ STYLES = {
     'operator': formatting('Indigo', 'bold'),
     'body': formatting('Maroon', 'bold'),
     'function_definition': formatting('black', 'underline bold'),
-    'object': formatting('DarkKhaki', 'bold'),
-    'string': formatting('DarkOliveGreen', 'italic'),
+    'object': formatting('Peru', 'bold'),
+    'string': formatting('Olive', 'italic'),
     'numbers': formatting('Teal', 'bold'),
     'sub_expr': formatting('violet', 'bold'),
     'comment': formatting('DarkCyan', 'italic'),
     'function_call': formatting('Crimson', 'bold'),
+    'api_function_call': formatting('Peru', 'bold italic', 11, 'Times New Roman')
 }
 
 
@@ -51,16 +56,16 @@ class RSLHighlighter(QSyntaxHighlighter):
         '\\(', '\\)'
     ]
 
-    def __init__(self, document):
+    def __init__(self, document, api_funcs):
         QSyntaxHighlighter.__init__(self, document)
+
+        self._api_funcs = api_funcs
 
         self.tri_single = (QRegExp("'''"), 1, STYLES['string'])
         self.tri_double = (QRegExp('"""'), 2, STYLES['string'])
 
         rules = []
 
-
-        # All other rules
         rules += [
             (r'\b[+-]?[0-9]+[lL]?\b', 0, STYLES['numbers']),
             (r'\b[a-z_A-Z0-9]+\b', 0, STYLES['object']),
@@ -78,6 +83,9 @@ class RSLHighlighter(QSyntaxHighlighter):
                   for b in RSLHighlighter.body]
         rules += [(r'%s' % b, 0, STYLES['sub_expr'])
                   for b in RSLHighlighter.sub_expr]
+
+        rules += [(r'%s' % func, 0, STYLES['api_function_call'])
+                  for func in self._api_funcs]
 
         # Создайте QRegExp для каждого шаблона
         self.rules = [(QRegExp(pat), index, fmt)

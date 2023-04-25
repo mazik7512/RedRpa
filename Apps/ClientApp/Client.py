@@ -7,6 +7,8 @@ from Apps.ClientApp.ClientModel import ClientModel
 from Apps.ClientApp.ClientMainView import Ui_MainWindow
 from Apps.ClientApp.SyntaxHighlighter import RSLHighlighter
 from RRPA.Modules.Core.Exceptions.Exceptions import STDRedConnectionStopException
+from RRPA.Modules.Core.SDK.APICollector.APICollector import STDAPICollector
+from RRPA.AppData.Configs.CompilerConfig import API_PATH
 
 
 class ClientApp:
@@ -33,7 +35,9 @@ class ClientApp:
                                   Qt.WindowMinimizeButtonHint | Qt.MSWindowsFixedSizeDialogHint)
 
     def __init_slots_and_signals(self):
-        self._highlighter = RSLHighlighter(self._client.scenarioEditor.document())
+        api_funcs = STDAPICollector(API_PATH)
+        api_funcs.collect_all_api_methods()
+        self._highlighter = RSLHighlighter(self._client.scenarioEditor.document(), api_funcs.get_all_api_methods())
         self._client.startScenarionButton.clicked.connect(self.__execute_scenario)
         self._client.openScenarioMenuOption.triggered.connect(self.__open_scenario_from_file)
 
