@@ -1,5 +1,5 @@
 from PySide2.QtCore import QRegExp
-from PySide2.QtGui import QColor, QTextCharFormat, QFont, QSyntaxHighlighter
+from PySide2.QtGui import QColor, QTextCharFormat, QFont, QSyntaxHighlighter, QBrush
 
 
 def formatting(color, style='', font_size=None, font_family=None):

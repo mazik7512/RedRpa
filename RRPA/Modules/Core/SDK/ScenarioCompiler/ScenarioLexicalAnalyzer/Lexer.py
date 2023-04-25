@@ -13,6 +13,14 @@ class STDRSLLexer(AbstractLexer):
         self._last_scenario_pos = 0
         self._errors = []
 
+    def _next_pos(self):
+        if self._last_scenario_pos < len(self._scenario):
+            self._last_scenario_pos += 1
+
+    def _next_char(self):
+        if self._last_scenario_pos < len(self._scenario):
+            return self._scenario[self._last_scenario_pos]
+
     def _prepare_scenario_text(self, data):
         if data:
             return data.strip()
@@ -52,6 +60,8 @@ class STDRSLLexer(AbstractLexer):
             return None
 
     def __specify_token_type(self, token_value: str):
+        if not token_value or len(token_value) == 0:
+            return None
         _type = STDLexerTokens.UNDEFINED_TOKEN
         if token_value in STDLexerTokens.TOKENS:
             _type = STDLexerTokens.TOKENS[token_value]
@@ -65,22 +75,20 @@ class STDRSLLexer(AbstractLexer):
     def __get_token_value(self):
         buffer = ""
         cur_char = ""
-        commentary = ""
         while self._last_scenario_pos < len(self._scenario):
-            cur_char = self._scenario[self._last_scenario_pos]
+            cur_char = self._next_char()
             if cur_char in STDLexerTokens.COMMENTARY_SYMBOLS:
                 while self._last_scenario_pos < len(self._scenario) and cur_char not in STDLexerTokens.NEW_LINE_SYMBOLS:
-                    commentary += cur_char
-                    self._last_scenario_pos += 1
-                    cur_char = self._scenario[self._last_scenario_pos]
-                self._last_scenario_pos += 1
+                    self._next_pos()
+                    cur_char = self._next_char()
+                self._next_pos()
             elif cur_char not in STDLexerTokens.TERMINATE_SYMBOLS + STDLexerTokens.WHITESPACE_SYMBOLS:
                 buffer += cur_char
-                self._last_scenario_pos += 1
+                self._next_pos()
             else:
                 break
         if len(buffer) == 0:
-            self._last_scenario_pos += 1
+            self._next_pos()
             return cur_char
         else:
             return buffer
@@ -95,7 +103,9 @@ class STDRSLLexer(AbstractLexer):
     def get_token_list(self):
         tokens = []
         while self._last_scenario_pos < len(self._scenario):
-            tokens.append(self.get_next_token())
+            token = self.get_next_token()
+            if token:
+                tokens.append(token)
         work_res = STDWorkResult()
         work_res.push(tokens)
         work_res.push_errors(self._errors)

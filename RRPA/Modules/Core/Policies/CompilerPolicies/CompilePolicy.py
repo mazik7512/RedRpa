@@ -24,7 +24,7 @@ class STDRSLCompilePolicy(AbstractCompilePolicy):
         self._api_collector = compiler_buffer['api_collector']
 
     def _compile(self, scenario):
-        tokens = self._lex_analyze(scenario)
+        tokens = self._lex_analyze(scenario + '\n')
         ast = self._syntax_analyze(tokens)
         self._collect_apis()
         import_data, init_data = self._name_bounding(ast)
