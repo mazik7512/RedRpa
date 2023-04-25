@@ -1,6 +1,7 @@
 from RRPA.Modules.Core.Abstract.Network.Managers.NetworkManager import AbstractNetworkManager
 from RRPA.Modules.Core.Abstract.Network.Managers.Types import WORK_TYPES
 from RRPA.Modules.Core.Abstract.Network.Managers.Manager import AbstractManager
+from RRPA.Modules.Core.Exceptions.Exceptions import STDRedConnectionStopException
 from RRPA.Modules.Core.Network.Protocols.RDT.v1.sv0.RDTProtocol import STDRDTReceiveProtocol
 from RRPA.Modules.Core.Network.Protocols.RDT.v1.sv0.ExtendedRDTProtocol import STDRDTExecutionSendProtocol
 from RRPA.Modules.Core.Network.Protocols.RDT.v1.sv0.ExtendedRDTProtocol import STDRDTEndSendProtocol
@@ -66,15 +67,14 @@ class STDNetworkManager(AbstractNetworkManager):
         while True:
             op_type, data = self.__serve()
             if op_type == STDOperationsCodes.EXECUTE:
-                return op_type, data
+                return data
             elif op_type == STDOperationsCodes.REFRESH_SESSION_KEY:
                 self._manager.refresh_session_key()
             elif op_type == STDOperationsCodes.END:
                 self._manager.reset_connection()
-                return op_type, None
+                raise STDRedConnectionStopException()
             elif op_type == STDOperationsCodes.INFO_DATA:
                 self._info.append(data)
-                return op_type, data
 
     def _specify_protocol(self, decrypted_data):
         return STDRDTReceiveProtocol(decrypted_data)

@@ -91,3 +91,9 @@ class STDClientInitializingException(STDException):
 class STDOSManagerException(STDException):
     def __init__(self, exception_data, *args):
         super().__init__(exception_data, args)
+
+
+class STDRedConnectionStopException(STDException):
+
+    def __init__(self):
+        super().__init__("Red-соединение принудительно сброшено")

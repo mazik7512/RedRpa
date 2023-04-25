@@ -3,6 +3,7 @@ from inspect import getsourcefile
 from os.path import abspath
 
 from RRPA.Modules.Core.Crypto.StribogHasher import STDHasher
+from RRPA.Modules.Core.Logger.Logger import Logger
 from RRPA.Modules.Core.SDK.ScenarioCompiler.CompilerGenerator import STDRSLCompilerGenerator
 from RRPA.Modules.Windows.Manager.OSTools import STDOSTools
 from RRPA.Modules.Core.Network.Managers.ManagerGenerator import STDManagerGenerator
@@ -16,6 +17,7 @@ class ClientModel:
         self.__init_network_manager(host, port)
         self.__init_compiler()
         self.__init_hasher()
+        self.__init_rvm()
 
     def __init_compiler(self):
         self._compiler = STDRSLCompilerGenerator.generate_compiler(self._os_tools)
@@ -33,7 +35,7 @@ class ClientModel:
         self._hasher = STDHasher(32)
 
     def compile(self, scenario):
-        self._compiler.compile(scenario)
+        return self._compiler.compile(scenario)
 
     def serve_for_commands(self):
         return self._net_manager.serve()
@@ -57,8 +59,11 @@ class ClientModel:
 
     def load_scenario(self, scenario_path):
         scenario_data = ""
-        with open(scenario_path, "r") as scenario:
-            scenario_data = scenario.read()
+        try:
+            with open(scenario_path, "r") as scenario:
+                scenario_data = scenario.read()
+        except TypeError:
+            Logger.error("Ошибка при открытии сценария")
         return scenario_data
 
     def hash_app(self, client_path):
@@ -86,3 +91,7 @@ class ClientModel:
             if file.endswith(".py"):
                 app_files.append(path + "\\" + file)
         return app_files
+
+    def compile_and_execute(self, scenario):
+        rex = self.compile(scenario)
+        self.execute_scenario(rex)
