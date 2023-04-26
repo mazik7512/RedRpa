@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+from threading import Thread
 from PySide2.QtCore import QEasingCurve
 from PySide2.QtWidgets import QFileDialog
 import PySide2.QtWidgets
@@ -13,6 +14,12 @@ from Apps.ClientApp.SyntaxHighlighter import RSLHighlighter
 from RRPA.Modules.Core.Exceptions.Exceptions import STDRedConnectionStopException, STDException
 from RRPA.Modules.Core.SDK.APICollector.APICollector import STDAPICollector
 from RRPA.AppData.Configs.CompilerConfig import API_PATH
+
+
+CLIENT_STATES = ['Неактивно', 'Выполнение...', 'Ожидание...']
+CLIENT_STATES_COLOR_SCHEMES = ["#currentStatus{\nbackground-color: red;\n color: white;\n }",
+                               "#currentStatus{\nbackground-color: forestgreen;\n color: white;\n }",
+                               "#currentStatus{\nbackground-color: navy;\n color: white;\n }"]
 
 
 class ClientApp:
@@ -31,6 +38,8 @@ class ClientApp:
         self.__init_animations()
 
         self.__init_network()
+
+        self.__init_threads()
 
     def __init_qt(self):
         dirname = os.path.dirname(PySide2.__file__)
@@ -53,6 +62,10 @@ class ClientApp:
         self._client.infoPanelButton.clicked.connect(self.__slide_info_panel)
         self._client.refreshHostsButton.clicked.connect(self.__update_network_config)
         self._client.refreshPortButton.clicked.connect(self.__update_network_config)
+        self._client.saveScenarioMenuOption.triggered.connect(self.__save_scenario_to_file)
+        self._client.exitMenuOption.triggered.connect(self.__exit)
+        self._client.startListenButton.clicked.connect(self.__start_serve)
+        self._client.stopListenButton.clicked.connect(self.__stop_serving)
 
     def __init_editor(self):
         api_funcs = STDAPICollector(API_PATH)
@@ -90,6 +103,12 @@ class ClientApp:
         self._port = 5551
         self.__update_network_config()
 
+    def __init_threads(self):
+        self.__init_serve_thread()
+
+    def __init_serve_thread(self):
+        self._serving_thread = Thread(target=self.__serve_wrapper)
+
     def __slide_info_panel_start(self):
         self._slide_info_animation.setStartValue(self._start_panel_width)
         self._slide_info_animation.setEndValue(self._end_panel_width)
@@ -119,6 +138,7 @@ class ClientApp:
         return filepath
 
     def __execute_scenario(self):
+        self.__set_client_current_state(1)
         self._client.infoTabsWidget.setTabText(0, "Ошибки")
         self.__inactive_app()
         try:
@@ -127,6 +147,7 @@ class ClientApp:
             self.__add_errors_to_info_panel(exception.get_exception_data())
         finally:
             self.__active_app()
+        self.__set_client_current_state(0)
 
     def __open_scenario_from_file(self, s):
         file = self.__open_file()
@@ -135,6 +156,12 @@ class ClientApp:
         self._client.scenarioEditor.setPlainText(text)
 
     def __start_serve(self):
+        self.__set_client_current_state(2)
+        self.__init_serve_thread()
+        self._serving_thread.start()
+
+    def __serve_wrapper(self):
+        self._model.start_client()
         while True:
             data = ""
             try:
@@ -149,7 +176,9 @@ class ClientApp:
         self.__execute_scenario()
 
     def __stop_serving(self):
-        self._model.end_client()
+        #self._model.end_client()
+        self._serving_thread.join(1)
+        self.__set_client_current_state(0)
 
     def __init_windows_list(self):
         self.__refresh_windows_list()
@@ -207,3 +236,16 @@ class ClientApp:
         self._host = self._client.hostComboBox.currentText()
         self._port = int(self._client.portNumberSpinBox.text())
         self._model.refresh_client_data(self._host, self._port)
+
+    def __save_scenario_to_file(self):
+        save_file = QFileDialog.getSaveFileName(self._form, "Сохранить сценарий",
+                                               os.getcwd(), "RSL-сценарий (*.rsl *.scenario *.txt)")
+        filename, _ = save_file
+        self._model.save_to_file(filename, self._client.scenarioEditor.toPlainText())
+
+    def __exit(self):
+        sys.exit(0)
+
+    def __set_client_current_state(self, index):
+        self._client.currentStatus.setText(CLIENT_STATES[index])
+        self._client.currentStatus.setStyleSheet(CLIENT_STATES_COLOR_SCHEMES[index])

@@ -101,3 +101,7 @@ class ClientModel:
     def get_window_name(self, hwnd):
         win_name = self._os_tools.get_window_name(hwnd)
         return win_name
+
+    def save_to_file(self, filename, data):
+        with open(filename, "w+") as save_file:
+            save_file.write(data)
