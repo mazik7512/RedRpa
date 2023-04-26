@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod, abstractproperty
 
 
-class TemplateMatcher(ABC):
+class AbstractTemplateMatcher(ABC):
 
     @abstractmethod
     def find_templates(self, image) -> list:

@@ -1,3 +1,4 @@
+from RRPA.Modules.CVObjectScanning.ObjectScannerGenerator import STDCVObjectScannerGenerator
 from RRPA.Modules.Core.Abstract.OS.Manager.OSTools import AbstractOSTools
 from RRPA.Modules.Windows.Manager.Window import STDWindow
 from RRPA.Modules.Windows.Manager.WindowManager import STDWindowManager
@@ -5,6 +6,8 @@ from win32 import win32gui
 
 
 class STDOSTools(AbstractOSTools):
+
+    scanners = {'CV': STDCVObjectScannerGenerator.generate_cv_object_scanner()}
 
     @staticmethod
     def create_window(win_desc):

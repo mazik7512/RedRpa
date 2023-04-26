@@ -3,11 +3,10 @@ from RRPA.Modules.Core.Abstract.OS.Manager.Window import AbstractWindow
 
 
 class AbstractWindowManager(ABC):
-    def __init__(self, window: AbstractWindow, cv_object_scanner=None, os_object_scanner=None):
+    def __init__(self, window: AbstractWindow, object_scanners):
         self.objects = []
         self.window = window
-        self.cv_object_scanner = cv_object_scanner
-        self.os_object_scanner = os_object_scanner
+        self._scanners = object_scanners
 
     @abstractmethod
     def cv_scan_for_objects(self):

@@ -9,8 +9,8 @@ import cv2
 
 class STDWindowManager(AbstractWindowManager):
 
-    def __init__(self, window: AbstractWindow, object_scanner=None, os_object_scanner=None):
-        super().__init__(window, object_scanner, os_object_scanner)
+    def __init__(self, window: AbstractWindow, object_scanners: dict = {}):
+        super().__init__(window, object_scanners)
 
     @staticmethod
     def decode_image(bitmap):
@@ -20,18 +20,20 @@ class STDWindowManager(AbstractWindowManager):
 
     def _add_objects(self, objects):
         for obj in objects:
-            if obj._type == 0:
+            if obj.get_object_type == 0:
                 self.objects.append(STDButton(self.window.get_window(), obj))
-            elif obj._type == 1:
+            elif obj.get_object_type == 1:
                 self.objects.append(STDInputField(self.window.get_window(), obj))
 
     def os_scan_for_object(self):
-        _objects = self.os_object_scanner.find_objects(self.window)
+        os_scanner = self._object_scanners['OS']
+        _objects = os_scanner.find_objects(self.window)
         self._add_objects(_objects)
 
     def cv_scan_for_objects(self):
+        cv_scanner = self._object_scanners['CV']
         window_screen = STDWindowManager.decode_image(self.window.get_window_bitmap())
-        _objects = self.cv_object_scanner.find_objects(window_screen)
+        _objects = cv_scanner.find_objects(window_screen)
         self._add_objects(_objects)
 
     def open(self):

@@ -1,9 +1,9 @@
 import cv2
-from RRPA.Modules.Core.Abstract.ObjectDetection.TemplateMatcher import TemplateMatcher
+from RRPA.Modules.Core.Abstract.ObjectScanning.TemplateMatcher import AbstractTemplateMatcher
 from RRPA.Modules.Core.General.WindowObjectsDescriptors.TemplateDescriptor import STDTemplateDescriptor
 
 
-class OpenCVTemplateMatcher(TemplateMatcher):
+class STDCVTemplateMatcher(AbstractTemplateMatcher):
 
     def find_templates(self, image) -> list:
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -14,13 +14,10 @@ class OpenCVTemplateMatcher(TemplateMatcher):
         dst = cv2.erode(dilation, rect_kernel, iterations=3)
         contours, hierarchy = cv2.findContours(dst, cv2.RETR_EXTERNAL,
                                                cv2.CHAIN_APPROX_NONE)
-        im2 = image.copy()
         templates = []
         for cnt in contours:
             x, y, w, h = cv2.boundingRect(cnt)
             temp = [x, x + w, y, y + h]
             obj = STDTemplateDescriptor(temp)
             templates.append(obj)
-            #cropped = im2[y:y + h, x:x + w]
-            #templates.append(cropped)
         return templates
