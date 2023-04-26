@@ -23,7 +23,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(977, 662)
+        MainWindow.resize(1051, 662)
         icon = QIcon()
         icon.addFile(u":/TabIcons/icons/app-icon.png", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -53,6 +53,11 @@ class Ui_MainWindow(object):
         icon2 = QIcon()
         icon2.addFile(u":/TabIcons/icons/exit-icon.png", QSize(), QIcon.Normal, QIcon.Off)
         self.exitMenuOption.setIcon(icon2)
+        self.saveScenarioMenuOption = QAction(MainWindow)
+        self.saveScenarioMenuOption.setObjectName(u"saveScenarioMenuOption")
+        icon3 = QIcon()
+        icon3.addFile(u":/TabIcons/icons/save-file-icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.saveScenarioMenuOption.setIcon(icon3)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayoutWidget = QWidget(self.centralwidget)
@@ -94,16 +99,6 @@ class Ui_MainWindow(object):
         self.windowsListLayout = QGridLayout(self.gridLayoutWidget_3)
         self.windowsListLayout.setObjectName(u"windowsListLayout")
         self.windowsListLayout.setContentsMargins(0, 0, 0, 0)
-        self.windowsListView = QTreeView(self.gridLayoutWidget_3)
-        self.windowsListView.setObjectName(u"windowsListView")
-        self.windowsListView.setStyleSheet(u"background-color: white;\n"
-"color: black;")
-        self.windowsListView.setFrameShape(QFrame.StyledPanel)
-        self.windowsListView.setFrameShadow(QFrame.Sunken)
-        self.windowsListView.setAnimated(True)
-
-        self.windowsListLayout.addWidget(self.windowsListView, 0, 0, 1, 1)
-
         self.refreshWindowsListButton = QPushButton(self.gridLayoutWidget_3)
         self.refreshWindowsListButton.setObjectName(u"refreshWindowsListButton")
         self.refreshWindowsListButton.setCursor(QCursor(Qt.PointingHandCursor))
@@ -116,11 +111,21 @@ class Ui_MainWindow(object):
 "	background-color: white;\n"
 "	color: black;\n"
 "}")
-        icon3 = QIcon()
-        icon3.addFile(u":/TabIcons/icons/refresh-icon.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.refreshWindowsListButton.setIcon(icon3)
+        icon4 = QIcon()
+        icon4.addFile(u":/TabIcons/icons/refresh-icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.refreshWindowsListButton.setIcon(icon4)
 
         self.windowsListLayout.addWidget(self.refreshWindowsListButton, 1, 0, 1, 1)
+
+        self.windowsListView = QTreeWidget(self.gridLayoutWidget_3)
+        __qtreewidgetitem = QTreeWidgetItem()
+        __qtreewidgetitem.setText(0, u"1")
+        self.windowsListView.setHeaderItem(__qtreewidgetitem)
+        self.windowsListView.setObjectName(u"windowsListView")
+        self.windowsListView.setStyleSheet(u"background-color: white;\n"
+"color: black;")
+
+        self.windowsListLayout.addWidget(self.windowsListView, 0, 0, 1, 1)
 
 
         self.horizontalLayout.addWidget(self.windowsListGroupBox)
@@ -181,9 +186,9 @@ class Ui_MainWindow(object):
         self.startListenButton.setSizePolicy(sizePolicy)
         self.startListenButton.setMinimumSize(QSize(150, 30))
         self.startListenButton.setCursor(QCursor(Qt.PointingHandCursor))
-        icon4 = QIcon()
-        icon4.addFile(u":/TabIcons/icons/start-listen-icon.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.startListenButton.setIcon(icon4)
+        icon5 = QIcon()
+        icon5.addFile(u":/TabIcons/icons/start-listen-icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.startListenButton.setIcon(icon5)
 
         self.horizontalLayout_3.addWidget(self.startListenButton)
 
@@ -193,9 +198,9 @@ class Ui_MainWindow(object):
         self.stopListenButton.setSizePolicy(sizePolicy)
         self.stopListenButton.setMinimumSize(QSize(100, 30))
         self.stopListenButton.setCursor(QCursor(Qt.PointingHandCursor))
-        icon5 = QIcon()
-        icon5.addFile(u":/TabIcons/icons/stop-listen-icon.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.stopListenButton.setIcon(icon5)
+        icon6 = QIcon()
+        icon6.addFile(u":/TabIcons/icons/stop-listen-icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.stopListenButton.setIcon(icon6)
 
         self.horizontalLayout_3.addWidget(self.stopListenButton)
 
@@ -247,9 +252,9 @@ class Ui_MainWindow(object):
         self.startScenarionButton.setSizePolicy(sizePolicy)
         self.startScenarionButton.setMinimumSize(QSize(150, 30))
         self.startScenarionButton.setCursor(QCursor(Qt.PointingHandCursor))
-        icon6 = QIcon()
-        icon6.addFile(u":/TabIcons/icons/compile-icon.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.startScenarionButton.setIcon(icon6)
+        icon7 = QIcon()
+        icon7.addFile(u":/TabIcons/icons/compile-icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.startScenarionButton.setIcon(icon7)
 
         self.horizontalLayout_3.addWidget(self.startScenarionButton)
 
@@ -259,9 +264,9 @@ class Ui_MainWindow(object):
         self.scenarioConstructorButton.setSizePolicy(sizePolicy)
         self.scenarioConstructorButton.setMinimumSize(QSize(180, 30))
         self.scenarioConstructorButton.setCursor(QCursor(Qt.PointingHandCursor))
-        icon7 = QIcon()
-        icon7.addFile(u":/TabIcons/icons/scenario-constructor-icon.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.scenarioConstructorButton.setIcon(icon7)
+        icon8 = QIcon()
+        icon8.addFile(u":/TabIcons/icons/scenario-constructor-icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.scenarioConstructorButton.setIcon(icon8)
         self.scenarioConstructorButton.setCheckable(False)
 
         self.horizontalLayout_3.addWidget(self.scenarioConstructorButton)
@@ -269,9 +274,9 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_2.addWidget(self.optionsGroupBox)
 
-        icon8 = QIcon()
-        icon8.addFile(u":/TabIcons/icons/main-tab-icon.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.MainTabWidget.addTab(self.MainTab, icon8, "")
+        icon9 = QIcon()
+        icon9.addFile(u":/TabIcons/icons/main-tab-icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.MainTabWidget.addTab(self.MainTab, icon9, "")
         self.SettingsTab = QWidget()
         self.SettingsTab.setObjectName(u"SettingsTab")
         self.gridLayoutWidget_5 = QWidget(self.SettingsTab)
@@ -379,7 +384,7 @@ class Ui_MainWindow(object):
 "	background-color: black;\n"
 "	color: white;\n"
 "}")
-        self.refreshHostsButton.setIcon(icon3)
+        self.refreshHostsButton.setIcon(icon4)
 
         self.gridLayout.addWidget(self.refreshHostsButton, 1, 2, 1, 1)
 
@@ -396,7 +401,7 @@ class Ui_MainWindow(object):
 "	background-color: black;\n"
 "	color: white;\n"
 "}")
-        self.refreshPortButton.setIcon(icon3)
+        self.refreshPortButton.setIcon(icon4)
 
         self.gridLayout.addWidget(self.refreshPortButton, 0, 2, 1, 1)
 
@@ -408,16 +413,16 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.setStretch(0, 1)
         self.verticalLayout.setStretch(1, 2)
-        icon9 = QIcon()
-        icon9.addFile(u":/TabIcons/icons/settings-tab-icon.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.MainTabWidget.addTab(self.SettingsTab, icon9, "")
+        icon10 = QIcon()
+        icon10.addFile(u":/TabIcons/icons/settings-tab-icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.MainTabWidget.addTab(self.SettingsTab, icon10, "")
 
         self.MainLayout.addWidget(self.MainTabWidget, 0, 0, 1, 1)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 977, 22))
+        self.menubar.setGeometry(QRect(0, 0, 1051, 22))
         self.menu = QMenu(self.menubar)
         self.menu.setObjectName(u"menu")
         self.menu.setTearOffEnabled(False)
@@ -429,15 +434,84 @@ class Ui_MainWindow(object):
         self.statusbar.setBaseSize(QSize(500, 20))
         self.statusbar.setSizeGripEnabled(False)
         MainWindow.setStatusBar(self.statusbar)
+        self.infoPanel = QDockWidget(MainWindow)
+        self.infoPanel.setObjectName(u"infoPanel")
+        self.infoPanel.setMinimumSize(QSize(82, 82))
+        self.infoPanel.setFeatures(QDockWidget.DockWidgetFloatable|QDockWidget.DockWidgetMovable)
+        self.infoPanel.setAllowedAreas(Qt.LeftDockWidgetArea|Qt.RightDockWidgetArea)
+        self.dockWidgetContents = QWidget()
+        self.dockWidgetContents.setObjectName(u"dockWidgetContents")
+        self.verticalLayoutWidget_2 = QWidget(self.dockWidgetContents)
+        self.verticalLayoutWidget_2.setObjectName(u"verticalLayoutWidget_2")
+        self.verticalLayoutWidget_2.setGeometry(QRect(0, 0, 241, 591))
+        self.verticalLayout_3 = QVBoxLayout(self.verticalLayoutWidget_2)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.infoPanelButton = QPushButton(self.verticalLayoutWidget_2)
+        self.infoPanelButton.setObjectName(u"infoPanelButton")
+        self.infoPanelButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.infoPanelButton.setMaximumSize(82, 82)
+        self.infoPanelButton.setStyleSheet(u"#infoPanelButton{\n"
+"	background-color: white;\n"
+"	border: 1px solid black;\n"
+"	color: black;\n"
+"}\n"
+"#infoPanelButton:hover{\n"
+"	background-color: aliceblue;\n"
+"}")
+        icon11 = QIcon()
+        icon11.addFile(u":/TabIcons/icons/show-hide-icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.infoPanelButton.setIcon(icon11)
+
+        self.verticalLayout_3.addWidget(self.infoPanelButton)
+
+        self.infoTabsWidget = QTabWidget(self.verticalLayoutWidget_2)
+        self.infoTabsWidget.setObjectName(u"infoTabsWidget")
+        self.infoTabsWidget.setTabPosition(QTabWidget.North)
+        self.infoErrorsTab = QWidget()
+        self.infoErrorsTab.setObjectName(u"infoErrorsTab")
+        self.verticalLayoutWidget_3 = QWidget(self.infoErrorsTab)
+        self.verticalLayoutWidget_3.setObjectName(u"verticalLayoutWidget_3")
+        self.verticalLayoutWidget_3.setGeometry(QRect(0, 0, 231, 531))
+        self.verticalLayout_4 = QVBoxLayout(self.verticalLayoutWidget_3)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.errorsView = QListWidget(self.verticalLayoutWidget_3)
+        self.errorsView.setObjectName(u"errorsView")
+
+        self.verticalLayout_4.addWidget(self.errorsView)
+
+        self.infoTabsWidget.addTab(self.infoErrorsTab, "")
+        self.infoInfoTab = QWidget()
+        self.infoInfoTab.setObjectName(u"infoInfoTab")
+        self.verticalLayoutWidget_4 = QWidget(self.infoInfoTab)
+        self.verticalLayoutWidget_4.setObjectName(u"verticalLayoutWidget_4")
+        self.verticalLayoutWidget_4.setGeometry(QRect(0, 0, 231, 531))
+        self.verticalLayout_5 = QVBoxLayout(self.verticalLayoutWidget_4)
+        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.infoView = QListWidget(self.verticalLayoutWidget_4)
+        self.infoView.setObjectName(u"infoView")
+
+        self.verticalLayout_5.addWidget(self.infoView)
+
+        self.infoTabsWidget.addTab(self.infoInfoTab, "")
+
+        self.verticalLayout_3.addWidget(self.infoTabsWidget)
+
+        self.infoPanel.setWidget(self.dockWidgetContents)
+        MainWindow.addDockWidget(Qt.RightDockWidgetArea, self.infoPanel)
 
         self.menubar.addAction(self.menu.menuAction())
         self.menu.addAction(self.openScenarioMenuOption)
+        self.menu.addAction(self.saveScenarioMenuOption)
         self.menu.addSeparator()
         self.menu.addAction(self.exitMenuOption)
 
         self.retranslateUi(MainWindow)
 
         self.MainTabWidget.setCurrentIndex(0)
+        self.infoTabsWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -447,6 +521,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"RedRPA-клиент", None))
         self.openScenarioMenuOption.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0442\u043a\u0440\u044b\u0442\u044c \u0441\u0446\u0435\u043d\u0430\u0440\u0438\u0439", None))
         self.exitMenuOption.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0445\u043e\u0434", None))
+        self.saveScenarioMenuOption.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u0441\u0446\u0435\u043d\u0430\u0440\u0438\u0439", None))
         self.windowsListGroupBox.setTitle(QCoreApplication.translate("MainWindow", u"\u0421\u043f\u0438\u0441\u043e\u043a \u043e\u043a\u043e\u043d", None))
         self.refreshWindowsListButton.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0431\u043d\u043e\u0432\u0438\u0442\u044c \u0441\u043f\u0438\u0441\u043e\u043a \u043e\u043a\u043e\u043d", None))
         self.scenarioGroupBox.setTitle(QCoreApplication.translate("MainWindow", u"\u0421\u0446\u0435\u043d\u0430\u0440\u0438\u0439", None))
@@ -481,5 +556,12 @@ class Ui_MainWindow(object):
         self.refreshPortButton.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0431\u043d\u043e\u0432\u0438\u0442\u044c", None))
         self.MainTabWidget.setTabText(self.MainTabWidget.indexOf(self.SettingsTab), QCoreApplication.translate("MainWindow", u"\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438", None))
         self.menu.setTitle(QCoreApplication.translate("MainWindow", u"\u0424\u0430\u0439\u043b", None))
+#if QT_CONFIG(tooltip)
+        self.infoPanel.setToolTip(QCoreApplication.translate("MainWindow", u"\u0418\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u043e\u043d\u043d\u0430\u044f \u043f\u0430\u043d\u0435\u043b\u044c", None))
+#endif // QT_CONFIG(tooltip)
+        self.infoPanel.setWindowTitle(QCoreApplication.translate("MainWindow", u"\u0418\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u043e\u043d\u043d\u0430\u044f \u043f\u0430\u043d\u0435\u043b\u044c", None))
+        self.infoPanelButton.setText(QCoreApplication.translate("MainWindow", u"Показать", None))
+        self.infoTabsWidget.setTabText(self.infoTabsWidget.indexOf(self.infoErrorsTab), QCoreApplication.translate("MainWindow", u"\u041e\u0448\u0438\u0431\u043a\u0438", None))
+        self.infoTabsWidget.setTabText(self.infoTabsWidget.indexOf(self.infoInfoTab), QCoreApplication.translate("MainWindow", u"\u0418\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u044f", None))
     # retranslateUi
 

@@ -95,3 +95,11 @@ class ClientModel:
     def compile_and_execute(self, scenario):
         rex = self.compile(scenario)
         self.execute_scenario(rex)
+
+    def get_windows_list(self):
+        windows_list = self._os_tools.get_windows_list()
+        return windows_list
+
+    def get_window_name(self, hwnd):
+        win_name = self._os_tools.get_window_name(hwnd)
+        return win_name

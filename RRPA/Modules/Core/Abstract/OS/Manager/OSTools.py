@@ -34,3 +34,8 @@ class AbstractOSTools(ABC):
     @abstractmethod
     def get_os_tools_import_path():
         pass
+
+    @staticmethod
+    @abstractmethod
+    def get_window_name(win_desc):
+        pass

@@ -30,6 +30,10 @@ class STDOSTools(AbstractOSTools):
         return win32gui.FindWindow(None, win_name)
 
     @staticmethod
+    def get_window_name(win_desc):
+        return win32gui.GetWindowText(win_desc)
+
+    @staticmethod
     def get_os_tools_name():
         return STDOSTools.__name__
 
