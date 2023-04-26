@@ -147,7 +147,7 @@ class ClientApp:
             self.__add_errors_to_info_panel(exception.get_exception_data())
         finally:
             self.__active_app()
-        self.__set_client_current_state(0)
+            self.__set_client_current_state(0)
 
     def __open_scenario_from_file(self, s):
         file = self.__open_file()
