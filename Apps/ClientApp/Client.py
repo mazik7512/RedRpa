@@ -30,6 +30,8 @@ class ClientApp:
 
         self.__init_animations()
 
+        self.__init_network()
+
     def __init_qt(self):
         dirname = os.path.dirname(PySide2.__file__)
         plugin_path = os.path.join(dirname, 'plugins', 'platforms')
@@ -37,6 +39,7 @@ class ClientApp:
 
     def __init_qt_app(self):
         self._app = PySide2.QtWidgets.QApplication(sys.argv)
+        self._app.setStyle('Fusion')
         self._form = PySide2.QtWidgets.QMainWindow()
         self._client = Ui_MainWindow(self._form)
         self._form.setWindowFlags(Qt.CustomizeWindowHint | Qt.WindowCloseButtonHint |
@@ -48,6 +51,8 @@ class ClientApp:
         self._client.refreshWindowsListButton.clicked.connect(self.__refresh_windows_list)
         self._client.windowsListView.itemPressed.connect(self.__window_click)
         self._client.infoPanelButton.clicked.connect(self.__slide_info_panel)
+        self._client.refreshHostsButton.clicked.connect(self.__update_network_config)
+        self._client.refreshPortButton.clicked.connect(self.__update_network_config)
 
     def __init_editor(self):
         api_funcs = STDAPICollector(API_PATH)
@@ -65,25 +70,46 @@ class ClientApp:
 
     def __init_animations(self):
         self._slider = False
-        self._start_width = 82
-        self._end_width = 250
+
+        self._start_panel_width = 82
+        self._end_panel_width = 250
+
+        self._start_button_width = 82
+        self._end_button_width = 240
+
         self._slide_info_animation = QPropertyAnimation(self._client.infoPanel, QByteArray(b"minimumWidth"))
         self._slide_info_animation.setDuration(250)
         self._slide_info_animation.setEasingCurve(QEasingCurve.InOutQuad)
 
+        self._slide_button_animation = QPropertyAnimation(self._client.infoPanelButton, QByteArray(b"maximumWidth"))
+        self._slide_button_animation.setDuration(250)
+        self._slide_button_animation.setEasingCurve(QEasingCurve.InOutQuad)
+
+    def __init_network(self):
+        self._host = "127.0.0.1"
+        self._port = 5551
+        self.__update_network_config()
+
     def __slide_info_panel_start(self):
-        self._slide_info_animation.setStartValue(self._start_width)
-        self._slide_info_animation.setEndValue(self._end_width)
-        temp = self._start_width
-        self._start_width = self._end_width
-        self._end_width = temp
+        self._slide_info_animation.setStartValue(self._start_panel_width)
+        self._slide_info_animation.setEndValue(self._end_panel_width)
+        temp = self._start_panel_width
+        self._start_panel_width = self._end_panel_width
+        self._end_panel_width = temp
         self._slide_info_animation.start()
 
+    def __slide_info_button_start(self):
+        self._slide_button_animation.setStartValue(self._start_button_width)
+        self._slide_button_animation.setEndValue(self._end_button_width)
+        temp = self._start_button_width
+        self._start_button_width = self._end_button_width
+        self._end_button_width = temp
+        self._slide_button_animation.start()
 
     def start_app(self):
         self._form.show()
         ret = self._app.exec_()
-        #sys.exit(ret)
+        # sys.exit(ret)
 
     def __open_file(self):
         filepath = QFileDialog.getOpenFileName(None,
@@ -93,11 +119,12 @@ class ClientApp:
         return filepath
 
     def __execute_scenario(self):
+        self._client.infoTabsWidget.setTabText(0, "Ошибки")
         self.__inactive_app()
         try:
             self._model.compile_and_execute(self._client.scenarioEditor.toPlainText())
         except STDException as exception:
-            print(exception.get_exception_data())
+            self.__add_errors_to_info_panel(exception.get_exception_data())
         finally:
             self.__active_app()
 
@@ -150,7 +177,8 @@ class ClientApp:
 
     def __window_click(self):
         selected_items = self._client.windowsListView.selectedItems()
-        print("selected items are ", [item.text(0) for item in selected_items])
+        text_to_add = "CV_scan(\"{}\");\n".format(selected_items[0].text(0))
+        self._client.scenarioEditor.setPlainText(text_to_add + self._client.scenarioEditor.toPlainText())
 
     def __active_app(self):
         self._form.window().setWindowOpacity(1.0)
@@ -163,10 +191,19 @@ class ClientApp:
     def __slide_info_panel(self):
         if self._slider:
             self._client.infoPanelButton.setText("Показать")
-            self._client.infoPanelButton.setMaximumSize(80, 82)
             self._slider = False
         else:
             self._client.infoPanelButton.setText("Скрыть")
-            self._client.infoPanelButton.setMaximumSize(240, 82)
             self._slider = True
         self.__slide_info_panel_start()
+        self.__slide_info_button_start()
+
+    def __add_errors_to_info_panel(self, errors):
+        self._client.errorsView.clear()
+        self._client.infoTabsWidget.setTabText(0, "({}) Ошибки".format(len(errors)))
+        self._client.errorsView.addItems(errors)
+
+    def __update_network_config(self):
+        self._host = self._client.hostComboBox.currentText()
+        self._port = int(self._client.portNumberSpinBox.text())
+        self._model.refresh_client_data(self._host, self._port)

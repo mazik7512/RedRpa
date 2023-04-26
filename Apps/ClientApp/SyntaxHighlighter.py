@@ -69,7 +69,6 @@ class RSLHighlighter(QSyntaxHighlighter):
         rules += [
             (r'\b[+-]?[0-9]+[lL]?\b', 0, STYLES['numbers']),
             (r'\b[a-z_A-Z0-9]+\b', 0, STYLES['object']),
-            (r'"[^"\\]*(\\.[^"\\]*)*"', 0, STYLES['string']),
             (r'\b(function)\b', 0, STYLES['function_definition']),
             (r'\b[+-]?[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\b', 0, STYLES['numbers']),
             (r'(#)(.)+', 0, STYLES['comment']),
@@ -87,6 +86,7 @@ class RSLHighlighter(QSyntaxHighlighter):
         rules += [(r'%s' % func, 0, STYLES['api_function_call'])
                   for func in self._api_funcs]
 
+        rules += [(r'"[^"\\]*(\\.[^"\\]*)*"', 0, STYLES['string'])]
         # Создайте QRegExp для каждого шаблона
         self.rules = [(QRegExp(pat), index, fmt)
                       for (pat, index, fmt) in rules]

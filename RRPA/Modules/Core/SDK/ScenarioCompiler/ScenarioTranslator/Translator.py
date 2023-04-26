@@ -10,6 +10,7 @@ class STDRSLTranslator(AbstractTranslator):
         self._errors = []
 
     def translate(self):
+        self._errors.clear()
         work_res = STDWorkResult()
         result = self._tree.get_head().deserialize()
         work_res.push(result)

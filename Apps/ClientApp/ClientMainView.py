@@ -7,7 +7,7 @@
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
-
+import PySide2.QtCore
 from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
@@ -119,7 +119,7 @@ class Ui_MainWindow(object):
 
         self.windowsListView = QTreeWidget(self.gridLayoutWidget_3)
         __qtreewidgetitem = QTreeWidgetItem()
-        __qtreewidgetitem.setText(0, u"1")
+        __qtreewidgetitem.setText(0, u"Заголовки окон")
         self.windowsListView.setHeaderItem(__qtreewidgetitem)
         self.windowsListView.setObjectName(u"windowsListView")
         self.windowsListView.setStyleSheet(u"background-color: white;\n"
@@ -350,6 +350,12 @@ class Ui_MainWindow(object):
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.hostComboBox = QComboBox(self.gridLayoutWidget_6)
         self.hostComboBox.setObjectName(u"hostComboBox")
+        host_icon = QIcon()
+        host_icon.addFile(u":/TabIcons/icons/net-icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.hostComboBox.addItem(host_icon, "127.0.0.1")
+        self.hostComboBox.setEditable(True)
+        self.hostComboBox.lineEdit().setAlignment(PySide2.QtCore.Qt.AlignCenter)
+        self.hostComboBox.lineEdit().setReadOnly(True)
 
         self.gridLayout.addWidget(self.hostComboBox, 1, 1, 1, 1)
 
@@ -478,6 +484,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.errorsView = QListWidget(self.verticalLayoutWidget_3)
         self.errorsView.setObjectName(u"errorsView")
+        self.errorsView.setStyleSheet("color: red; font-weight: bold; font-size: 12px;")
 
         self.verticalLayout_4.addWidget(self.errorsView)
 

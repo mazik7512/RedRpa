@@ -16,7 +16,7 @@ class STDOSTools(AbstractOSTools):
 
     @staticmethod
     def create_window_manager(window):
-        window_manager = STDWindowManager(window)
+        window_manager = STDWindowManager(window, STDOSTools.scanners)
         return window_manager
 
     @staticmethod

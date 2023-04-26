@@ -33,6 +33,7 @@ class STDRSLNameBounder(AbstractNameBounder):
         self._stdlib = apis
 
     def link_names(self):
+        self._errors.clear()
         api_imports, api_inits = self._link_funcs()
         work_res = STDWorkResult()
         work_res.push((api_imports, api_inits))

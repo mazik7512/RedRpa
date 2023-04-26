@@ -60,6 +60,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
             self._token_value = self._tokens[self._cur_token_pos - 1].get_token_value()
 
     def generate_ast(self):
+        self._errors.clear()
         ast = self._generate_ast()
         self._ast = STDRSLSyntaxTree(ast)
         work_res = STDWorkResult()

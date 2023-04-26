@@ -26,12 +26,12 @@ class STDWindowManager(AbstractWindowManager):
                 self.objects.append(STDInputField(self.window.get_window(), obj))
 
     def os_scan_for_object(self):
-        os_scanner = self._object_scanners['OS']
+        os_scanner = self._scanners['OS']
         _objects = os_scanner.find_objects(self.window)
         self._add_objects(_objects)
 
     def cv_scan_for_objects(self):
-        cv_scanner = self._object_scanners['CV']
+        cv_scanner = self._scanners['CV']
         window_screen = STDWindowManager.decode_image(self.window.get_window_bitmap())
         _objects = cv_scanner.find_objects(window_screen)
         self._add_objects(_objects)

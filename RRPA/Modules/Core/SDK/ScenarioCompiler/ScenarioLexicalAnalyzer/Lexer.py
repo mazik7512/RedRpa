@@ -77,12 +77,15 @@ class STDRSLLexer(AbstractLexer):
         cur_char = ""
         while self._last_scenario_pos < len(self._scenario):
             cur_char = self._next_char()
-            if cur_char in STDLexerTokens.COMMENTARY_SYMBOLS:
+            if cur_char in STDLexerTokens.COMMENTARY_SYMBOLS: # для комментариев
                 while self._last_scenario_pos < len(self._scenario) and cur_char not in STDLexerTokens.NEW_LINE_SYMBOLS:
                     self._next_pos()
                     cur_char = self._next_char()
                 self._next_pos()
-            elif cur_char not in STDLexerTokens.TERMINATE_SYMBOLS + STDLexerTokens.WHITESPACE_SYMBOLS:
+            elif buffer.startswith("\"") and cur_char not in STDLexerTokens.TERMINATE_SYMBOLS: # для str-литералов
+                buffer += cur_char
+                self._next_pos()
+            elif cur_char not in STDLexerTokens.TERMINATE_SYMBOLS + STDLexerTokens.WHITESPACE_SYMBOLS: # общий случай
                 buffer += cur_char
                 self._next_pos()
             else:
@@ -101,6 +104,7 @@ class STDRSLLexer(AbstractLexer):
         return token_object
 
     def get_token_list(self):
+        self._errors.clear()
         tokens = []
         while self._last_scenario_pos < len(self._scenario):
             token = self.get_next_token()

@@ -12,8 +12,8 @@ from RRPA.Modules.Core.SDK.RedVirtualMachine.RVM import STDRedVirtualMachine
 
 class ClientModel:
 
-    def __init__(self, host, port, os=STDOSTools):
-        self.__init_os_tools(os)
+    def __init__(self, host, port, _os=STDOSTools):
+        self.__init_os_tools(_os)
         self.__init_network_manager(host, port)
         self.__init_compiler()
         self.__init_hasher()
@@ -53,9 +53,7 @@ class ClientModel:
         self._rvm.execute(compiled_scenario)
 
     def refresh_client_data(self, host, port):
-        self._net_manager.end()
         self.__init_network_manager(host, port)
-        self._net_manager.start()
 
     def load_scenario(self, scenario_path):
         scenario_data = ""
