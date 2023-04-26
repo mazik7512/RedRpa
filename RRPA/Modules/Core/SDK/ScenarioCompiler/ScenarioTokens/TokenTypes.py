@@ -23,5 +23,5 @@ class STDTokenTypes:
     BODY_LINE = 20
     LINE = 21
     SCENARIO = 22
-    API_FUNC_CALL = 23
-    USER_FUNC_CALL = 24
+    RETURN_ARG = 23
+

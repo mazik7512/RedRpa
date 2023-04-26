@@ -39,7 +39,7 @@ STYLES = {
 class RSLHighlighter(QSyntaxHighlighter):
     # RSL special instructions
     special_instructions = [
-        'loop',
+        'loop', 'return',
     ]
 
     # RSL operators

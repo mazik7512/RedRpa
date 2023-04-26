@@ -16,6 +16,7 @@ class STDLexerTokens:
         ';': STDTokenTypes.ENDLINE,
         '=': STDTokenTypes.ASSIGMENT_OPERATION,
         'loop': STDTokenTypes.SPECIAL_INSTRUCTION,
+        'return': STDTokenTypes.SPECIAL_INSTRUCTION,
         ',': STDTokenTypes.ARG_DELIMITER
             }
     # спец токены
@@ -50,11 +51,10 @@ class STDSyntaxTokens:
     BODY_LINE = STDTokenTypes.BODY_LINE
     LINE = STDTokenTypes.LINE
     SCENARIO = STDTokenTypes.SCENARIO
+    RETURN_ARG = STDTokenTypes.RETURN_ARG
 
 
 class STDNameResolverTokens:
-    API_FUNC_CALL = STDTokenTypes.API_FUNC_CALL
-    USER_FUNC_CALL = STDTokenTypes.USER_FUNC_CALL
     FUNC_CALL = STDTokenTypes.FUNC_CALL
     FUNC_DEF = STDTokenTypes.FUNC_DEFINITION
 

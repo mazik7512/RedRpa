@@ -154,3 +154,21 @@ class STDRSLScenarioNode(STDRSLSyntaxNode):
 
     def deserialize(self):
         return STDRSLTranslationPolicy.translate_scenario(self)
+
+
+class STDRSLReturnNode(STDRSLSyntaxNode):
+
+    def __init__(self, data):
+        super().__init__(STDSyntaxTokens.SPECIAL_INSTRUCTION, data)
+
+    def deserialize(self):
+        return STDRSLTranslationPolicy.translate_return(self)
+
+
+class STDRSLReturnArgNode(STDRSLSyntaxNode):
+
+    def __init__(self, data):
+        super().__init__(STDSyntaxTokens.RETURN_ARG, data)
+
+    def deserialize(self):
+        return STDRSLTranslationPolicy.translate_return_arg(self)

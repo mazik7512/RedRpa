@@ -12,3 +12,8 @@ class AbstractNameTranslationPolicy(ABC):
     @abstractmethod
     def generate_func_call_arg_name(*args):
         pass
+
+    @staticmethod
+    @abstractmethod
+    def generate_loop_data_name(*args):
+        pass

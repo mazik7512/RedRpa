@@ -19,6 +19,8 @@ from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.Extend
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyntaxNode import STDRSLScenarioNode
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyntaxNode import STDRSLLineNode
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyntaxNode import STDRSLObjectNode
+from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyntaxNode import STDRSLReturnNode
+from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.ExtendedSyntaxNode import STDRSLReturnArgNode
 from RRPA.Modules.Core.General.DataStructures.WorkResult import STDWorkResult
 from RRPA.Modules.Core.Logger.Logger import Logger
 
@@ -158,23 +160,27 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
         return func_call_arg_list_node
 
     def _specify_and_create_func_call_arg_node(self, parent_node):
-        func_call_arg = STDRSLFuncCallArgNode(None)
-        func_call_arg.set_parent(parent_node)
+        func_call_arg_node = STDRSLFuncCallArgNode(None)
+        func_call_arg_node.set_parent(parent_node)
+        node = self._specify_and_create_standart_call_arg_node(func_call_arg_node)
+        func_call_arg_node.set_left_node(node)
+        return func_call_arg_node
+
+    def _specify_and_create_standart_call_arg_node(self, parent_node):
         if self._token_type == STDSyntaxTokens.OBJECT:
-            node = self._specify_and_create_func_call_object_arg_node(func_call_arg, self._token_value)
+            node = self._specify_and_create_standart_call_arg_object_node(parent_node, self._token_value)
         elif self._token_type == STDSyntaxTokens.STR_LITERAL:
-            node = self._create_str_literal_node(func_call_arg, self._token_value)
+            node = self._create_str_literal_node(parent_node, self._token_value)
             self._next_token()
         elif self._token_type == STDSyntaxTokens.NUMBER_LITERAL:
-            node = self._create_number_literal_node(func_call_arg, self._token_value)
+            node = self._create_number_literal_node(parent_node, self._token_value)
             self._next_token()
         else:
             self._error("Ожидалось имя, строка или число, а пришло: " + self._token_value)
-            node = self._create_error_node(func_call_arg, self._token_value)
-        func_call_arg.set_left_node(node)
-        return func_call_arg
+            node = self._create_error_node(parent_node, self._token_value)
+        return node
 
-    def _specify_and_create_func_call_object_arg_node(self, parent_node, object_name):
+    def _specify_and_create_standart_call_arg_object_node(self, parent_node, object_name):
         self._next_token()
         if self._token_type == STDSyntaxTokens.SUBEXPR_START:
             node = self._create_func_call_node(parent_node, object_name)
@@ -211,6 +217,35 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
         else:
             self._error("Ожидалось SPEC_INST, а пришло: " + spec_inst)
             return self._create_error_node(parent_node, spec_inst)
+
+    def _create_body_special_instruction_node(self, parent_node, spec_inst):
+        if spec_inst == "loop":
+            return self._create_loop_node(parent_node)
+        elif spec_inst == "return":
+            return self._create_return_node(parent_node)
+        else:
+            self._error("Ожидалось SPEC_INST, а пришло: " + spec_inst)
+            return self._create_error_node(parent_node, spec_inst)
+
+    def _create_return_node(self, parent_node):
+        return_node = STDRSLReturnNode("return")
+        return_node.set_parent(parent_node)
+        self._next_token()
+        return_arg_node = self._create_return_arg_node(return_node)
+        return_node.set_left_node(return_arg_node)
+        return return_node
+
+    def _create_return_arg_node(self, parent_node):
+        return_arg_node = STDRSLReturnArgNode(None)
+        return_arg_node.set_parent(parent_node)
+        if self._token_type != STDSyntaxTokens.ENDLINE:
+            node = self._specify_and_create_standart_call_arg_node(return_arg_node)
+            return_arg_node.set_left_node(node)
+        if self._token_type != STDSyntaxTokens.ENDLINE:
+            self._error("Ожидалась ;, а пришло: " + self._token_value)
+            node = self._create_error_node(parent_node, self._token_value)
+            return node
+        return return_arg_node
 
     def _create_loop_node(self, parent_node):
         loop_node = STDRSLLoopNode("loop")
@@ -289,7 +324,7 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
         if self._token_type == STDSyntaxTokens.OBJECT:
             node = self._create_expr_node(parent_node, self._token_value)
         elif self._token_type == STDSyntaxTokens.SPECIAL_INSTRUCTION:
-            node = self._create_special_instruction_node(parent_node, self._token_value)
+            node = self._create_body_special_instruction_node(parent_node, self._token_value)
         else:
             node = self._create_error_node(parent_node, self._token_value)
             self._error("Ожидалось тело инструкции, а пришло: " + self._token_value)
