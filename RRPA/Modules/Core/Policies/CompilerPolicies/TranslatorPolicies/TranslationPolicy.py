@@ -23,7 +23,7 @@ class STDRSLTranslationPolicy(AbstractTranslationPolicy):
         loop_header_init, loop_header = node.get_left_node().deserialize()
         loop_body = node.get_right_node().deserialize()
         if len(loop_header_init) > 0:
-            loop_header_init += '\n'
+            loop_header_init += '\n' + STDRSLTranslationPolicy.offset_policy.get_current_offset()
         result += loop_header_init + "for " + loop_header + ":\n" + loop_body
         return result
 
