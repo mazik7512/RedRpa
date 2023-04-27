@@ -1,7 +1,9 @@
 import os
 import sys
 import time
+from multiprocessing import Process
 from threading import Thread
+from threading import Event
 from PySide2.QtCore import QEasingCurve, QSize
 from PySide2.QtWidgets import QFileDialog
 import PySide2.QtWidgets
@@ -114,7 +116,7 @@ class ClientApp:
         self.__init_serve_thread()
 
     def __init_serve_thread(self):
-        self._serving_thread = Thread(target=self.__serve_wrapper)
+        self._serving_thread = Thread(target=self.__serve_wrapper, daemon=True)
 
     def __slide_info_panel_start(self):
         self._slide_info_animation.setStartValue(self._start_panel_width)
@@ -172,7 +174,6 @@ class ClientApp:
     def __serve_wrapper(self):
         self._model.start_client()
         while True:
-            data = ""
             try:
                 data = self._model.serve_for_commands()
             except STDRedConnectionStopException:
@@ -186,8 +187,12 @@ class ClientApp:
 
     def __stop_serving(self):
         #self._model.end_client()
-        self._serving_thread.join(1)
+        self.__end_thread(self._serving_thread)
         self.__set_client_current_state(0)
+
+    def __end_thread(self, thread):
+        if thread.is_alive():
+            thread.join(1)
 
     def __init_windows_list(self):
         self.__refresh_windows_list()
@@ -256,7 +261,11 @@ class ClientApp:
         self._model.save_to_file(filename, self._client.scenarioEditor.toPlainText())
 
     def __exit(self):
+        self.__close_all_threads()
         sys.exit(0)
+
+    def __close_all_threads(self):
+        self.__end_thread(self._serving_thread)
 
     def __set_client_current_state(self, index):
         self._client.currentStatus.setText(CLIENT_STATES[index])
