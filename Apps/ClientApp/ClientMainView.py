@@ -373,7 +373,7 @@ class Ui_MainWindow(object):
         self.portNumberSpinBox.setObjectName(u"portNumberSpinBox")
         self.portNumberSpinBox.setAlignment(Qt.AlignCenter)
         self.portNumberSpinBox.setMaximum(65535)
-        self.portNumberSpinBox.setValue(5551)
+        self.portNumberSpinBox.setValue(5550)
 
         self.gridLayout.addWidget(self.portNumberSpinBox, 0, 1, 1, 1)
 

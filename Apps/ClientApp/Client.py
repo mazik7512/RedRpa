@@ -100,7 +100,7 @@ class ClientApp:
 
     def __init_network(self):
         self._host = "127.0.0.1"
-        self._port = 5551
+        self._port = 5559
         self.__update_network_config()
 
     def __init_threads(self):
@@ -140,6 +140,7 @@ class ClientApp:
     def __execute_scenario(self):
         self.__set_client_current_state(1)
         self._client.infoTabsWidget.setTabText(0, "Ошибки")
+        self._client.errorsView.clear()
         self.__inactive_app()
         try:
             self._model.compile_and_execute(self._client.scenarioEditor.toPlainText())
@@ -228,7 +229,6 @@ class ClientApp:
         self.__slide_info_button_start()
 
     def __add_errors_to_info_panel(self, errors):
-        self._client.errorsView.clear()
         self._client.infoTabsWidget.setTabText(0, "({}) Ошибки".format(len(errors)))
         self._client.errorsView.addItems(errors)
 

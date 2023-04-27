@@ -82,7 +82,14 @@ class STDRSLLexer(AbstractLexer):
                     self._next_pos()
                     cur_char = self._next_char()
                 self._next_pos()
-            elif buffer.startswith("\"") and cur_char not in STDLexerTokens.TERMINATE_SYMBOLS: # для str-литералов
+            elif cur_char in STDLexerTokens.LITERAL_TERMINATE_SYMBOLS: # для str-литералов
+                buffer += cur_char
+                self._next_pos()
+                cur_char = self._next_char()
+                while self._last_scenario_pos < len(self._scenario) and cur_char not in STDLexerTokens.LITERAL_TERMINATE_SYMBOLS:
+                    buffer += cur_char
+                    self._next_pos()
+                    cur_char = self._next_char()
                 buffer += cur_char
                 self._next_pos()
             elif cur_char not in STDLexerTokens.TERMINATE_SYMBOLS + STDLexerTokens.WHITESPACE_SYMBOLS: # общий случай
