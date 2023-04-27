@@ -5,6 +5,7 @@ from RRPA.Modules.Core.Policies.CompilerPolicies.TranslatorPolicies.NameTranslat
     STDRSLNameTranslationPolicy
 from RRPA.Modules.Core.Policies.CompilerPolicies.TranslatorPolicies.OffsetTranslationPolicy import \
     STDRSLOffsetTranslationPolicy
+from RRPA.Modules.Core.Exceptions.Exceptions import STDTranslationException
 
 
 class STDRSLTranslationPolicy(AbstractTranslationPolicy):
@@ -13,8 +14,15 @@ class STDRSLTranslationPolicy(AbstractTranslationPolicy):
 
     @staticmethod
     def translate_expr(node):
-        result_init, result = node.get_left_node().deserialize()
-        res = result_init + result
+        left_node = node.get_left_node()
+        node_type = left_node.get_type()
+        if node_type == STDSyntaxTokens.ASSIGMENT_OPERATION or node_type == STDSyntaxTokens.FUNC_CALL:
+            result_init, result = node.get_left_node().deserialize()
+            res = result_init + result
+        else:
+            data = "Ошибка трансляции выражения: [{}]".format(left_node.deserialize())
+            t_exception = STDTranslationException(data)
+            raise t_exception
         return res
 
     @staticmethod

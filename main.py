@@ -90,7 +90,7 @@ if __name__ == "__main__":
     #scenario = "loop(a){ loop(5){test();} test(test(test()), test()); test(); a=test(); } a=test();"
     scenario = "b=z=2;function test(){ a=5; test();} loop(a){ loop(5){test();} test(test(test()), test()); test(); q=z=test(); } a=test();"
     scenario = "CV_scan(\"Внешний HDD(E:)\");\n#comment check\n\nfunction inner_loop(a, b){ # comment_check_2\n a = b = 5; b = 2; return ; } loop(test()){} CV_scan(get_window(get_name()), \"button\"); click_on_object(); loop(5){ loop(b){ inner_loop(); inner_loop_1(); } outer_loop_1(); outer_loop2(); } outside_loop();#comment\n\n#comment"
-    scenario = "CV_scan(\"Внешний HDD(E:)\");"
+    scenario = "test_func;"
     lexer = STDRSLLexer(scenario)
     lexems = lexer.get_token_list().get_data()
     parser = STDRSLSyntaxParser(lexems)

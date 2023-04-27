@@ -56,6 +56,8 @@ class ClientModel:
         self.__init_network_manager(host, port)
 
     def load_scenario(self, scenario_path):
+        if not scenario_path or len(scenario_path) == 0:
+            return ""
         scenario_data = ""
         try:
             with open(scenario_path, "r") as scenario:
