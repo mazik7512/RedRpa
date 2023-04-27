@@ -2,11 +2,12 @@ import os
 import sys
 import time
 from threading import Thread
-from PySide2.QtCore import QEasingCurve
+from PySide2.QtCore import QEasingCurve, QSize
 from PySide2.QtWidgets import QFileDialog
 import PySide2.QtWidgets
+from PySide2.QtGui import QIcon
 from PySide2.QtCore import Qt, QByteArray
-from PySide2.QtWidgets import QTreeWidgetItem
+from PySide2.QtWidgets import QTreeWidgetItem, QListWidgetItem
 from PySide2.QtCore import QPropertyAnimation
 from Apps.ClientApp.ClientModel import ClientModel
 from Apps.ClientApp.ClientMainView import Ui_MainWindow
@@ -40,6 +41,8 @@ class ClientApp:
         self.__init_network()
 
         self.__init_threads()
+
+        self.__init_resources()
 
     def __init_qt(self):
         dirname = os.path.dirname(PySide2.__file__)
@@ -98,6 +101,10 @@ class ClientApp:
         self._slide_button_animation.setDuration(250)
         self._slide_button_animation.setEasingCurve(QEasingCurve.InOutQuad)
 
+    def __init_resources(self):
+        self._error_icon = QIcon()
+        self._error_icon.addFile(u":/TabIcons/icons/error-icon.png", QSize(), QIcon.Normal, QIcon.Off)
+
     def __init_network(self):
         self._host = "127.0.0.1"
         self._port = 5559
@@ -112,6 +119,7 @@ class ClientApp:
     def __slide_info_panel_start(self):
         self._slide_info_animation.setStartValue(self._start_panel_width)
         self._slide_info_animation.setEndValue(self._end_panel_width)
+        self._client.infoPanel.setMaximumWidth(self._end_panel_width)
         temp = self._start_panel_width
         self._start_panel_width = self._end_panel_width
         self._end_panel_width = temp
@@ -230,7 +238,11 @@ class ClientApp:
 
     def __add_errors_to_info_panel(self, errors):
         self._client.infoTabsWidget.setTabText(0, "({}) Ошибки".format(len(errors)))
-        self._client.errorsView.addItems(errors)
+        for error in errors:
+            item = QListWidgetItem(error)
+            item.setIcon(self._error_icon)
+            item.setToolTip(error)
+            self._client.errorsView.addItem(item)
 
     def __update_network_config(self):
         self._host = self._client.hostComboBox.currentText()

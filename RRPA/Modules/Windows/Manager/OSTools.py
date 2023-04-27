@@ -40,3 +40,4 @@ class STDOSTools(AbstractOSTools):
     @staticmethod
     def get_os_tools_import_path():
         return "RRPA.Modules.Windows.Manager.OSTools"
+

@@ -72,7 +72,7 @@ class STDRSLNameBounder(AbstractNameBounder):
     def _link_func_def(self, func_defs, func_calls):
         for func in func_calls:
             if not func.get_data() in func_defs:
-                self._error("Неизвесная функция {" + func.get_data() + "}")
+                self._error("Неизвестная функция {" + func.get_data() + "}")
 
     def _generate_import_section(self, api_name, section_data):
         import_string = "from " + self._stdlib.get_api_import_path(api_name) + " import " + api_name

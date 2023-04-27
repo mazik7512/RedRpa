@@ -39,3 +39,4 @@ class AbstractOSTools(ABC):
     @abstractmethod
     def get_window_name(win_desc):
         pass
+
