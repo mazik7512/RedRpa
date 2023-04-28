@@ -18,7 +18,6 @@ from RRPA.Modules.Core.Exceptions.Exceptions import STDRedConnectionStopExceptio
 from RRPA.Modules.Core.SDK.APICollector.APICollector import STDAPICollector
 from RRPA.AppData.Configs.CompilerConfig import API_PATH
 
-
 CLIENT_STATES = ['Неактивно', 'Выполнение...', 'Ожидание...']
 CLIENT_STATES_COLOR_SCHEMES = ["#currentStatus{\nbackground-color: red;\n color: white;\n }",
                                "#currentStatus{\nbackground-color: forestgreen;\n color: white;\n }",
@@ -45,6 +44,8 @@ class ClientApp:
         self.__init_threads()
 
         self.__init_resources()
+
+        self.__init_settings()
 
     def __init_qt(self):
         dirname = os.path.dirname(PySide2.__file__)
@@ -118,6 +119,14 @@ class ClientApp:
     def __init_serve_thread(self):
         self._serving_thread = Thread(target=self.__serve_wrapper, daemon=True)
 
+    def __init_settings(self):
+        self.__init_hosts()
+
+    def __init_hosts(self):
+        hosts = self._model.get_ip_interfaces()
+        for host in hosts:
+            self._client.hostComboBox.addItem(host)
+
     def __slide_info_panel_start(self):
         self._slide_info_animation.setStartValue(self._start_panel_width)
         self._slide_info_animation.setEndValue(self._end_panel_width)
@@ -186,7 +195,7 @@ class ClientApp:
         self.__execute_scenario()
 
     def __stop_serving(self):
-        #self._model.end_client()
+        self._model.end_client()
         self.__end_thread(self._serving_thread)
         self.__set_client_current_state(0)
 
@@ -256,9 +265,10 @@ class ClientApp:
 
     def __save_scenario_to_file(self):
         save_file = QFileDialog.getSaveFileName(self._form, "Сохранить сценарий",
-                                               os.getcwd(), "RSL-сценарий (*.rsl *.scenario *.txt)")
+                                                os.getcwd(), "RSL-сценарий (*.rsl *.scenario *.txt)")
         filename, _ = save_file
-        self._model.save_to_file(filename, self._client.scenarioEditor.toPlainText())
+        if filename:
+            self._model.save_to_file(filename, self._client.scenarioEditor.toPlainText())
 
     def __exit(self):
         self.__close_all_threads()

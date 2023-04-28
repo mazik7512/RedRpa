@@ -38,5 +38,8 @@ class STDTransportLevelReceivePolicy(AbstractTransportLevelReceivePolicy):
         self._logger.debug(MODULE_PREFIX, "Ожидание подключений завершено")
 
     def close_connection(self):
-        self._connection.close()
+        try:
+            self._connection.close()
+        except AttributeError:
+            return
         self._logger.debug(MODULE_PREFIX, "Соединение с", self._address, "закрыто")

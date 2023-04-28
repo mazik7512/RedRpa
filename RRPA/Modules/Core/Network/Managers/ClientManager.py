@@ -13,6 +13,7 @@ class STDClientManager(AbstractClientManager):
         super().__init__(AppLevelReceivePolicy)
         self._cryptographer = cryptographer
         self._logger = logger
+        self._connected = False
 
     def setup_connection(self):
         self._logger.debug(MODULE_PREFIX, "Ожидаю red-соединения с сервером")
@@ -20,6 +21,7 @@ class STDClientManager(AbstractClientManager):
         self._cryptographer.set_keys(rsa_key, None)
         self._alr_policy.wait_for_session(rsa_key)
         self.refresh_session_key()
+        self._connected = True
 
     def refresh_session_key(self):
         self._logger.debug(MODULE_PREFIX, "Процедура обновления сессионного ключа начата")
@@ -29,10 +31,11 @@ class STDClientManager(AbstractClientManager):
         self._logger.debug(MODULE_PREFIX, "Процедура обновления сессионного ключа завершена")
 
     def reset_connection(self, data):
-        if data:
+        if data and self._connected:
             self.send(data)
         self._alr_policy.end_session()
         self._logger.debug(MODULE_PREFIX, "Red-соединение с сервером завершено")
+        self._connected = False
 
     def get(self):
         self._logger.debug(MODULE_PREFIX, "Получаю данные от сервера")

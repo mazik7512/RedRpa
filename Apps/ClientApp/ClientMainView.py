@@ -7,7 +7,7 @@
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
-import PySide2.QtCore
+import PySide2
 from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
@@ -19,7 +19,6 @@ class Ui_MainWindow(object):
 
     def __init__(self, main_window):
         self.setupUi(main_window)
-
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
@@ -42,6 +41,7 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "	background-color: green;\n"
 "}")
+        MainWindow.setTabShape(QTabWidget.Rounded)
         self.openScenarioMenuOption = QAction(MainWindow)
         self.openScenarioMenuOption.setObjectName(u"openScenarioMenuOption")
         icon1 = QIcon()
@@ -119,11 +119,13 @@ class Ui_MainWindow(object):
 
         self.windowsListView = QTreeWidget(self.gridLayoutWidget_3)
         __qtreewidgetitem = QTreeWidgetItem()
-        __qtreewidgetitem.setText(0, u"Заголовки окон")
+        __qtreewidgetitem.setText(0, u"Заголовки окон");
         self.windowsListView.setHeaderItem(__qtreewidgetitem)
         self.windowsListView.setObjectName(u"windowsListView")
         self.windowsListView.setStyleSheet(u"background-color: white;\n"
 "color: black;")
+        self.windowsListView.setDragDropMode(QAbstractItemView.DragOnly)
+        self.windowsListView.setAnimated(True)
 
         self.windowsListLayout.addWidget(self.windowsListView, 0, 0, 1, 1)
 
@@ -373,7 +375,7 @@ class Ui_MainWindow(object):
         self.portNumberSpinBox.setObjectName(u"portNumberSpinBox")
         self.portNumberSpinBox.setAlignment(Qt.AlignCenter)
         self.portNumberSpinBox.setMaximum(65535)
-        self.portNumberSpinBox.setValue(5550)
+        self.portNumberSpinBox.setValue(5551)
 
         self.gridLayout.addWidget(self.portNumberSpinBox, 0, 1, 1, 1)
 
@@ -390,7 +392,9 @@ class Ui_MainWindow(object):
 "	background-color: black;\n"
 "	color: white;\n"
 "}")
-        self.refreshHostsButton.setIcon(icon4)
+        icon10 = QIcon()
+        icon10.addFile(u":/TabIcons/icons/set-icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.refreshHostsButton.setIcon(icon10)
 
         self.gridLayout.addWidget(self.refreshHostsButton, 1, 2, 1, 1)
 
@@ -407,7 +411,7 @@ class Ui_MainWindow(object):
 "	background-color: black;\n"
 "	color: white;\n"
 "}")
-        self.refreshPortButton.setIcon(icon4)
+        self.refreshPortButton.setIcon(icon10)
 
         self.gridLayout.addWidget(self.refreshPortButton, 0, 2, 1, 1)
 
@@ -419,16 +423,16 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.setStretch(0, 1)
         self.verticalLayout.setStretch(1, 2)
-        icon10 = QIcon()
-        icon10.addFile(u":/TabIcons/icons/settings-tab-icon.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.MainTabWidget.addTab(self.SettingsTab, icon10, "")
+        icon11 = QIcon()
+        icon11.addFile(u":/TabIcons/icons/settings-tab-icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.MainTabWidget.addTab(self.SettingsTab, icon11, "")
 
         self.MainLayout.addWidget(self.MainTabWidget, 0, 0, 1, 1)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 1051, 22))
+        self.menubar.setGeometry(QRect(0, 0, 1061, 22))
         self.menu = QMenu(self.menubar)
         self.menu.setObjectName(u"menu")
         self.menu.setTearOffEnabled(False)
@@ -455,19 +459,20 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.infoPanelButton = QPushButton(self.verticalLayoutWidget_2)
         self.infoPanelButton.setObjectName(u"infoPanelButton")
+        self.infoPanelButton.setMaximumSize(QSize(82, 16777215))
         self.infoPanelButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.infoPanelButton.setMaximumSize(82, 82)
         self.infoPanelButton.setStyleSheet(u"#infoPanelButton{\n"
 "	background-color: white;\n"
 "	border: 1px solid black;\n"
 "	color: black;\n"
 "}\n"
 "#infoPanelButton:hover{\n"
-"	background-color: aliceblue;\n"
+"	background-color: black;\n"
+"	color: white;\n"
 "}")
-        icon11 = QIcon()
-        icon11.addFile(u":/TabIcons/icons/show-hide-icon.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.infoPanelButton.setIcon(icon11)
+        icon12 = QIcon()
+        icon12.addFile(u":/TabIcons/icons/show-hide-icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.infoPanelButton.setIcon(icon12)
 
         self.verticalLayout_3.addWidget(self.infoPanelButton)
 
@@ -525,7 +530,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"RedRPA-клиент", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"RedRPA-\u043a\u043b\u0438\u0435\u043d\u0442", None))
         self.openScenarioMenuOption.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0442\u043a\u0440\u044b\u0442\u044c \u0441\u0446\u0435\u043d\u0430\u0440\u0438\u0439", None))
         self.exitMenuOption.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0445\u043e\u0434", None))
         self.saveScenarioMenuOption.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u0441\u0446\u0435\u043d\u0430\u0440\u0438\u0439", None))
@@ -541,33 +546,23 @@ class Ui_MainWindow(object):
         self.scenarioConstructorButton.setText(QCoreApplication.translate("MainWindow", u"\u041a\u043e\u043d\u0441\u0442\u0440\u0443\u043a\u0442\u043e\u0440 \u0441\u0446\u0435\u043d\u0430\u0440\u0438\u0435\u0432", None))
         self.MainTabWidget.setTabText(self.MainTabWidget.indexOf(self.MainTab), QCoreApplication.translate("MainWindow", u"\u0413\u043b\u0430\u0432\u043d\u0430\u044f", None))
         self.infoGroupBox.setTitle(QCoreApplication.translate("MainWindow", u"\u0418\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u044f", None))
-        self.infoProgramNameLabel.setText(QCoreApplication.translate("MainWindow",
-                                                                     u"<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">🖥 RedRPA-\u043a\u043b\u0438\u0435\u043d\u0442</span></p></body></html>",
-                                                                     None))
-        self.infoProgramVersionLabel.setText(QCoreApplication.translate("MainWindow",
-                                                                        u"<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">🛠 \u0412\u0435\u0440\u0441\u0438\u044f: &quot;Rey&quot; 1.0</span></p></body></html>",
-                                                                        None))
-        self.infoProgramHashLabel.setText(QCoreApplication.translate("MainWindow",
-                                                                     u"<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">⚙️ \u0425\u044d\u0448: {}</span></p></body></html>",
-                                                                     None))
-        self.infoProgramLicenseLabel.setText(QCoreApplication.translate("MainWindow",
-                                                                        u"<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">©® Boost Software License - Version 1.0 - August 17th, 2003</span></p></body></html>",
-                                                                        None))
-        self.infoProgramAdditionalData.setText(QCoreApplication.translate("MainWindow",
-                                                                          u"<html><head/><body><p align=\"center\">ℹ \u0420\u0435\u0430\u043b\u0438\u0437\u0430\u0446\u0438\u044f \u043a\u043b\u0438\u0435\u043d\u0442\u0441\u043a\u043e\u0433\u043e \u043f\u0440\u0438\u043b\u043e\u0436\u0435\u043d\u0438\u044f \u043d\u0430 \u043e\u0441\u043d\u043e\u0432\u0435 \u0444\u0440\u0435\u0439\u043c\u0432\u043e\u0440\u043a\u0430 RedRPA. \u041f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0430 \u043b\u0438\u0446\u0435\u043d\u0437\u0438\u0440\u043e\u0432\u0430\u043d\u0430 Boost Software License 1.0.</p></body></html>",
-                                                                          None))
+        self.infoProgramNameLabel.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">🖥 RedRPA-\u043a\u043b\u0438\u0435\u043d\u0442</span></p></body></html>", None))
+        self.infoProgramVersionLabel.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">🛠 \u0412\u0435\u0440\u0441\u0438\u044f: &quot;Rey&quot; 1.0</span></p></body></html>", None))
+        self.infoProgramHashLabel.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">⚙️ \u0425\u044d\u0448: {}</span></p></body></html>", None))
+        self.infoProgramLicenseLabel.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">©® Boost Software License - Version 1.0 - August 17th, 2003</span></p></body></html>", None))
+        self.infoProgramAdditionalData.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\">ℹ \u0420\u0435\u0430\u043b\u0438\u0437\u0430\u0446\u0438\u044f \u043a\u043b\u0438\u0435\u043d\u0442\u0441\u043a\u043e\u0433\u043e \u043f\u0440\u0438\u043b\u043e\u0436\u0435\u043d\u0438\u044f \u043d\u0430 \u043e\u0441\u043d\u043e\u0432\u0435 \u0444\u0440\u0435\u0439\u043c\u0432\u043e\u0440\u043a\u0430 RedRPA. \u041f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0430 \u043b\u0438\u0446\u0435\u043d\u0437\u0438\u0440\u043e\u0432\u0430\u043d\u0430 Boost Software License 1.0.</p></body></html>"))
         self.settingsGroupBox.setTitle(QCoreApplication.translate("MainWindow", u"\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438", None))
         self.portNumberLabel.setText(QCoreApplication.translate("MainWindow", u"\u041d\u043e\u043c\u0435\u0440 \u043f\u043e\u0440\u0442\u0430:", None))
         self.hostLabel.setText(QCoreApplication.translate("MainWindow", u"\u041f\u0440\u043e\u0441\u043b\u0443\u0448\u0438\u0432\u0430\u0435\u043c\u044b\u0439 \u0430\u0434\u0440\u0435\u0441:", None))
-        self.refreshHostsButton.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0431\u043d\u043e\u0432\u0438\u0442\u044c", None))
-        self.refreshPortButton.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0431\u043d\u043e\u0432\u0438\u0442\u044c", None))
+        self.refreshHostsButton.setText(QCoreApplication.translate("MainWindow", u"\u0423\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0442\u044c", None))
+        self.refreshPortButton.setText(QCoreApplication.translate("MainWindow", u"\u0423\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0442\u044c", None))
         self.MainTabWidget.setTabText(self.MainTabWidget.indexOf(self.SettingsTab), QCoreApplication.translate("MainWindow", u"\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438", None))
         self.menu.setTitle(QCoreApplication.translate("MainWindow", u"\u0424\u0430\u0439\u043b", None))
 #if QT_CONFIG(tooltip)
         self.infoPanel.setToolTip(QCoreApplication.translate("MainWindow", u"\u0418\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u043e\u043d\u043d\u0430\u044f \u043f\u0430\u043d\u0435\u043b\u044c", None))
 #endif // QT_CONFIG(tooltip)
         self.infoPanel.setWindowTitle(QCoreApplication.translate("MainWindow", u"\u0418\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u043e\u043d\u043d\u0430\u044f \u043f\u0430\u043d\u0435\u043b\u044c", None))
-        self.infoPanelButton.setText(QCoreApplication.translate("MainWindow", u"Показать", None))
+        self.infoPanelButton.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u043a\u0430\u0437\u0430\u0442\u044c", None))
         self.infoTabsWidget.setTabText(self.infoTabsWidget.indexOf(self.infoErrorsTab), QCoreApplication.translate("MainWindow", u"\u041e\u0448\u0438\u0431\u043a\u0438", None))
         self.infoTabsWidget.setTabText(self.infoTabsWidget.indexOf(self.infoInfoTab), QCoreApplication.translate("MainWindow", u"\u0418\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u044f", None))
     # retranslateUi

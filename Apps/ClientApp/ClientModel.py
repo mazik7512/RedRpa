@@ -1,7 +1,7 @@
 import os
 from inspect import getsourcefile
 from os.path import abspath
-
+import re
 from RRPA.Modules.Core.Crypto.StribogHasher import STDHasher
 from RRPA.Modules.Core.Logger.Logger import Logger
 from RRPA.Modules.Core.SDK.ScenarioCompiler.CompilerGenerator import STDRSLCompilerGenerator
@@ -107,3 +107,12 @@ class ClientModel:
     def save_to_file(self, filename, data):
         with open(filename, "w+") as save_file:
             save_file.write(data)
+
+    def get_ip_interfaces(self):
+        ip_reg = re.compile("(IPv4.*)(: )(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})")
+        hosts = []
+        for device in os.popen('ipconfig'):
+            ip = ip_reg.search(device)
+            if ip:
+                hosts.append(ip.group(3))
+        return hosts
