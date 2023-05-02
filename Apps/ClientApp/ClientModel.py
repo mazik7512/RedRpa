@@ -116,3 +116,6 @@ class ClientModel:
             if ip:
                 hosts.append(ip.group(3))
         return hosts
+
+    def get_window_icon(self, hwnd):
+        return self._os_tools.get_icon(hwnd)

@@ -4,8 +4,9 @@ import pathlib
 import sys
 import threading
 import time
-
+import win32gui
 import PySide2
+import win32con
 from PySide2.QtCore import Qt
 import PySide2.QtWidgets
 

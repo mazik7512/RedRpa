@@ -6,6 +6,7 @@ from threading import Thread
 from threading import Event
 from PySide2.QtCore import QEasingCurve, QSize
 from PySide2.QtWidgets import QFileDialog
+from PySide2.QtWidgets import QCompleter
 import PySide2.QtWidgets
 from PySide2.QtGui import QIcon
 from PySide2.QtCore import Qt, QByteArray
@@ -17,6 +18,8 @@ from Apps.ClientApp.SyntaxHighlighter import RSLHighlighter
 from RRPA.Modules.Core.Exceptions.Exceptions import STDRedConnectionStopException, STDException
 from RRPA.Modules.Core.SDK.APICollector.APICollector import STDAPICollector
 from RRPA.AppData.Configs.CompilerConfig import API_PATH
+from Apps.ClientApp.CodeEditor import RSLEditor
+
 
 CLIENT_STATES = ['Неактивно', 'Выполнение...', 'Ожидание...']
 CLIENT_STATES_COLOR_SCHEMES = ["#currentStatus{\nbackground-color: red;\n color: white;\n }",
@@ -76,7 +79,15 @@ class ClientApp:
     def __init_editor(self):
         api_funcs = STDAPICollector(API_PATH)
         api_funcs.collect_all_api_methods()
-        self._highlighter = RSLHighlighter(self._client.scenarioEditor.document(), api_funcs.get_all_api_methods())
+        code_editor = RSLEditor(api_funcs.get_all_api_methods())
+        editor_qss = self._client.scenarioEditor.styleSheet()
+        editor_object_name = self._client.scenarioEditor.objectName()
+        code_editor.setStyleSheet(editor_qss)
+        code_editor.setObjectName(editor_object_name)
+        self._client.scenarioLayout.removeWidget(self._client.scenarioEditor)
+        self._client.scenarioEditor = code_editor
+        self._client.scenarioLayout.addWidget(self._client.scenarioEditor)
+        #self._highlighter = RSLHighlighter(self._client.scenarioEditor.document(), api_funcs.get_all_api_methods())
 
     def __init_app_model(self):
         self._model = ClientModel("127.0.0.1", 5553)

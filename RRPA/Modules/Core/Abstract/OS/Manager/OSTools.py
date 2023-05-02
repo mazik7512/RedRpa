@@ -40,3 +40,7 @@ class AbstractOSTools(ABC):
     def get_window_name(win_desc):
         pass
 
+    @staticmethod
+    @abstractmethod
+    def get_icon(win_desc):
+        pass
