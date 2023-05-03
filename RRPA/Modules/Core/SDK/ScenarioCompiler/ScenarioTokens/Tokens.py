@@ -72,6 +72,7 @@ class STDSemanticTokens:
     ANY_TYPE = STDTokenTypes.UNIDENTIFIED
     API_FUNC = STDTokenTypes.API_FUNC
     USER_FUNC = STDTokenTypes.USER_FUNC
+    KEYWORDS = ['loop', 'return', 'function']
 
 
 class STDTranslatorTokens:

@@ -78,6 +78,9 @@ class STDRSLSemanticAnalyzer(AbstractSemanticAnalyzer):
         return result
 
     def _analyze(self, func_defs_list, func_calls_list, api_functions_list):
+        no_duplicates = self._analyze_func_defs_names(func_defs_list, api_functions_list)
+        if not no_duplicates:
+            return
         api_funcs = self._api_funcs_to_funcs_wrappers(api_functions_list)
         for func_call in func_calls_list:
             func_call_type = func_call.get_func_type()
@@ -85,6 +88,23 @@ class STDRSLSemanticAnalyzer(AbstractSemanticAnalyzer):
                 self._analyze_api_func(func_call, api_funcs)
             elif func_call_type == STDSemanticTokens.USER_FUNC:
                 self._analyze_user_func(func_call, func_defs_list)
+
+    def _analyze_func_defs_names(self, func_defs_list, api_func_list):
+        used_names = []
+        no_errors = True
+        for func_def in func_defs_list:
+            func_def_name = func_def.get_func_name()
+            if func_def_name in used_names:
+                self._error("Найдено переопределение функции [{}], манглирование имён не поддерживается".format(func_def_name))
+                no_errors = False
+            if func_def_name in api_func_list:
+                self._error("[{}] Переопределние функций стандартной библиотеки запрещено.".format(func_def_name))
+                no_errors = False
+            if func_def_name in STDSemanticTokens.KEYWORDS:
+                self._error("В имени функции [{}] использовано ключевое слово".format(func_def_name))
+                no_errors = False
+            used_names.append(func_def_name)
+        return no_errors
 
     def _analyze_api_func(self, func, api_funcs):
         for api_func in api_funcs:

@@ -9,8 +9,8 @@ class RSLEditor(QPlainTextEdit):
 
     def __init__(self, keywords):
         super().__init__()
-        _keywords = ['loop', 'return']
-        completer = QCompleter(_keywords + keywords)
+        _keywords = ['loop', 'return', 'function'] + keywords
+        completer = QCompleter(_keywords)
         completer.activated.connect(self.insert_completion)
         completer.setWidget(self)
         completer.setCompletionMode(QCompleter.CompletionMode.PopupCompletion)

@@ -1,4 +1,5 @@
 from RRPA.Modules.Core.Abstract.SDK.VirtualMachine.VM import AbstractVirtualMachine
+from RRPA.Modules.Core.Exceptions.Exceptions import STDRVMRuntimeException, STDREXCorruptionException
 from RRPA.Modules.Core.SDK.ScenarioExecutable.Executable import STDRedExecutable
 from RRPA.Modules.Core.Crypto.StribogHasher import STDHasher
 from RRPA.Modules.Core.Logger.Logger import Logger
@@ -10,6 +11,7 @@ class STDRedVirtualMachine(AbstractVirtualMachine):
         self._errors = []
 
     def execute(self,  file: STDRedExecutable):
+        self._errors.clear()
         self._analyze_and_execute(file)
 
     def _analyze_and_execute(self, file: STDRedExecutable):
@@ -41,13 +43,19 @@ class STDRedVirtualMachine(AbstractVirtualMachine):
         if check:
             self._execute(script)
         else:
-            self._error("Файл сценария поврежден")
+            error_data = "Файл сценария поврежден"
+            self._error(error_data)
+            corrupted_scenario_exception = STDREXCorruptionException(self._errors)
+            raise corrupted_scenario_exception
 
     def _execute(self, source_code):
         try:
             exec(source_code)
         except Exception as e:
-            self._error("Runtime Error: " + str(e))
+            error_data = "Ошибка выполнения: " + str(e)
+            self._error(error_data)
+            runtime_exception = STDRVMRuntimeException(self._errors)
+            raise runtime_exception
 
     def _dump_section(self, section):
         result = ""
