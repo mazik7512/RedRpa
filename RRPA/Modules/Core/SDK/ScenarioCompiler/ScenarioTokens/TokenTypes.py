@@ -24,4 +24,6 @@ class STDTokenTypes:
     LINE = 21
     SCENARIO = 22
     RETURN_ARG = 23
+    API_FUNC = 24
+    USER_FUNC = 25
 

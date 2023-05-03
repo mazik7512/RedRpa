@@ -49,6 +49,7 @@ class ClientApp:
         self.__init_resources()
 
         self.__init_settings()
+        #self._model.get_window_icon(0)
 
     def __init_qt(self):
         dirname = os.path.dirname(PySide2.__file__)

@@ -33,6 +33,11 @@ class STDNameBoundException(STDException):
         super().__init__(exception_data, args)
 
 
+class STDSemanticException(STDException):
+    def __init__(self, exception_data, *args):
+        super().__init__(exception_data, args)
+
+
 class STDTranslationException(STDException):
     def __init__(self, exception_data, *args):
         super().__init__(exception_data, args)

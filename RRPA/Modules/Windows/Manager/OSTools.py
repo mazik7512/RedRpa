@@ -1,5 +1,9 @@
+import inspect
+import struct
+import win32ui
 import pywintypes
 import win32con
+from PIL import Image
 
 from RRPA.Modules.CVObjectScanning.ObjectScannerGenerator import STDCVObjectScannerGenerator
 from RRPA.Modules.Core.Abstract.OS.Manager.OSTools import AbstractOSTools
@@ -48,24 +52,36 @@ class STDOSTools(AbstractOSTools):
     @staticmethod
     def get_icon(win_desc):
         handle = win32gui.FindWindow(None, "Steam")
-        print(handle)
-        #test = win32gui.SendMessage(handle, win32con.WM_GETICON, win32con.ICON_SMALL)
-        test = win32gui.DefWindowProc(handle, win32con.WM_GETICON, win32con.ICON_SMALL, 1)
-        print(test)
-        icon = win32gui.LoadImage(handle, test % 65535, win32con.IMAGE_ICON, 0, 0, win32con.LR_DEFAULTSIZE)
-
+        test = win32gui.DefWindowProc(handle, win32con.WM_GETICON, win32con.ICON_SMALL, 0)
+        print("defwindowproc=", test)
+        test_class_long = win32gui.GetClassLong(handle, win32con.GCL_HICON)
+        print("class_log=", test_class_long)
+        res = win32gui.CopyIcon(test_class_long)
+        print("res=", res)
+        icon_info = win32gui.GetIconInfo(res)
+        print(icon_info)
+        icon = win32gui.GetObject(icon_info[3])
         print(icon)
-
-        #module = win32api.GetModuleFileName("TelegramDesktop")
-        try:
-            icon_names = win32api.EnumResourceNames(handle, win32con.RT_STRING)
-            print(icon_names)
-        except pywintypes.error as e:
-            print(e)
-            return
-        for icon_name in icon_names:
-            rec = win32api.LoadResource(win_desc, win32con.RT_ICON, icon_name)
-            hicon = win32gui.CreateIconFromResource(rec, True)
-            info = win32gui.GetIconInfo(hicon)
-            bminfo = win32gui.GetObject(info[3])
-            print("%2d: 0x%08X -> %d %d " % (icon_name, hicon, bminfo.bmWidth, bminfo.bmHeight))
+        print(dir(icon))
+        #wDC = win32gui.GetWindowDC(None)
+        #dcObj = win32ui.CreateDCFromHandle(res)
+        #cDC = dcObj.CreateCompatibleDC()
+        #dataBitMap = win32ui.CreateBitmap()
+        #dataBitMap.CreateCompatibleBitmap(dcObj, 16, 16)
+        #cDC.SelectObject(dataBitMap)
+        #cDC.BitBlt((0, 0), (16, 16), dcObj, (0, 0), win32con.SRCCOPY)
+        #win32gui.DrawIconEx(wDC, 100, 100, res, 16, 16, 0, None, win32con.DI_IMAGE)
+        #bmpinfo = dataBitMap.GetInfo()
+        #bmpstr = dataBitMap.GetBitmapBits(True)
+        #im = Image.frombuffer(
+        #    'RGB',
+        #    (bmpinfo['bmWidth'], bmpinfo['bmHeight']),
+        #    bmpstr, 'raw', 'BGRX', 0, 1)
+        #im.show("test")
+        #dcObj.DeleteDC()
+        #cDC.DeleteDC()
+        #win32gui.ReleaseDC(handle, wDC)
+        #icon_info = win32gui.GetIconInfo(res)
+        #print(icon_info)
+        #icon_object = win32gui.GetObject(icon_info[3])
+        #print(icon_object)

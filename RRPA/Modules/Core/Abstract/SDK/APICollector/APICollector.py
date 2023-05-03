@@ -26,3 +26,7 @@ class AbstractAPICollector(ABC):
     @abstractmethod
     def get_api_name_by_func_name(self, func_name):
         pass
+
+    @abstractmethod
+    def get_func_params_by_func_name(self, func_name):
+        pass

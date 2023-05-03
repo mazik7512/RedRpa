@@ -55,9 +55,23 @@ class STDSyntaxTokens:
     RETURN_ARG = STDTokenTypes.RETURN_ARG
 
 
-class STDNameResolverTokens:
+class STDNameBounderTokens:
     FUNC_CALL = STDTokenTypes.FUNC_CALL
     FUNC_DEF = STDTokenTypes.FUNC_DEFINITION
+
+
+class STDSemanticTokens:
+    FUNC_CALL = STDTokenTypes.FUNC_CALL
+    FUNC_CALL_ARG_LIST = STDTokenTypes.FUNC_CALL_ARG_LIST
+    FUNC_CALL_ARG = STDTokenTypes.FUNC_CALL_ARG
+    FUNC_DEF = STDTokenTypes.FUNC_DEFINITION
+    FUNC_DEF_ARG_LIST = STDTokenTypes.FUNC_DEF_ARG_LIST
+    FUNC_DEF_ARG = STDTokenTypes.FUNC_DEF_ARG
+    STR_LITERAL_TYPE = STDTokenTypes.STR_LITERAL
+    NUMBER_LITERAL_TYPE = STDTokenTypes.NUMBER_LITERAL
+    ANY_TYPE = STDTokenTypes.UNIDENTIFIED
+    API_FUNC = STDTokenTypes.API_FUNC
+    USER_FUNC = STDTokenTypes.USER_FUNC
 
 
 class STDTranslatorTokens:

@@ -11,8 +11,8 @@ class STDAPICollection(AbstractAPICollection):
     def get_methods(self):
         return self._api_methods
 
-    def add_method(self, method_name):
-        self._api_methods.append(method_name)
+    def add_method(self, method):
+        self._api_methods.append(method)
 
     def get_api_name(self):
         return self._api_data[0]

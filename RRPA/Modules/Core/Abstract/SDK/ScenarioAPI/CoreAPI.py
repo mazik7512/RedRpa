@@ -36,7 +36,7 @@ class AbstractScenarioAPI(ABC):
         pass
 
     @abstractmethod
-    def move_window(self, window, points):
+    def move_window(self, window, x, y):
         pass
 
     @abstractmethod

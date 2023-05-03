@@ -9,12 +9,14 @@ class RSLEditor(QPlainTextEdit):
 
     def __init__(self, keywords):
         super().__init__()
-        completer = QCompleter(keywords)
+        _keywords = ['loop', 'return']
+        completer = QCompleter(_keywords + keywords)
         completer.activated.connect(self.insert_completion)
         completer.setWidget(self)
         completer.setCompletionMode(QCompleter.CompletionMode.PopupCompletion)
         completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
-        completer.popup().setStyleSheet("font-size: 14px;")
+        completer.popup().setStyleSheet("font-size: 14px;background-color: black; color: aliceblue;"
+                                        "")
         self._completer = completer
         self.textChanged.connect(self.complete)
         self._highlighter = RSLHighlighter(self.document(), keywords)

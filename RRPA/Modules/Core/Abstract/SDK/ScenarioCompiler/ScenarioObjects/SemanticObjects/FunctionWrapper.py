@@ -1,24 +1,24 @@
 from abc import ABC, abstractmethod
 
 
-class AbstractAPICollection(ABC):
+class AbstractFunctionWrapper(ABC):
 
     @abstractmethod
-    def get_methods(self):
+    def get_func_name(self):
         pass
 
     @abstractmethod
-    def add_method(self, method):
+    def get_func_args_count(self):
         pass
 
     @abstractmethod
-    def get_api_name(self):
+    def get_func_args_types(self):
         pass
 
     @abstractmethod
-    def get_api_filename(self):
+    def get_func_arg_type(self, index):
         pass
 
     @abstractmethod
-    def get_class_instance(self):
+    def get_func_type(self):
         pass

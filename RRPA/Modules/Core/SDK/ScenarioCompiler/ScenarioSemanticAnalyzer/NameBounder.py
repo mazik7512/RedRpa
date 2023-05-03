@@ -1,5 +1,5 @@
-from RRPA.Modules.Core.Abstract.SDK.ScenarioCompiler.ScenarioNameBounder.NameBounder import AbstractNameBounder
-from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioTokens.Tokens import STDNameResolverTokens
+from RRPA.Modules.Core.Abstract.SDK.ScenarioCompiler.ScenarioSemanticAnalyzer.NameBounder import AbstractNameBounder
+from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioTokens.Tokens import STDNameBounderTokens
 from RRPA.Modules.Core.Logger.Logger import Logger
 from RRPA.Modules.Core.General.DataStructures.WorkResult import STDWorkResult
 
@@ -8,12 +8,12 @@ MODULE_PREFIX = "[Name Bounder]"
 
 def get_func_calls(func_call_node, api_calls_list, func_calls_list, func_def_list, api_funcs):
     _type = func_call_node.get_type()
-    if _type == STDNameResolverTokens.FUNC_CALL:
+    if _type == STDNameBounderTokens.FUNC_CALL:
         if func_call_node.get_data() in api_funcs:
             api_calls_list.append(func_call_node)
         else:
             func_calls_list.append(func_call_node)
-    elif _type == STDNameResolverTokens.FUNC_DEF:
+    elif _type == STDNameBounderTokens.FUNC_DEF:
         func_def_list.append(func_call_node.get_data())
 
 

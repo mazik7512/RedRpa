@@ -2,6 +2,7 @@ from RRPA.Modules.Core.Abstract.Policies.CompilerPolicies.CompileErrorsProcessin
 from RRPA.Modules.Core.Exceptions.Exceptions import STDLexicalException
 from RRPA.Modules.Core.Exceptions.Exceptions import STDSyntaxException
 from RRPA.Modules.Core.Exceptions.Exceptions import STDNameBoundException
+from RRPA.Modules.Core.Exceptions.Exceptions import STDSemanticException
 from RRPA.Modules.Core.Exceptions.Exceptions import STDTranslationException
 
 
@@ -33,3 +34,8 @@ class STDCompileErrorsProcessingPolicy(AbstractCompileErrorsProcessingPolicy):
     def _process_translation_errors(errors):
         translation_exception = STDTranslationException(errors)
         raise translation_exception
+
+    @staticmethod
+    def _process_semantic_errors(errors):
+        semantic_exception = STDSemanticException(errors)
+        raise semantic_exception

@@ -20,7 +20,7 @@ from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioTranslator.Translator import
 from RRPA.Modules.Core.Logger.Logger import Logger
 from RRPA.AppData.Configs.CoreConfig import LOGS_PATH
 from RRPA.Modules.Core.SDK.APICollector.APICollector import STDAPICollector
-from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioNameBounder.NameBounder import STDRSLNameBounder
+from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioSemanticAnalyzer.NameBounder import STDRSLNameBounder
 from RRPA.Modules.Core.SDK.ScenarioCompiler.CompilerGenerator import STDRSLCompilerGenerator
 from RRPA.Modules.Core.SDK.ScenarioExecutable.Executable import STDRedExecutable
 from RRPA.Modules.Windows.Manager.OSTools import STDOSTools

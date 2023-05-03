@@ -4,6 +4,7 @@ import inspect
 import os
 import importlib
 from RRPA.Modules.Core.Logger.Logger import Logger
+from RRPA.Modules.Core.SDK.APICollector.APIObject import STDAPIObject
 
 
 class STDAPICollector(AbstractAPICollector):
@@ -27,16 +28,25 @@ class STDAPICollector(AbstractAPICollector):
             functions = inspect.getmembers(module_api.get_class_instance(), inspect.isfunction)
             functions = filter(lambda x: not x[0].startswith('_'), functions)
             for func in functions:
-                module_api.add_method(func[0])
+                args = inspect.signature(func[1])
+                _args = []
+                for arg in args.parameters.items():
+                    if arg[0] != "self":
+                        _args.append(str(arg[1]))
+                api_function = STDAPIObject(func[0], _args)
+                module_api.add_method(api_function)
             self._api_functions.append(module_api)
 
     def get_all_api_methods(self):
-        return [func for api in self._api_functions for func in api.get_methods()]
+        return [func.get_object_name() for api in self._api_functions for func in api.get_methods()]
 
     def get_api_methods(self, api_name):
+        api_methods = []
         for api in self._api_functions:
             if api_name == api.get_api_name():
-                return api.get_methods()
+                methods = api.get_methods()
+                for method in methods:
+                    api_methods.append(method.get_object_name())
 
     def get_api_names(self):
         api_names_list = [api_name.get_api_name() for api_name in self._api_functions]
@@ -51,5 +61,10 @@ class STDAPICollector(AbstractAPICollector):
 
     def get_api_name_by_func_name(self, func_name):
         for api in self._api_functions:
-            if func_name in api.get_methods():
-                return api.get_api_name()
+            for method in api.get_methods():
+                if method.get_object_name() == func_name:
+                    return api.get_api_name()
+
+    def get_func_params_by_func_name(self, func_name):
+        params = [func.get_object_data() for api in self._api_functions for func in api.get_methods() if func.get_object_name() == func_name]
+        return params[0]
