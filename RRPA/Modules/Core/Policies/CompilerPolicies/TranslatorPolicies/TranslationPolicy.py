@@ -212,7 +212,7 @@ class STDRSLTranslationPolicy(AbstractTranslationPolicy):
 
     @staticmethod
     def translate_str_literal(node):
-        result = node.get_data()
+        result = 'r' + node.get_data().replace("\"", "'")
         return result
 
     @staticmethod

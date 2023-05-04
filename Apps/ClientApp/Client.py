@@ -1,3 +1,4 @@
+import datetime
 import os
 import sys
 import time
@@ -178,7 +179,7 @@ class ClientApp:
         self.__inactive_app()
         try:
             self._model.compile_and_execute(self._client.scenarioEditor.toPlainText())
-            self.__add_info_to_info_panel(["Сценарий успешно выполнен."])
+            self.__add_info_to_info_panel(["[{}] Сценарий успешно выполнен.".format(datetime.datetime.now())])
         except STDException as exception:
             self.__add_errors_to_info_panel(exception.get_exception_data())
         finally:
@@ -233,15 +234,18 @@ class ClientApp:
             win_name = self._model.get_window_name(elem)
             item = self.__window_filter(win_name, filtered_windows)
             if item:
-                #image = self._model.get_window_icon(elem)
-                #if image:
-                #    q_image = ImageQt(image)
-                #    pixmap = QPixmap(q_image)
-                #    icon = QIcon()
-                #    icon.addPixmap(pixmap, QIcon.Normal, QIcon.State.Off)
-                #    item.setIcon(0, icon)
+                #self.__get_window_icon(item, elem)
                 filtered_windows.append(win_name)
                 self._client.windowsListView.addTopLevelItem(item)
+
+    def __get_window_icon(self, item, window):
+        image = self._model.get_window_icon(window)
+        if image:
+            q_image = ImageQt(image)
+            pixmap = QPixmap(q_image)
+            icon = QIcon()
+            icon.addPixmap(pixmap, QIcon.Normal, QIcon.State.Off)
+            item.setIcon(0, icon)
 
     def __window_filter(self, win_name: str, filtered_windows):
         _filter = True if len(win_name) > 0 else False

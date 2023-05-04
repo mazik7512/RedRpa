@@ -60,6 +60,26 @@ class STDOSTools(AbstractOSTools):
         res = win32gui.CopyIcon(_icon)
         icon_info = win32gui.GetIconInfo(res)
         icon = win32gui.GetObject(icon_info[3])
+        #bminfo_list = []
+        #bminfo_list.append(icon.bmType)
+        #bminfo_list.append(icon.bmWidth)
+        #bminfo_list.append(icon.bmHeight)
+        #bminfo_list.append(icon.bmWidthBytes)
+        #bminfo_list.append(icon.bmPlanes)
+        #addr = id(icon)
+        #fmt = "llllll"
+        #bminfo_buf = win32gui.PyGetMemory(addr, struct.calcsize(fmt))
+        #unpacked_list = struct.unpack_from(fmt, bminfo_buf)
+        #print(unpacked_list)
+        #for item in unpacked_list:
+        #    if item not in bminfo_list:
+        #        bits_addr = item
+        #        break
+        #print('bits_addr =', bits_addr)
+        #bpp = 3
+        #tot_bytes = int(icon.bmWidth * icon.bmHeight * bpp)
+        #bits_str = win32gui.PyGetMemory(bits_addr, tot_bytes)
+        #print(bits_str.tobytes())
         wDC = win32gui.GetDC(None)
         dcObj = win32ui.CreateDCFromHandle(wDC)
         cDC = dcObj.CreateCompatibleDC()
