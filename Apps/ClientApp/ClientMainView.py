@@ -504,6 +504,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
         self.infoView = QListWidget(self.verticalLayoutWidget_4)
         self.infoView.setObjectName(u"infoView")
+        self.infoView.setStyleSheet("color:RoyalBlue;")
 
         self.verticalLayout_5.addWidget(self.infoView)
 

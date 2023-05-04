@@ -1,4 +1,5 @@
 import inspect
+import io
 import struct
 import win32ui
 import pywintypes
@@ -51,37 +52,34 @@ class STDOSTools(AbstractOSTools):
 
     @staticmethod
     def get_icon(win_desc):
-        handle = win32gui.FindWindow(None, "Steam")
-        test = win32gui.DefWindowProc(handle, win32con.WM_GETICON, win32con.ICON_SMALL, 0)
-        print("defwindowproc=", test)
-        test_class_long = win32gui.GetClassLong(handle, win32con.GCL_HICON)
-        print("class_log=", test_class_long)
-        res = win32gui.CopyIcon(test_class_long)
-        print("res=", res)
+        _icon = win32gui.DefWindowProc(win_desc, win32con.WM_GETICON, win32con.ICON_SMALL, 0)
+        if not _icon:
+            _icon = win32gui.GetClassLong(win_desc, win32con.GCL_HICON)
+        if not _icon:
+            return None
+        res = win32gui.CopyIcon(_icon)
         icon_info = win32gui.GetIconInfo(res)
-        print(icon_info)
         icon = win32gui.GetObject(icon_info[3])
-        print(icon)
-        print(dir(icon))
-        #wDC = win32gui.GetWindowDC(None)
-        #dcObj = win32ui.CreateDCFromHandle(res)
-        #cDC = dcObj.CreateCompatibleDC()
-        #dataBitMap = win32ui.CreateBitmap()
-        #dataBitMap.CreateCompatibleBitmap(dcObj, 16, 16)
-        #cDC.SelectObject(dataBitMap)
-        #cDC.BitBlt((0, 0), (16, 16), dcObj, (0, 0), win32con.SRCCOPY)
-        #win32gui.DrawIconEx(wDC, 100, 100, res, 16, 16, 0, None, win32con.DI_IMAGE)
-        #bmpinfo = dataBitMap.GetInfo()
-        #bmpstr = dataBitMap.GetBitmapBits(True)
-        #im = Image.frombuffer(
-        #    'RGB',
-        #    (bmpinfo['bmWidth'], bmpinfo['bmHeight']),
-        #    bmpstr, 'raw', 'BGRX', 0, 1)
-        #im.show("test")
-        #dcObj.DeleteDC()
-        #cDC.DeleteDC()
-        #win32gui.ReleaseDC(handle, wDC)
-        #icon_info = win32gui.GetIconInfo(res)
-        #print(icon_info)
-        #icon_object = win32gui.GetObject(icon_info[3])
-        #print(icon_object)
+        wDC = win32gui.GetDC(None)
+        dcObj = win32ui.CreateDCFromHandle(wDC)
+        cDC = dcObj.CreateCompatibleDC()
+        dataBitMap = win32ui.CreateBitmap()
+        dataBitMap.CreateCompatibleBitmap(dcObj, icon.bmHeight, icon.bmWidth)
+        cDC.SelectObject(dataBitMap)
+        win32gui.DrawIconEx(wDC, 0, 0, res, icon.bmHeight, icon.bmWidth, 0, None, win32con.DI_IMAGE)
+        bitmap_bytes = bytearray(icon.bmHeight * icon.bmWidth * 3)
+        for y in range(icon.bmHeight):
+            for x in range(icon.bmWidth):
+                color = win32gui.GetPixel(wDC, x, y)
+                bitmap_bytes[(y * icon.bmHeight + x) * 3: (y * icon.bmWidth + x) * 3 + 3] = bytes([color & 0xFF, (color & 0xFF00) >> 8, (color & 0xFF0000) >> 16])
+        bitmap_bytes = bytes(bitmap_bytes)
+        dcObj.DeleteDC()
+        cDC.DeleteDC()
+        win32gui.ReleaseDC(win_desc, wDC)
+        win32gui.DestroyIcon(res)
+        im = Image.frombuffer(
+            'RGB',
+            (icon.bmHeight, icon.bmWidth),
+            bitmap_bytes, 'raw', 'RGB', 0, 1)
+        return im
+

@@ -4,11 +4,13 @@ import time
 from multiprocessing import Process
 from threading import Thread
 from threading import Event
+
+from PIL.ImageQt import ImageQt
 from PySide2.QtCore import QEasingCurve, QSize
 from PySide2.QtWidgets import QFileDialog
 from PySide2.QtWidgets import QCompleter
 import PySide2.QtWidgets
-from PySide2.QtGui import QIcon
+from PySide2.QtGui import QIcon, QPixmap
 from PySide2.QtCore import Qt, QByteArray
 from PySide2.QtWidgets import QTreeWidgetItem, QListWidgetItem
 from PySide2.QtCore import QPropertyAnimation
@@ -49,7 +51,6 @@ class ClientApp:
         self.__init_resources()
 
         self.__init_settings()
-        #self._model.get_window_icon(0)
 
     def __init_qt(self):
         dirname = os.path.dirname(PySide2.__file__)
@@ -118,7 +119,9 @@ class ClientApp:
 
     def __init_resources(self):
         self._error_icon = QIcon()
+        self._info_icon = QIcon()
         self._error_icon.addFile(u":/TabIcons/icons/error-icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        self._info_icon.addFile(u":/TabIcons/icons/info-icon.png", QSize(), QIcon.Normal, QIcon.Off)
 
     def __init_network(self):
         self._host = "127.0.0.1"
@@ -175,6 +178,7 @@ class ClientApp:
         self.__inactive_app()
         try:
             self._model.compile_and_execute(self._client.scenarioEditor.toPlainText())
+            self.__add_info_to_info_panel(["Сценарий успешно выполнен."])
         except STDException as exception:
             self.__add_errors_to_info_panel(exception.get_exception_data())
         finally:
@@ -229,6 +233,13 @@ class ClientApp:
             win_name = self._model.get_window_name(elem)
             item = self.__window_filter(win_name, filtered_windows)
             if item:
+                #image = self._model.get_window_icon(elem)
+                #if image:
+                #    q_image = ImageQt(image)
+                #    pixmap = QPixmap(q_image)
+                #    icon = QIcon()
+                #    icon.addPixmap(pixmap, QIcon.Normal, QIcon.State.Off)
+                #    item.setIcon(0, icon)
                 filtered_windows.append(win_name)
                 self._client.windowsListView.addTopLevelItem(item)
 
@@ -269,6 +280,14 @@ class ClientApp:
             item.setIcon(self._error_icon)
             item.setToolTip(error)
             self._client.errorsView.addItem(item)
+
+    def __add_info_to_info_panel(self, info_data):
+        self._client.infoTabsWidget.setTabText(1, "({}) Информация".format(len(info_data)))
+        for info in info_data:
+            item = QListWidgetItem(info)
+            item.setIcon(self._info_icon)
+            item.setToolTip(info)
+            self._client.infoView.addItem(item)
 
     def __update_network_config(self):
         self._host = self._client.hostComboBox.currentText()
