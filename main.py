@@ -14,6 +14,7 @@ from Apps.ClientApp.Client import ClientApp
 from Apps.ClientApp.ClientMainView import Ui_MainWindow
 from RRPA.Modules.Core.Network.Managers.ManagerGenerator import STDManagerGenerator
 from RRPA.Modules.Core.SDK.RedVirtualMachine.RVM import STDRedVirtualMachine
+from RRPA.Modules.Core.SDK.ScenarioAPI.CoreAPI import STDScenarioAPI
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioLexicalAnalyzer.Lexer import STDRSLLexer
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioSyntaxAnalyzer.Parser import STDRSLSyntaxParser
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioTranslator.Translator import STDRSLTranslator
@@ -47,6 +48,8 @@ if __name__ == "__main__":
     log_file = LOGS_PATH + "logs.txt"
     Logger.add_output_file(log_file)
     Logger.success("Приложение запущено")
+
+
     """
     hWnd_list = []
     windows = win32gui.EnumWindows(lambda hWnd, param: param.append(hWnd), hWnd_list)
@@ -54,7 +57,7 @@ if __name__ == "__main__":
         #text = win32gui.GetWindowText(wnd)
         #print(text)
 
-    wnd = win32gui.FindWindow(None, "Новости - Google Chrome") #RedRPA – main.py Список друзей
+    wnd = win32gui.FindWindow(None, "Список друзей") #RedRPA – main.py Список друзей
     win32gui.SetForegroundWindow(wnd)
     win32gui.SetActiveWindow(wnd)
     #print(wnd)
@@ -79,16 +82,16 @@ if __name__ == "__main__":
     client_thread.join()
     server_thread.join()
 
-    #scenario = "c=5; function \ntest_func(a, b){ \nreturn(a); }loop(5){ click(\"accept\"); " \
-               #"hover(1234.5); }" \
-               #"user_object = test(3, 4); test_func(1,\n2);\n \n"
-    #scenario = "a = b = test(test_func()); function test(d){ return(\"test\");}loop(c){click(a,b);" \
-               #"hover(b, func_1());} test(d);"
-    #scenario = "test(a, b, c, test(test()));"
-    #scenario = "loop(get_number(inner())){test(\"ss\"); a=test(); a=5; a=b; }"
-    #scenario = "test(a, b, test(test()), d); a=test(test(test()), test(), 123); d=1; a=d; d=a; test(); b=test(); a=b=test();" # работает
-    #scenario = "a=x=test();" # работает
-    #scenario = "loop(a){ loop(5){test();} test(test(test()), test()); test(); a=test(); } a=test();"
+    # scenario = "c=5; function \ntest_func(a, b){ \nreturn(a); }loop(5){ click(\"accept\"); " \
+    # "hover(1234.5); }" \
+    # "user_object = test(3, 4); test_func(1,\n2);\n \n"
+    # scenario = "a = b = test(test_func()); function test(d){ return(\"test\");}loop(c){click(a,b);" \
+    # "hover(b, func_1());} test(d);"
+    # scenario = "test(a, b, c, test(test()));"
+    # scenario = "loop(get_number(inner())){test(\"ss\"); a=test(); a=5; a=b; }"
+    # scenario = "test(a, b, test(test()), d); a=test(test(test()), test(), 123); d=1; a=d; d=a; test(); b=test(); a=b=test();" # работает
+    # scenario = "a=x=test();" # работает
+    # scenario = "loop(a){ loop(5){test();} test(test(test()), test()); test(); a=test(); } a=test();"
     scenario = "b=z=2;function test(){ a=5; test();} loop(a){ loop(5){test();} test(test(test()), test()); test(); q=z=test(); } a=test();"
     scenario = "CV_scan(\"Внешний HDD(E:)\");\n#comment check\n\nfunction inner_loop(a, b){ # comment_check_2\n a = b = 5; b = 2; return ; } loop(test()){} CV_scan(get_window(get_name()), \"button\"); click_on_object(); loop(5){ loop(b){ inner_loop(); inner_loop_1(); } outer_loop_1(); outer_loop2(); } outside_loop();#comment\n\n#comment"
     scenario = "test_func;"
@@ -116,9 +119,7 @@ if __name__ == "__main__":
     rvm = STDRedVirtualMachine()
     rvm.execute(rex)
 
-    #node = res.get_next()
-    #while node:
+    # node = res.get_next()
+    # while node:
     #    print(node)
     #    node = res.get_next()
-
-

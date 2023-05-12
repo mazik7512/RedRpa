@@ -9,7 +9,7 @@ class STDRSLOffsetTranslationPolicy(AbstractOffsetTranslationPolicy):
     def get_current_offset():
         offset = ""
         for i in range(STDRSLOffsetTranslationPolicy._offset_level):
-            offset += "\t"
+            offset += "    "
         return offset
 
     @staticmethod

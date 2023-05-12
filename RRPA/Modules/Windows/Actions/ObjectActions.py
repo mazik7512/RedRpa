@@ -56,7 +56,7 @@ class ActionHelper:
 
     @staticmethod
     def get_object_center(hwnd: int, object_desc: STDTemplateDescriptor) -> Tuple[int, int]:
-        x = object_desc._points[0] + (object_desc._points[1] - object_desc._points[0]) // 2
-        y = object_desc._points[2] + (object_desc._points[3] - object_desc._points[2]) // 2
+        x = object_desc.get_points()[0] + ((object_desc.get_points()[1] - object_desc.get_points()[0]) // 2)
+        y = object_desc.get_points()[2] + ((object_desc.get_points()[3] - object_desc.get_points()[2]) // 2)
         x, y = win32gui.ClientToScreen(hwnd, (x, y))
         return x, y

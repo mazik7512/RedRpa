@@ -48,7 +48,7 @@ class STDRSLTranslationPolicy(AbstractTranslationPolicy):
             loop_arg_data = loop_data_name
         else:
             loop_arg_data = loop_arg_node.deserialize()
-        result = loop_arg_name + " in range(1, " + loop_arg_data + ")"
+        result = loop_arg_name + " in range(" + loop_arg_data + ")"
         return loop_arg_init, result
 
     @staticmethod
@@ -212,7 +212,7 @@ class STDRSLTranslationPolicy(AbstractTranslationPolicy):
 
     @staticmethod
     def translate_str_literal(node):
-        result = 'r' + node.get_data().replace("\"", "'")
+        result = 'r' + "'" + node.get_data()[1:-1].replace("'", "\"") + "'"
         return result
 
     @staticmethod

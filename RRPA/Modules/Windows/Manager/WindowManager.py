@@ -20,9 +20,9 @@ class STDWindowManager(AbstractWindowManager):
 
     def _add_objects(self, objects):
         for obj in objects:
-            if obj.get_object_type == 0:
+            if obj.get_object_type() == 0:
                 self.objects.append(STDButton(self.window.get_window(), obj))
-            elif obj.get_object_type == 1:
+            elif obj.get_object_type() == 1:
                 self.objects.append(STDInputField(self.window.get_window(), obj))
 
     def os_scan_for_object(self):
@@ -32,6 +32,7 @@ class STDWindowManager(AbstractWindowManager):
 
     def cv_scan_for_objects(self):
         cv_scanner = self._scanners['CV']
+        self.focus()
         window_screen = STDWindowManager.decode_image(self.window.get_window_bitmap())
         _objects = cv_scanner.find_objects(window_screen)
         self._add_objects(_objects)
@@ -77,3 +78,4 @@ class STDWindowManager(AbstractWindowManager):
         for i in range(len(self.objects)):
             if self.objects[i].get_text() == _text:
                 return i
+        return -1

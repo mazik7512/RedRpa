@@ -1,3 +1,5 @@
+import cv2
+
 from RRPA.Modules.Core.Abstract.ObjectScanning.ObjectScanner import AbstractObjectScanner
 from RRPA.Modules.Core.Abstract.ObjectScanning.TemplateMatcher import AbstractTemplateMatcher
 from RRPA.Modules.Core.Abstract.ObjectScanning.ObjectDetector import AbstractObjectDetector

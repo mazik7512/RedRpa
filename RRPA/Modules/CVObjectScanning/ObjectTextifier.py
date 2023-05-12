@@ -62,15 +62,12 @@ def deskew(image):
 
 
 def preprocess(image):
-    gray = get_grayscale(image)
-    no_noise = remove_noise(gray)
-    threshold = thresholding(no_noise)
-    dilation = dilate(threshold)
-    erosion = erode(dilation)
-    morphology = opening(erosion)
-    canny_edge = canny(morphology)
-    skew = deskew(canny_edge)
-    return skew
+    #image = get_grayscale(image)
+    #image = thresholding(image)
+    #cv2.imshow("preprocess", image)
+    #cv2.waitKey(0)
+    #cv2.destroyAllWindows()
+    return image
 
 
 class STDCVObjectTextifier(AbstractObjectTextifier):
@@ -78,5 +75,7 @@ class STDCVObjectTextifier(AbstractObjectTextifier):
     def textify(self, _object):
         img = preprocess(_object)
         text = pytesseract.image_to_string(img, config=tessdata_dir_config) # lang=rus
+        #text = pytesseract.image_to_string(img)
+        text = text.strip()
         print("text=", text)
         return text

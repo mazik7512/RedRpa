@@ -1,3 +1,5 @@
+import time
+
 from RRPA.Modules.Core.Abstract.SDK.ScenarioAPI.CoreAPI import AbstractScenarioAPI
 from RRPA.Modules.Core.Abstract.OS.Manager.OSTools import AbstractOSTools
 
@@ -78,3 +80,6 @@ class STDScenarioAPI(AbstractScenarioAPI):
     def focus_window(self, window: str):
         wnd = self._find_window_in_pool(window)
         wnd.focus()
+
+    def wait(self, seconds: int):
+        time.sleep(seconds)
