@@ -49,7 +49,10 @@ class ObjectActionizer:
 
     @staticmethod
     def input_text(hwnd: int, object_desc: STDTextObjectDescriptor, text):
-        pass
+        ObjectActionizer.click(hwnd, object_desc)
+        for letter in text:
+            win32api.keybd_event(ord(letter), 0, win32con.WM_KEYDOWN, 0)
+            win32api.keybd_event(ord(letter), 0, win32con.WM_KEYUP, 0)
 
 
 class ActionHelper:

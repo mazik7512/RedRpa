@@ -37,6 +37,8 @@ class RSLEditor(QPlainTextEdit):
 
     def complete(self):
         prefix = self.text_under_cursor
+        if len(prefix) < 1:
+            return None
         self._completer.setCompletionPrefix(prefix)
         popup = self._completer.popup()
         cr = self.cursorRect()

@@ -9,7 +9,7 @@ class STDButton(WindowObject):
         super().__init__(hwnd, object_desc)
 
     def click(self):
-        ObjectActionizer.click(self._window, self._object)
+        ObjectActionizer.click(self._window.get_window(), self._object)
 
     def double_click(self):
         ObjectActionizer.double_click(self._window.get_window(), self._object)
@@ -27,4 +27,4 @@ class STDButton(WindowObject):
         ObjectActionizer.move(self._window.get_window(), self._object)
 
     def get_text(self):
-        return ObjectActionizer.get_text(self._window, self._object)
+        return ObjectActionizer.get_text(self._window.get_window(), self._object)

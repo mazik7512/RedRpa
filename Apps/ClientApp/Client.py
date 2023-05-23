@@ -1,27 +1,21 @@
 import datetime
 import os
 import sys
-import time
-from multiprocessing import Process
 from threading import Thread
-from threading import Event
-
+import PySide2.QtWidgets
 from PIL.ImageQt import ImageQt
 from PySide2.QtCore import QEasingCurve, QSize
-from PySide2.QtWidgets import QFileDialog
-from PySide2.QtWidgets import QCompleter
-import PySide2.QtWidgets
-from PySide2.QtGui import QIcon, QPixmap
-from PySide2.QtCore import Qt, QByteArray
-from PySide2.QtWidgets import QTreeWidgetItem, QListWidgetItem
 from PySide2.QtCore import QPropertyAnimation
-from Apps.ClientApp.ClientModel import ClientModel
+from PySide2.QtCore import Qt, QByteArray
+from PySide2.QtGui import QIcon, QPixmap
+from PySide2.QtWidgets import QFileDialog
+from PySide2.QtWidgets import QTreeWidgetItem, QListWidgetItem
 from Apps.ClientApp.ClientMainView import Ui_MainWindow
-from Apps.ClientApp.SyntaxHighlighter import RSLHighlighter
+from Apps.ClientApp.ClientModel import ClientModel
+from Apps.ClientApp.CodeEditor import RSLEditor
+from RRPA.AppData.Configs.CompilerConfig import API_PATH
 from RRPA.Modules.Core.Exceptions.Exceptions import STDRedConnectionStopException, STDException
 from RRPA.Modules.Core.SDK.APICollector.APICollector import STDAPICollector
-from RRPA.AppData.Configs.CompilerConfig import API_PATH
-from Apps.ClientApp.CodeEditor import RSLEditor
 
 
 CLIENT_STATES = ['Неактивно', 'Выполнение...', 'Ожидание...']
@@ -31,6 +25,9 @@ CLIENT_STATES_COLOR_SCHEMES = ["#currentStatus{\nbackground-color: red;\n color:
 
 
 class ClientApp:
+
+    _info_count = 0
+
     def __init__(self):
         self.__init_qt()
         self.__init_qt_app()
@@ -286,7 +283,8 @@ class ClientApp:
             self._client.errorsView.addItem(item)
 
     def __add_info_to_info_panel(self, info_data):
-        self._client.infoTabsWidget.setTabText(1, "({}) Информация".format(len(info_data)))
+        self._info_count += len(info_data)
+        self._client.infoTabsWidget.setTabText(1, "({}) Информация".format(self._info_count))
         for info in info_data:
             item = QListWidgetItem(info)
             item.setIcon(self._info_icon)

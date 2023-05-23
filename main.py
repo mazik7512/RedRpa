@@ -44,13 +44,9 @@ def server_test(_server):
 
 
 if __name__ == "__main__":
-
-    #pytesseract.pytesseract.tesseract_cmd = r'D:\Programms\Tesseract-OCR-5.3\tesseract.exe'
-    #tessdata_dir_config = r'--tessdata-dir "D:\Programms\Tesseract-OCR-5.3\tessdata"'
-
-    #img = cv2.imread("RRPA\\Tests\\TestImages\\test-2.png")
-
-    #print(pytesseract.image_to_string(img, lang='rus', config=tessdata_dir_config))
+    #api = STDScenarioAPI(STDOSTools)
+    #api.CV_scan("Конфигурация")
+    #api.click_on_object("Конфигурация", "Продажи")
 
     client = ClientApp()
     client.start_app()

@@ -27,6 +27,7 @@ class STDCVObjectScanner(AbstractObjectScanner):
             obj = STDObjectDescriptor(template, template_type)
             obj_text = self._textifier.textify(image[y:yh, x:xw])
             textifyied_obj = STDTextObjectDescriptor(obj, obj_text)
+            print(textifyied_obj.get_object_typename(), textifyied_obj.get_text())
             objects.append(textifyied_obj)
         return objects
 
