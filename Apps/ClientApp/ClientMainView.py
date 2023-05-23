@@ -526,7 +526,6 @@ class Ui_MainWindow(object):
         self.MainTabWidget.setCurrentIndex(0)
         self.infoTabsWidget.setCurrentIndex(0)
 
-
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
 

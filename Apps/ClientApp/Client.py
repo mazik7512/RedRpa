@@ -27,6 +27,8 @@ CLIENT_STATES_COLOR_SCHEMES = ["#currentStatus{\nbackground-color: red;\n color:
 class ClientApp:
 
     _info_count = 0
+    _current_host = "127.0.0.1"
+    _current_port = 5551
 
     def __init__(self):
         self.__init_qt()
@@ -90,7 +92,7 @@ class ClientApp:
         #self._highlighter = RSLHighlighter(self._client.scenarioEditor.document(), api_funcs.get_all_api_methods())
 
     def __init_app_model(self):
-        self._model = ClientModel("127.0.0.1", 5553)
+        self._model = ClientModel("127.0.0.1", 5551)
 
     def __init_app_info(self):
         client_path = os.getcwd() + "\\Apps\\ClientApp\\"
@@ -123,7 +125,7 @@ class ClientApp:
 
     def __init_network(self):
         self._host = "127.0.0.1"
-        self._port = 5559
+        self._port = 5551
         self.__update_network_config()
 
     def __init_threads(self):
@@ -292,9 +294,12 @@ class ClientApp:
             self._client.infoView.addItem(item)
 
     def __update_network_config(self):
-        self._host = self._client.hostComboBox.currentText()
-        self._port = int(self._client.portNumberSpinBox.text())
-        self._model.refresh_client_data(self._host, self._port)
+        host = self._client.hostComboBox.currentText()
+        port = int(self._client.portNumberSpinBox.text())
+        if host != self._host and port != self._port:
+            self._host = host
+            self._port = port
+            self._model.refresh_client_data(self._host, self._port)
 
     def __save_scenario_to_file(self):
         save_file = QFileDialog.getSaveFileName(self._form, "Сохранить сценарий",

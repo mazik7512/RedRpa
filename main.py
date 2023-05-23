@@ -76,7 +76,7 @@ if __name__ == "__main__":
     wm.scan_for_objects()
     #Actionizer.move(wnd, TemplateDescriptor([sv0, 30, sv0, 30]))
     """
-
+    """
     generator = STDManagerGenerator("127.0.0.1", 5551)
     server = generator.generate_server()
     client = generator.generate_client()
@@ -87,7 +87,7 @@ if __name__ == "__main__":
     server_thread.start()
     client_thread.join()
     server_thread.join()
-
+"""
     # scenario = "c=5; function \ntest_func(a, b){ \nreturn(a); }loop(5){ click(\"accept\"); " \
     # "hover(1234.5); }" \
     # "user_object = test(3, 4); test_func(1,\n2);\n \n"
