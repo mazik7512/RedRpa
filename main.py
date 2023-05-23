@@ -4,6 +4,9 @@ import pathlib
 import sys
 import threading
 import time
+
+import cv2
+import pytesseract
 import win32gui
 import PySide2
 import win32con
@@ -41,6 +44,13 @@ def server_test(_server):
 
 
 if __name__ == "__main__":
+
+    #pytesseract.pytesseract.tesseract_cmd = r'D:\Programms\Tesseract-OCR-5.3\tesseract.exe'
+    #tessdata_dir_config = r'--tessdata-dir "D:\Programms\Tesseract-OCR-5.3\tessdata"'
+
+    #img = cv2.imread("RRPA\\Tests\\TestImages\\test-2.png")
+
+    #print(pytesseract.image_to_string(img, lang='rus', config=tessdata_dir_config))
 
     client = ClientApp()
     client.start_app()

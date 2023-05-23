@@ -4,8 +4,8 @@ import cv2
 import numpy as np
 
 
-pytesseract.pytesseract.tesseract_cmd = r'D:\Programms\Tesseract-OCR\tesseract.exe'
-tessdata_dir_config = r'--tessdata-dir "D:\Programms\Tesseract-OCR\tessdata"'
+pytesseract.pytesseract.tesseract_cmd = r'D:\Programms\Tesseract-OCR-5.3\tesseract.exe'
+tessdata_dir_config = r'--tessdata-dir "D:\Programms\Tesseract-OCR-5.3\tessdata"'
 
 
 # get grayscale image
@@ -20,7 +20,7 @@ def remove_noise(image):
 
 # thresholding
 def thresholding(image):
-    return cv2.threshold(image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+    return cv2.threshold(image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 
 
 # dilation
@@ -62,11 +62,9 @@ def deskew(image):
 
 
 def preprocess(image):
-    #image = get_grayscale(image)
-    #image = thresholding(image)
-    #cv2.imshow("preprocess", image)
-    #cv2.waitKey(0)
-    #cv2.destroyAllWindows()
+    image = get_grayscale(image)
+    image = cv2.bilateralFilter(image, 11, 17, 17)  # Blur to reduce noise
+    #image = cv2.GaussianBlur(image, (3, 3), 0)
     return image
 
 
@@ -74,8 +72,7 @@ class STDCVObjectTextifier(AbstractObjectTextifier):
 
     def textify(self, _object):
         img = preprocess(_object)
-        text = pytesseract.image_to_string(img, config=tessdata_dir_config) # lang=rus
-        #text = pytesseract.image_to_string(img)
+        text = pytesseract.image_to_string(img, lang='rus', config=tessdata_dir_config) # lang=rus
         text = text.strip()
         print("text=", text)
         return text
