@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from RRPA.Modules.Core.Abstract.OS.Manager.Window import AbstractWindow
+from RRPA.Modules.Core.Abstract.OS.Tools.Window import AbstractWindow
 
 
 class AbstractWindowManager(ABC):

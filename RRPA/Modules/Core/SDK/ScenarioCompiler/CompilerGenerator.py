@@ -1,7 +1,6 @@
-from RRPA.Modules.Core.Abstract.OS.Manager.OSTools import AbstractOSTools
+from RRPA.Modules.Core.Abstract.OS.Tools.OSTools import AbstractOSTools
 from RRPA.Modules.Core.SDK.ScenarioCompiler.Compilers.Compiler import STDRSLCompiler
 from RRPA.Modules.Core.Policies.CompilerPolicies.CompilePolicy import STDRSLCompilePolicy
-from RRPA.AppData.Configs.CompilerConfig import OS_UTILS_PATH
 
 
 class STDRSLCompilerGenerator:

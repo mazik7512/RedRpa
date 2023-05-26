@@ -1,5 +1,5 @@
 from RRPA.Modules.Core.General.WindowObjectsDescriptors.ObjectDescriptor import STDObjectDescriptor
-from RRPA.Modules.Core.Abstract.OS.Manager.Window import AbstractWindow
+from RRPA.Modules.Core.Abstract.OS.Tools.Window import AbstractWindow
 
 
 class WindowObject:

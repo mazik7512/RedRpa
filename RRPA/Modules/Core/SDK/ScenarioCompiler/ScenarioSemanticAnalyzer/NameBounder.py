@@ -55,8 +55,8 @@ class STDRSLNameBounder(AbstractNameBounder):
         return api_imports, api_inits
 
     def _generate_std_os_tools(self, section_data):
-        section_data['STDOSTools'] = 'from {} import {}'.format(self._os_utils.get_os_tools_import_path(),
-                                                                self._os_utils.get_os_tools_name())
+        section_data['STDOSTools'] = 'from {} import {}'.format(self._os_utils.get_tools_import_path(),
+                                                                self._os_utils.get_tools_name())
 
     def _generate_api_sections(self, api_calls):
         api_imports = {}
@@ -80,6 +80,6 @@ class STDRSLNameBounder(AbstractNameBounder):
 
     def _generate_init_section(self, api_name, section_data):
         api_init_name = "api_init_" + api_name.lower()
-        init_string = api_init_name + " = " + api_name + "({})".format(self._os_utils.get_os_tools_name())
+        init_string = api_init_name + " = " + api_name + "({})".format(self._os_utils.get_tools_name())
         init_section = {'api_init_name': api_init_name, 'api_init_code': init_string}
         section_data[api_name] = init_section

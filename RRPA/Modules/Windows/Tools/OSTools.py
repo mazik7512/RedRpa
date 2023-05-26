@@ -1,15 +1,17 @@
 import inspect
 import io
 import struct
+import time
+
 import win32ui
 import pywintypes
 import win32con
 from PIL import Image
 
 from RRPA.Modules.CVObjectScanning.ObjectScannerGenerator import STDCVObjectScannerGenerator
-from RRPA.Modules.Core.Abstract.OS.Manager.OSTools import AbstractOSTools
-from RRPA.Modules.Windows.Manager.Window import STDWindow
-from RRPA.Modules.Windows.Manager.WindowManager import STDWindowManager
+from RRPA.Modules.Core.Abstract.OS.Tools.OSTools import AbstractOSTools
+from RRPA.Modules.Windows.Tools.Window import STDWindow
+from RRPA.Modules.Windows.Tools.WindowManager import STDWindowManager
 from win32 import win32gui
 from win32 import win32api
 
@@ -43,12 +45,12 @@ class STDOSTools(AbstractOSTools):
         return win32gui.GetWindowText(win_desc)
 
     @staticmethod
-    def get_os_tools_name():
+    def get_tools_name():
         return STDOSTools.__name__
 
     @staticmethod
-    def get_os_tools_import_path():
-        return "RRPA.Modules.Windows.Manager.OSTools"
+    def get_tools_import_path():
+        return STDOSTools.__module__
 
     @staticmethod
     def get_icon(win_desc):
@@ -102,4 +104,8 @@ class STDOSTools(AbstractOSTools):
             (icon.bmHeight, icon.bmWidth),
             bitmap_bytes, 'raw', 'RGB', 0, 1)
         return im
+
+    @staticmethod
+    def sleep(seconds):
+        time.sleep(seconds)
 

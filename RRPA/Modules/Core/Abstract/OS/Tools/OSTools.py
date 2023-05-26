@@ -1,9 +1,10 @@
 from abc import ABC, abstractmethod
-from RRPA.Modules.Core.Abstract.OS.Manager.Window import AbstractWindow
-from RRPA.Modules.Core.Abstract.OS.Manager.WindowManager import AbstractWindowManager
+from RRPA.Modules.Core.Abstract.OS.Tools.Window import AbstractWindow
+from RRPA.Modules.Core.Abstract.OS.Tools.WindowManager import AbstractWindowManager
+from RRPA.Modules.Core.Abstract.General.Tools.Tools import AbstractTools
 
 
-class AbstractOSTools(ABC):
+class AbstractOSTools(AbstractTools):
 
     @staticmethod
     @abstractmethod
@@ -27,12 +28,12 @@ class AbstractOSTools(ABC):
 
     @staticmethod
     @abstractmethod
-    def get_os_tools_name():
+    def get_tools_name():
         pass
 
     @staticmethod
     @abstractmethod
-    def get_os_tools_import_path():
+    def get_tools_import_path():
         pass
 
     @staticmethod
@@ -43,4 +44,9 @@ class AbstractOSTools(ABC):
     @staticmethod
     @abstractmethod
     def get_icon(win_desc):
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def sleep(seconds):
         pass

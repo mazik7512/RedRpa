@@ -1,4 +1,4 @@
-from RRPA.Modules.Core.Abstract.OS.Manager.Window import AbstractWindow
+from RRPA.Modules.Core.Abstract.OS.Tools.Window import AbstractWindow
 import win32gui
 import win32ui
 from ctypes import windll

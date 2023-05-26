@@ -1,7 +1,7 @@
-from RRPA.Modules.Core.Abstract.OS.Manager.WindowManager import AbstractWindowManager
-from RRPA.Modules.Core.Abstract.OS.Manager.Window import AbstractWindow
-from RRPA.Modules.Windows.Manager.WinObjects.Button import STDButton
-from RRPA.Modules.Windows.Manager.WinObjects.InputField import STDInputField
+from RRPA.Modules.Core.Abstract.OS.Tools.WindowManager import AbstractWindowManager
+from RRPA.Modules.Core.Abstract.OS.Tools.Window import AbstractWindow
+from RRPA.Modules.Windows.Tools.WinObjects.Button import STDButton
+from RRPA.Modules.Windows.Tools.WinObjects.InputField import STDInputField
 from RRPA.Modules.Windows.Actions.WindowActions import WindowActionizer
 import numpy as np
 import cv2

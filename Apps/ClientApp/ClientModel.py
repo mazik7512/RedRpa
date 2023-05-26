@@ -5,7 +5,7 @@ import re
 from RRPA.Modules.Core.Crypto.StribogHasher import STDHasher
 from RRPA.Modules.Core.Logger.Logger import Logger
 from RRPA.Modules.Core.SDK.ScenarioCompiler.CompilerGenerator import STDRSLCompilerGenerator
-from RRPA.Modules.Windows.Manager.OSTools import STDOSTools
+from RRPA.Modules.Windows.Tools.OSTools import STDOSTools
 from RRPA.Modules.Core.Network.Managers.ManagerGenerator import STDManagerGenerator
 from RRPA.Modules.Core.SDK.RedVirtualMachine.RVM import STDRedVirtualMachine
 
