@@ -1,12 +1,13 @@
-from RRPA.Modules.Core.Abstract.OS.Tools.OSObjects.ObjectWrapper import WindowObject
+from RRPA.Modules.Core.Abstract.OS.Objects.ObjectWrapper import AbstractWindowObject
 from RRPA.Modules.Core.General.WindowObjectsDescriptors.ObjectDescriptor import STDObjectDescriptor
 from RRPA.Modules.Windows.Actions.ObjectActions import ObjectActionizer
 
 
-class STDInputField(WindowObject):
+class STDInputField(AbstractWindowObject):
 
     def __init__(self, hwnd, object_desc: STDObjectDescriptor):
-        super().__init__(hwnd, object_desc)
+        self._window = hwnd
+        self._object = object_desc
 
     def click(self):
         ObjectActionizer.click(self._window.get_window(), self._object)

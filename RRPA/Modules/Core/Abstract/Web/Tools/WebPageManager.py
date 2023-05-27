@@ -14,3 +14,7 @@ class AbstractWebPageManager(ABC):
     @abstractmethod
     def object_action(self, web_object, web_action, *params):
         pass
+
+    @abstractmethod
+    def scan_for_objects(self):
+        pass

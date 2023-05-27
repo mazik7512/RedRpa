@@ -11,3 +11,10 @@ class AbstractWebPage(ABC):
     def get_page(self):
         pass
 
+    @abstractmethod
+    def set_page_handle(self, handle):
+        pass
+
+    @abstractmethod
+    def get_page_handle(self):
+        pass

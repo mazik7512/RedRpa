@@ -21,11 +21,6 @@ class AbstractWebTools(AbstractTools):
 
     @staticmethod
     @abstractmethod
-    def close_web_page(web_page):
-        pass
-
-    @staticmethod
-    @abstractmethod
     def get_icon(web_page):
         pass
 
@@ -38,3 +33,4 @@ class AbstractWebTools(AbstractTools):
     @abstractmethod
     def get_pages():
         pass
+

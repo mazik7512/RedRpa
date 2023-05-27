@@ -6,27 +6,34 @@ from RRPA.AppData.Configs.WebDriverConfig import WEB_DRIVER_PATH
 
 
 class WebObjectActionizer:
-
-    _service = Service(executable_path=WEB_DRIVER_PATH)
-    _driver = webdriver.Chrome(service=_service)
-    _actions = ActionChains(_driver)
+    @staticmethod
+    def click(actions: ActionChains, elem):
+        actions.click(elem)
 
     @staticmethod
-    def _find_element(element_text):
-        return WebObjectActionizer._driver.find_element(By.XPATH, "//*[contains(text(), '{}')]".format(object_text))
+    def double_click(actions: ActionChains, elem):
+        actions.double_click(elem)
 
     @staticmethod
-    def click(object_text):
-
-        elem = WebObjectActionizer._find_element(object_text)
-        elem.click()
+    def click_and_hold(actions: ActionChains, elem):
+        actions.click_and_hold(elem)
 
     @staticmethod
-    def double_click(object_text):
-        elem = WebObjectActionizer._find_element(object_text)
-        elem.click()
-        elem.click()
+    def release(actions: ActionChains, elem):
+        actions.release(elem)
 
     @staticmethod
-    def r_click(object_text):
-        elem = WebObjectActionizer._find_element(object_text)
+    def move_to_element(actions: ActionChains, elem):
+        actions.move_to_element(elem)
+
+    @staticmethod
+    def get_text(elem):
+        return elem.text
+
+    @staticmethod
+    def input_text(elem, text):
+        elem.text = text
+
+    @staticmethod
+    def get_attr(elem, attr):
+        return elem.get_attribute(attr)
