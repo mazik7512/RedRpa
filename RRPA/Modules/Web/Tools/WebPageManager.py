@@ -12,7 +12,7 @@ class STDWebPageManager(AbstractWebPageManager):
     def __init__(self, web_url, web_name, driver, actions):
         self._w_page = STDWebPage(web_url, web_name)
         self._driver = driver
-        self._objects = []
+        self._objects = {}
         self._actions = actions
 
     def open(self):
@@ -25,17 +25,27 @@ class STDWebPageManager(AbstractWebPageManager):
 
     def object_action(self, web_object, web_action, *params):
         action = getattr(WebObjectActionizer, web_action)
-        action(web_object, *params)
+        action(self._objects[web_object], *params)
 
     def scan_for_objects(self):
         buttons = WebPageActionizer.scan_for_objects(self._driver, self._w_page.get_page_handle(), "button")
-        links = WebPageActionizer.scan_for_objects(self._driver, self._w_page.get_page_handle(), "link")
+        links = WebPageActionizer.scan_for_objects(self._driver, self._w_page.get_page_handle(), "a")
         inputs = WebPageActionizer.scan_for_objects(self._driver, self._w_page.get_page_handle(), "input")
-        self._add_objects_by_type(buttons, type(STDWebButton))
-        self._add_objects_by_type(links, type(STDWebLink))
-        self._add_objects_by_type(inputs, type(STDWebInputField))
+        self._add_buttons_objects(buttons)
+        self._add_links_objects(links)
+        self._add_inputs_objects(inputs)
 
-    def _add_objects_by_type(self, objects, obj_type):
+    def _add_buttons_objects(self, objects):
         for obj in objects:
-            self._objects.append(obj_type(self._w_page, obj, self._actions))
+            spec_obj = STDWebButton(self._w_page, obj, self._actions)
+            self._objects[WebObjectActionizer.get_attr(obj, 'value')] = spec_obj
 
+    def _add_links_objects(self, objects):
+        for obj in objects:
+            spec_obj = STDWebLink(self._w_page, obj, self._actions)
+            self._objects[WebObjectActionizer.get_attr(obj, 'value')] = spec_obj
+
+    def _add_inputs_objects(self, objects):
+        for obj in objects:
+            spec_obj = STDWebInputField(self._w_page, obj, self._actions)
+            self._objects[WebObjectActionizer.get_attr(obj, 'value')] = spec_obj

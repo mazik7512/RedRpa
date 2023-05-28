@@ -14,12 +14,16 @@ class STDREXGenerator(AbstractExecutableGenerator):
 
     def _add_import_section(self, import_data):
         import_section = STDImportSection()
-        import_section.add("api", import_data)
+        keys = import_data.keys()
+        for key in keys:
+            import_section.add(key, import_data[key])
         self._sections.add_section("import_section", import_section)
 
     def _add_init_section(self, init_data):
         init_section = STDInitSection()
-        init_section.add("api_init", init_data)
+        keys = init_data.keys()
+        for key in keys:
+            init_section.add(key, init_data[key])
         self._sections.add_section("init_section", init_section)
 
     def _add_info_section(self):

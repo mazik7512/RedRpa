@@ -1,32 +1,16 @@
-import inspect
-import os
-import pathlib
-import sys
-import threading
-import time
-
-import cv2
-import pytesseract
-import win32gui
-import PySide2
-import win32con
-from PySide2.QtCore import Qt
-import PySide2.QtWidgets
-
 from Apps.ClientApp.Client import ClientApp
-from Apps.ClientApp.ClientMainView import Ui_MainWindow
-from RRPA.Modules.Core.Network.Managers.ManagerGenerator import STDManagerGenerator
 from RRPA.Modules.Core.SDK.RedVirtualMachine.RVM import STDRedVirtualMachine
-from RRPA.Modules.Core.SDK.ScenarioAPI.CoreAPI import STDScenarioAPI
+from RRPA.Modules.Core.SDK.ScenarioAPI.WebAPI import STDWebAPI
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioLexicalAnalyzer.Lexer import STDRSLLexer
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioSyntaxAnalyzer.Parser import STDRSLSyntaxParser
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioTranslator.Translator import STDRSLTranslator
 from RRPA.Modules.Core.Logger.Logger import Logger
 from RRPA.AppData.Configs.CoreConfig import LOGS_PATH
 from RRPA.Modules.Core.SDK.APICollector.APICollector import STDAPICollector
-from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioSemanticAnalyzer.NameBounder import STDRSLNameBounder
+from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioNameBounding.NameBounder import STDRSLNameBounder
 from RRPA.Modules.Core.SDK.ScenarioCompiler.CompilerGenerator import STDRSLCompilerGenerator
 from RRPA.Modules.Core.SDK.ScenarioExecutable.Executable import STDRedExecutable
+from RRPA.Modules.Web.Tools.WebTools import STDWebTools
 from RRPA.Modules.Windows.Tools.OSTools import STDOSTools
 
 
@@ -47,6 +31,10 @@ if __name__ == "__main__":
     #api = STDScenarioAPI(STDOSTools)
     #api.CV_scan("Конфигурация")
     #api.click_on_object("Конфигурация", "Продажи")
+    #web_tools = STDWebTools()
+    #api = STDWebAPI({'web': web_tools})
+    #api.web_open("https://www.youtube.com//", "yt")
+    #api.web_scan("yt")
 
     client = ClientApp()
     client.start_app()
@@ -112,11 +100,11 @@ if __name__ == "__main__":
     res.traverse("preorder", print)
     api_names = STDAPICollector("RRPA\\Modules\\Core\\SDK\\ScenarioAPI\\")
     STDAPICollector.collect_all_api_methods(api_names)
-    linker = STDRSLNameBounder(res, api_names, STDOSTools)
+    linker = STDRSLNameBounder(res, api_names, {'os': STDOSTools, 'web': STDWebTools})
     print(*linker.link_names().get_data())
     translator = STDRSLTranslator(res)
     print(translator.translate().get_data())
-    compiler = STDRSLCompilerGenerator.generate_compiler(STDOSTools)
+    compiler = STDRSLCompilerGenerator.generate_compiler(STDOSTools, STDWebTools)
     rex = compiler.compile(scenario)
     with open("scenario.rex", "w+") as red_executable:
         red_executable.write(rex.deserialize())

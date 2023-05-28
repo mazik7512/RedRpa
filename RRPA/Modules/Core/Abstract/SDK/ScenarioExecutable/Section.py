@@ -15,5 +15,10 @@ class AbstractSection(ABC):
     def deserialize(self):
         pass
 
+    @abstractmethod
     def get_data_by_name(self, name: str):
+        pass
+
+    @abstractmethod
+    def get_names(self):
         pass

@@ -1,7 +1,7 @@
 from RRPA.Modules.Core.Abstract.Policies.CompilerPolicies.CompilePolicy import AbstractCompilePolicy
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioLexicalAnalyzer.Lexer import STDRSLLexer
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioSyntaxAnalyzer.Parser import STDRSLSyntaxParser
-from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioSemanticAnalyzer.NameBounder import STDRSLNameBounder
+from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioNameBounding.NameBounder import STDRSLNameBounder
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioSemanticAnalyzer.SemanticAnalyzer import STDRSLSemanticAnalyzer
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioTranslator.Translator import STDRSLTranslator
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioLogger.Logger import STDCompilerLogger
@@ -15,8 +15,8 @@ from RRPA.AppData.Configs.CompilerConfig import API_PATH
 
 class STDRSLCompilePolicy(AbstractCompilePolicy):
 
-    def __init__(self, os_utils):
-        self._os_utils = os_utils
+    def __init__(self, utils):
+        self._utils = utils
         compiler_buffer = self._generate_compiler_components()
         self._lexer = compiler_buffer['lexer']
         self._parser = compiler_buffer['parser']
@@ -83,7 +83,7 @@ class STDRSLCompilePolicy(AbstractCompilePolicy):
         components['logger'] = logger
         components['lexer'] = STDRSLLexer(logger=logger)
         components['parser'] = STDRSLSyntaxParser(logger=logger)
-        components['name_bounder'] = STDRSLNameBounder(os_utils=self._os_utils, logger=logger)
+        components['name_bounder'] = STDRSLNameBounder(tools=self._utils, logger=logger)
         components['semantic'] = STDRSLSemanticAnalyzer(logger=logger)
         components['translator'] = STDRSLTranslator(logger=logger)
         components['api_collector'] = STDAPICollector(API_PATH, logger=logger)

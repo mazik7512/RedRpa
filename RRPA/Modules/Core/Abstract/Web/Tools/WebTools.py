@@ -1,5 +1,6 @@
 from abc import abstractmethod
 from RRPA.Modules.Core.Abstract.General.Tools.Tools import AbstractTools
+from RRPA.Modules.Core.Abstract.Web.Tools.WebPageManager import AbstractWebPageManager
 
 
 class AbstractWebTools(AbstractTools):
@@ -16,7 +17,7 @@ class AbstractWebTools(AbstractTools):
 
     @staticmethod
     @abstractmethod
-    def create_web_page_manager(url, wp_name):
+    def create_web_page_manager(url, wp_name) -> AbstractWebPageManager:
         pass
 
     @staticmethod
@@ -24,13 +25,4 @@ class AbstractWebTools(AbstractTools):
     def get_icon(web_page):
         pass
 
-    @staticmethod
-    @abstractmethod
-    def find_web_page(web_page_name):
-        pass
-
-    @staticmethod
-    @abstractmethod
-    def get_pages():
-        pass
 

@@ -4,9 +4,9 @@ from RRPA.Modules.Core.Abstract.OS.Tools.OSTools import AbstractOSTools
 
 class STDScenarioAPI(AbstractScenarioAPI):
 
-    def __init__(self, win_helper: AbstractOSTools):
+    def __init__(self, tools):
         self._WINDOWS_POOL = {}
-        self._win_helper = win_helper
+        self._win_helper = tools['os']
 
     def _create_window_manager_object(self, win_name):
         win_desciptor = self._win_helper.get_window_by_name(win_name)

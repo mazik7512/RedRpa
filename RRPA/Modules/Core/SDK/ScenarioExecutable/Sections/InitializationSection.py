@@ -16,6 +16,6 @@ class STDInitSection(STDSection):
         result = ""
         for init_type in self._table_data:
             for init_instance in self._table_data[init_type]:
-                result += self._table_data[init_type][init_instance]['api_init_code'] + '\n'
+                result += self._table_data[init_type][init_instance]['init_code'] + '\n'
         result += "\n\n"
         return result

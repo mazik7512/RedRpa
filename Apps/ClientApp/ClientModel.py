@@ -2,9 +2,13 @@ import os
 from inspect import getsourcefile
 from os.path import abspath
 import re
+
+from RRPA.AppData.Configs.CompilerConfig import API_PATH
 from RRPA.Modules.Core.Crypto.StribogHasher import STDHasher
 from RRPA.Modules.Core.Logger.Logger import Logger
+from RRPA.Modules.Core.SDK.APICollector.APICollector import STDAPICollector
 from RRPA.Modules.Core.SDK.ScenarioCompiler.CompilerGenerator import STDRSLCompilerGenerator
+from RRPA.Modules.Web.Tools.WebTools import STDWebTools
 from RRPA.Modules.Windows.Tools.OSTools import STDOSTools
 from RRPA.Modules.Core.Network.Managers.ManagerGenerator import STDManagerGenerator
 from RRPA.Modules.Core.SDK.RedVirtualMachine.RVM import STDRedVirtualMachine
@@ -12,24 +16,28 @@ from RRPA.Modules.Core.SDK.RedVirtualMachine.RVM import STDRedVirtualMachine
 
 class ClientModel:
 
-    def __init__(self, host, port, _os=STDOSTools):
-        self.__init_os_tools(_os)
+    def __init__(self, host, port, _os=STDOSTools, _web=STDWebTools):
+        self.__init_tools(_os, _web)
         self.__init_network_manager(host, port)
         self.__init_compiler()
         self.__init_hasher()
         self.__init_rvm()
 
     def __init_compiler(self):
-        self._compiler = STDRSLCompilerGenerator.generate_compiler(self._os_tools)
+        self._compiler = STDRSLCompilerGenerator.generate_compiler(self._os_tools, self._web_tools)
 
     def __init_network_manager(self, host, port):
         self._net_manager = STDManagerGenerator(host, port).generate_client()
 
-    def __init_os_tools(self, _os):
+    def __init_tools(self, _os, _web):
         self._os_tools = _os
+        self._web_tools = _web
 
     def __init_rvm(self):
-        self._rvm = STDRedVirtualMachine()
+        api_collector = STDAPICollector(API_PATH)
+        api_collector.collect_all_api_methods()
+        tools = {'os': self._os_tools, 'web': self._web_tools}
+        self._rvm = STDRedVirtualMachine(tools=tools, api_collector=api_collector)
 
     def __init_hasher(self):
         self._hasher = STDHasher(32)

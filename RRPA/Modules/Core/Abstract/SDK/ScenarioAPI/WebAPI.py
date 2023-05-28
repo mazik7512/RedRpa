@@ -8,11 +8,11 @@ class AbstractWebAPI(ABC):
         pass
 
     @abstractmethod
-    def web_click(self, page: str, web_object: str):
+    def web_scan(self, page: str):
         pass
 
     @abstractmethod
-    def web_r_click(self, page: str, web_object: str):
+    def web_click(self, page: str, web_object: str):
         pass
 
     @abstractmethod
@@ -20,19 +20,11 @@ class AbstractWebAPI(ABC):
         pass
 
     @abstractmethod
-    def web_double_r_click(self, page: str, web_object: str):
-        pass
-
-    @abstractmethod
-    def web_input_text(self, page: str, web_object: str):
+    def web_input_text(self, page: str, web_object: str, text: str):
         pass
 
     @abstractmethod
     def web_hover(self, page: str, web_object: str):
-        pass
-
-    @abstractmethod
-    def web_focus(self, page: str, web_object: str):
         pass
 
     @abstractmethod
@@ -41,4 +33,12 @@ class AbstractWebAPI(ABC):
 
     @abstractmethod
     def web_close(self, page: str):
+        pass
+
+    @abstractmethod
+    def web_click_and_hold(self, page: str, web_object: str):
+        pass
+
+    @abstractmethod
+    def web_release(self, page: str, web_object: str):
         pass

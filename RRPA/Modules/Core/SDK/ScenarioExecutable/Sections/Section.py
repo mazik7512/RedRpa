@@ -7,6 +7,9 @@ class STDSection(AbstractSection):
     def __init__(self):
         self._table_data = {}
 
+    def get_names(self):
+        return self._table_data.keys()
+
     def get_data_by_name(self, name: str):
         return self._table_data[name]
 
