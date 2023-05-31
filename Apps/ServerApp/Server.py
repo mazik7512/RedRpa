@@ -295,6 +295,7 @@ class ServerApp:
         client.startConnectionButton.clicked.connect(self.__send_scenario_to_client)
         client.codeEditor.setPlainText(self._server.codeEditor.toPlainText())
         client.clientNameEdit.setText("Клиент №{}".format(self.clients_count))
+        client.clientIPEdit.setText("127.0.0.1")
         self.clients_count += 1
         self._server.clientsArea.addSubWindow(client)
         client.show()

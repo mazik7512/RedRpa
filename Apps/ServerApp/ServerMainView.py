@@ -189,7 +189,9 @@ class Ui_MainWindow(object):
 
         self.windowsListView = QTreeWidget(self.verticalLayoutWidget_2)
         self.windowsListView.setObjectName(u"windowsListView")
-
+        __qtreewidgetitem = QTreeWidgetItem()
+        __qtreewidgetitem.setText(0, u"Заголовки окон")
+        self.windowsListView.setHeaderItem(__qtreewidgetitem)
         self.windowsListLayout.addWidget(self.windowsListView)
 
         self.refreshWindowsListButton = QPushButton(self.verticalLayoutWidget_2)
