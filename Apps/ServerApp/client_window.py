@@ -7,7 +7,7 @@
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
-
+import PySide2.QtWidgets
 from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
@@ -15,11 +15,18 @@ from PySide2.QtWidgets import *
 import Apps.ServerApp.Resources.ClientWindowIcons_rc
 
 
-class Ui_ClientWindow(object):
+class Ui_ClientWindow(QMdiSubWindow):
+
+    def __init__(self, parent=None):
+        super().__init__(parent=parent)
+        self.setupUi(self)
+
     def setupUi(self, ClientWindow):
         if not ClientWindow.objectName():
             ClientWindow.setObjectName(u"ClientWindow")
         ClientWindow.resize(499, 353)
+        ClientWindow.setWindowFlags(Qt.CustomizeWindowHint | Qt.WindowCloseButtonHint |
+                                  Qt.WindowMinimizeButtonHint | Qt.MSWindowsFixedSizeDialogHint)
         icon = QIcon()
         icon.addFile(u":/Icons/Icons/client-window-icon.jpg", QSize(), QIcon.Normal, QIcon.Off)
         ClientWindow.setWindowIcon(icon)
@@ -99,23 +106,11 @@ class Ui_ClientWindow(object):
 
         self.optionsLayout.addWidget(self.label, 0, 1, 1, 1)
 
-        self.label_4 = QLabel(self.gridLayoutWidget)
-        self.label_4.setObjectName(u"label_4")
-        self.label_4.setAlignment(Qt.AlignCenter)
 
-        self.optionsLayout.addWidget(self.label_4, 3, 1, 1, 1)
-
-        self.serverIPEdit = QLineEdit(self.gridLayoutWidget)
-        self.serverIPEdit.setObjectName(u"serverIPEdit")
-        self.serverIPEdit.setAlignment(Qt.AlignCenter)
-        self.serverIPEdit.setCursorMoveStyle(Qt.VisualMoveStyle)
-        self.serverIPEdit.setClearButtonEnabled(False)
-
-        self.optionsLayout.addWidget(self.serverIPEdit, 3, 2, 1, 1)
 
         self.gridLayoutWidget_2 = QWidget(ClientWindow)
         self.gridLayoutWidget_2.setObjectName(u"gridLayoutWidget_2")
-        self.gridLayoutWidget_2.setGeometry(QRect(260, 10, 231, 341))
+        self.gridLayoutWidget_2.setGeometry(QRect(260, 25, 231, 321))
         self.codeLayout = QGridLayout(self.gridLayoutWidget_2)
         self.codeLayout.setObjectName(u"codeLayout")
         self.codeLayout.setContentsMargins(0, 0, 0, 0)
@@ -123,13 +118,12 @@ class Ui_ClientWindow(object):
         self.scenarioLabel.setObjectName(u"scenarioLabel")
         self.scenarioLabel.setAlignment(Qt.AlignCenter)
 
-        self.codeLayout.addWidget(self.scenarioLabel, 0, 0, 1, 1)
+        self.codeLayout.addWidget(self.scenarioLabel, 0, 0, 1, 0)
 
         self.codeEditor = QPlainTextEdit(self.gridLayoutWidget_2)
         self.codeEditor.setObjectName(u"codeEditor")
 
-        self.codeLayout.addWidget(self.codeEditor, 1, 0, 1, 1)
-
+        self.codeLayout.addWidget(self.codeEditor, 1, 0, 1, 0)
 
         self.retranslateUi(ClientWindow)
 
@@ -143,8 +137,6 @@ class Ui_ClientWindow(object):
         self.label_2.setText(QCoreApplication.translate("ClientWindow", u"IP \u043a\u043b\u0438\u0435\u043d\u0442\u0430:", None))
         self.label_3.setText(QCoreApplication.translate("ClientWindow", u"\u041f\u043e\u0440\u0442 \u043a\u043b\u0438\u0435\u043d\u0442\u0430:", None))
         self.label.setText(QCoreApplication.translate("ClientWindow", u"\u041a\u043b\u0438\u0435\u043d\u0442:", None))
-        self.label_4.setText(QCoreApplication.translate("ClientWindow", u"IP \u0441\u0435\u0440\u0432\u0435\u0440\u0430:", None))
-        self.serverIPEdit.setInputMask(QCoreApplication.translate("ClientWindow", u"000.000.000.000", None))
         self.scenarioLabel.setText(QCoreApplication.translate("ClientWindow", u"\u0421\u0446\u0435\u043d\u0430\u0440\u0438\u0439:", None))
     # retranslateUi
 

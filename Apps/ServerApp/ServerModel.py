@@ -1,4 +1,5 @@
 import os
+import threading
 from inspect import getsourcefile
 from os.path import abspath
 import re
@@ -127,3 +128,15 @@ class ServerModel:
 
     def get_window_icon(self, hwnd):
         return self._os_tools.get_icon(hwnd)
+
+    def _send_scenario_to_client(self, host, port, scenario):
+        net_manager = STDManagerGenerator(host, port).generate_server()
+        net_manager.start()
+        net_manager.send_scenario(scenario)
+        data = net_manager.get_info_data()
+        net_manager.end()
+        return data
+
+    def send_scenario_to_client(self, host, port, scenario):
+        send_thread = threading.Thread(target=self._send_scenario_to_client, args=(host, port, scenario,))
+        send_thread.start()

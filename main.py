@@ -1,4 +1,9 @@
+import threading
+import time
+
 from Apps.ClientApp.Client import ClientApp
+from Apps.ServerApp.Server import ServerApp
+from RRPA.Modules.Core.Network.Managers.ManagerGenerator import STDManagerGenerator
 from RRPA.Modules.Core.SDK.RedVirtualMachine.RVM import STDRedVirtualMachine
 from RRPA.Modules.Core.SDK.ScenarioAPI.WebAPI import STDWebAPI
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioLexicalAnalyzer.Lexer import STDRSLLexer
@@ -36,8 +41,11 @@ if __name__ == "__main__":
     #api.web_open("https://www.youtube.com//", "yt")
     #api.web_scan("yt")
 
-    client = ClientApp()
-    client.start_app()
+    server = ServerApp()
+    server.start_app()
+
+    #client = ClientApp()
+    #client.start_app()
 
     log_file = LOGS_PATH + "logs.txt"
     Logger.add_output_file(log_file)

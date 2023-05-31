@@ -16,6 +16,10 @@ import Apps.ServerApp.Resources.ServerIcons_rc
 
 
 class Ui_MainWindow(object):
+
+    def __init__(self, MainWindow):
+        self.setupUi(MainWindow)
+
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
@@ -28,6 +32,7 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton{\n"
 "	border-radius: 10px;\n"
+"	border: 1px solid black;\n"
 "	box-shadow: 0 0 5px 0 black;\n"
 "	height: 20px;\n"
 "	margin-left: 5px;\n"
@@ -41,7 +46,7 @@ class Ui_MainWindow(object):
         self.loadScenarioButton = QAction(MainWindow)
         self.loadScenarioButton.setObjectName(u"loadScenarioButton")
         icon1 = QIcon()
-        icon1.addFile(u":/icons/Icons/file-icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon1.addFile(u":/icons/Icons/open-file-icon.png", QSize(), QIcon.Normal, QIcon.Off)
         self.loadScenarioButton.setIcon(icon1)
         self.saveScenarioButton = QAction(MainWindow)
         self.saveScenarioButton.setObjectName(u"saveScenarioButton")
@@ -62,12 +67,12 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.tabWidget = QTabWidget(self.centralwidget)
         self.tabWidget.setObjectName(u"tabWidget")
-        self.tabWidget.setGeometry(QRect(10, 10, 871, 551))
+        self.tabWidget.setGeometry(QRect(10, 10, 881, 551))
         self.mainTab = QWidget()
         self.mainTab.setObjectName(u"mainTab")
         self.horizontalLayoutWidget_3 = QWidget(self.mainTab)
         self.horizontalLayoutWidget_3.setObjectName(u"horizontalLayoutWidget_3")
-        self.horizontalLayoutWidget_3.setGeometry(QRect(0, 10, 861, 511))
+        self.horizontalLayoutWidget_3.setGeometry(QRect(0, 10, 881, 511))
         self.horizontalLayout_4 = QHBoxLayout(self.horizontalLayoutWidget_3)
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
@@ -131,40 +136,6 @@ class Ui_MainWindow(object):
         self.additionalInfoLabel.setAlignment(Qt.AlignCenter)
 
         self.verticalLayout.addWidget(self.additionalInfoLabel)
-
-        self.horizontalLayout = QHBoxLayout()
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.hostLabel = QLabel(self.horizontalLayoutWidget_2)
-        self.hostLabel.setObjectName(u"hostLabel")
-        self.hostLabel.setAlignment(Qt.AlignCenter)
-
-        self.horizontalLayout.addWidget(self.hostLabel)
-
-        self.hostComboBox = QComboBox(self.horizontalLayoutWidget_2)
-        self.hostComboBox.setObjectName(u"hostComboBox")
-
-        self.horizontalLayout.addWidget(self.hostComboBox)
-
-        self.setHostButton = QPushButton(self.horizontalLayoutWidget_2)
-        self.setHostButton.setObjectName(u"setHostButton")
-        self.setHostButton.setStyleSheet(u"#setHostButton{\n"
-"	background-color: white;\n"
-"	color: black;\n"
-"}\n"
-"\n"
-"#setHostButton:hover{\n"
-"	background-color: green;\n"
-"	font-weight: bold;\n"
-"}")
-        icon6 = QIcon()
-        icon6.addFile(u":/icons/Icons/set-icon.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.setHostButton.setIcon(icon6)
-
-        self.horizontalLayout.addWidget(self.setHostButton)
-
-
-        self.verticalLayout.addLayout(self.horizontalLayout)
-
         icon7 = QIcon()
         icon7.addFile(u":/icons/Icons/info-icon.png", QSize(), QIcon.Normal, QIcon.Off)
         self.tabWidget.addTab(self.infoTab, icon7, "")
@@ -191,7 +162,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.dataWidget.sizePolicy().hasHeightForWidth())
         self.dataWidget.setSizePolicy(sizePolicy)
-        self.dataWidget.setMinimumSize(QSize(82, 85))
+        self.dataWidget.setMinimumSize(QSize(82, 100))
         font = QFont()
         font.setFamily(u"Gadugi")
         font.setPointSize(10)
@@ -199,14 +170,14 @@ class Ui_MainWindow(object):
         font.setItalic(False)
         font.setWeight(9)
         self.dataWidget.setFont(font)
-        self.dataWidget.setCursor(QCursor(Qt.OpenHandCursor))
+        self.dataWidget.setCursor(QCursor(Qt.ArrowCursor))
         self.dataWidget.setFeatures(QDockWidget.DockWidgetFloatable|QDockWidget.DockWidgetMovable)
         self.dataWidget.setAllowedAreas(Qt.BottomDockWidgetArea|Qt.TopDockWidgetArea)
         self.dockWidgetContents_4 = QWidget()
         self.dockWidgetContents_4.setObjectName(u"dockWidgetContents_4")
         self.verticalLayoutWidget_2 = QWidget(self.dockWidgetContents_4)
         self.verticalLayoutWidget_2.setObjectName(u"verticalLayoutWidget_2")
-        self.verticalLayoutWidget_2.setGeometry(QRect(10, 10, 231, 581))
+        self.verticalLayoutWidget_2.setGeometry(QRect(10, 30, 231, 561))
         self.windowsListLayout = QVBoxLayout(self.verticalLayoutWidget_2)
         self.windowsListLayout.setObjectName(u"windowsListLayout")
         self.windowsListLayout.setContentsMargins(0, 0, 0, 0)
@@ -216,7 +187,7 @@ class Ui_MainWindow(object):
 
         self.windowsListLayout.addWidget(self.windowsListViewLabel)
 
-        self.windowsListView = QListWidget(self.verticalLayoutWidget_2)
+        self.windowsListView = QTreeWidget(self.verticalLayoutWidget_2)
         self.windowsListView.setObjectName(u"windowsListView")
 
         self.windowsListLayout.addWidget(self.windowsListView)
@@ -231,7 +202,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayoutWidget_3 = QWidget(self.dockWidgetContents_4)
         self.verticalLayoutWidget_3.setObjectName(u"verticalLayoutWidget_3")
-        self.verticalLayoutWidget_3.setGeometry(QRect(250, 10, 741, 581))
+        self.verticalLayoutWidget_3.setGeometry(QRect(250, 30, 741, 561))
         self.codeLayout = QVBoxLayout(self.verticalLayoutWidget_3)
         self.codeLayout.setObjectName(u"codeLayout")
         self.codeLayout.setContentsMargins(0, 0, 0, 0)
@@ -279,13 +250,37 @@ class Ui_MainWindow(object):
 
         self.codeLayout.addLayout(self.horizontalLayout_2)
 
+        self.horizontalLayoutWidget = QWidget(self.dockWidgetContents_4)
+        self.horizontalLayoutWidget.setObjectName(u"horizontalLayoutWidget")
+        self.horizontalLayoutWidget.setGeometry(QRect(10, 0, 981, 31))
+        self.horizontalLayout_3 = QHBoxLayout(self.horizontalLayoutWidget)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.showBottomButton = QPushButton(self.horizontalLayoutWidget)
+        self.showBottomButton.setObjectName(u"showBottomButton")
+        self.showBottomButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.showBottomButton.setStyleSheet(u"#showBottomButton{\n"
+"	background-color: white;\n"
+"	color: black;\n"
+"\n"
+"}\n"
+"\n"
+"#showBottomButton:hover{\n"
+"	background-color: #B0E0E6;\n"
+"}")
+        icon10 = QIcon()
+        icon10.addFile(u":/icons/Icons/show-icon-2.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.showBottomButton.setIcon(icon10)
+
+        self.horizontalLayout_3.addWidget(self.showBottomButton)
+
         self.dataWidget.setWidget(self.dockWidgetContents_4)
         MainWindow.addDockWidget(Qt.BottomDockWidgetArea, self.dataWidget)
         self.infoDataWidget = QDockWidget(MainWindow)
         self.infoDataWidget.setObjectName(u"infoDataWidget")
         self.infoDataWidget.setMinimumSize(QSize(110, 40))
         self.infoDataWidget.setMaximumSize(QSize(300, 524287))
-        self.infoDataWidget.setCursor(QCursor(Qt.OpenHandCursor))
+        self.infoDataWidget.setCursor(QCursor(Qt.ArrowCursor))
         self.infoDataWidget.setStyleSheet(u"")
         self.infoDataWidget.setFeatures(QDockWidget.DockWidgetFloatable|QDockWidget.DockWidgetMovable)
         self.infoDataWidget.setAllowedAreas(Qt.LeftDockWidgetArea|Qt.RightDockWidgetArea)
@@ -300,7 +295,7 @@ class Ui_MainWindow(object):
         self.showButton = QPushButton(self.verticalLayoutWidget)
         self.showButton.setObjectName(u"showButton")
         self.showButton.setMinimumSize(QSize(95, 0))
-        self.showButton.setMaximumSize(QSize(16777215, 16777215))
+        self.showButton.setMaximumSize(QSize(95, 16777215))
         self.showButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.showButton.setStyleSheet(u"#showButton{\n"
 "	background-color: white;\n"
@@ -311,16 +306,45 @@ class Ui_MainWindow(object):
 "#showButton:hover{\n"
 "	background-color: #B0E0E6;\n"
 "}")
-        icon10 = QIcon()
-        icon10.addFile(u":/icons/Icons/show-hide-icon.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.showButton.setIcon(icon10)
+        icon11 = QIcon()
+        icon11.addFile(u":/icons/Icons/show-hide-icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.showButton.setIcon(icon11)
 
         self.infoLayout.addWidget(self.showButton)
 
-        self.infoView = QListWidget(self.verticalLayoutWidget)
+        self.infoErrosTabWidget = QTabWidget(self.verticalLayoutWidget)
+        self.infoErrosTabWidget.setObjectName(u"infoErrosTabWidget")
+        self.infoErrosTabWidget.setTabShape(QTabWidget.Rounded)
+        self.infoInfoTab = QWidget()
+        self.infoInfoTab.setObjectName(u"infoInfoTab")
+        self.verticalLayoutWidget_4 = QWidget(self.infoInfoTab)
+        self.verticalLayoutWidget_4.setObjectName(u"verticalLayoutWidget_4")
+        self.verticalLayoutWidget_4.setGeometry(QRect(0, 0, 271, 471))
+        self.verticalLayout_2 = QVBoxLayout(self.verticalLayoutWidget_4)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.infoView = QListWidget(self.verticalLayoutWidget_4)
         self.infoView.setObjectName(u"infoView")
 
-        self.infoLayout.addWidget(self.infoView)
+        self.verticalLayout_2.addWidget(self.infoView)
+
+        self.infoErrosTabWidget.addTab(self.infoInfoTab, "")
+        self.infoErrorsTab = QWidget()
+        self.infoErrorsTab.setObjectName(u"infoErrorsTab")
+        self.verticalLayoutWidget_5 = QWidget(self.infoErrorsTab)
+        self.verticalLayoutWidget_5.setObjectName(u"verticalLayoutWidget_5")
+        self.verticalLayoutWidget_5.setGeometry(QRect(0, 0, 271, 481))
+        self.verticalLayout_3 = QVBoxLayout(self.verticalLayoutWidget_5)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.errorsView = QListWidget(self.verticalLayoutWidget_5)
+        self.errorsView.setObjectName(u"errorsView")
+
+        self.verticalLayout_3.addWidget(self.errorsView)
+
+        self.infoErrosTabWidget.addTab(self.infoErrorsTab, "")
+
+        self.infoLayout.addWidget(self.infoErrosTabWidget)
 
         self.infoDataWidget.setWidget(self.dockWidgetContents_6)
         MainWindow.addDockWidget(Qt.RightDockWidgetArea, self.infoDataWidget)
@@ -335,10 +359,9 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
+        self.infoErrosTabWidget.setCurrentIndex(0)
 
-
-        QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
 
     def retranslateUi(self, MainWindow):
@@ -348,16 +371,14 @@ class Ui_MainWindow(object):
         self.exitButton.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0445\u043e\u0434", None))
         self.addClientButton.setText(QCoreApplication.translate("MainWindow", u"\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u043a\u043b\u0438\u0435\u043d\u0442\u0430", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.mainTab), QCoreApplication.translate("MainWindow", u"\u0413\u043b\u0430\u0432\u043d\u0430\u044f", None))
-        self.nameInfoLabel.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>\ud83d\udce1 RedRPA - \u0441\u0435\u0440\u0432\u0435\u0440</p></body></html>", None))
-        self.versionInfoLabel.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>\ud83d\udca1 \u0412\u0435\u0440\u0441\u0438\u044f 1.0 &quot;Asuka&quot;</p></body></html>", None))
-        self.hashInfoLabel.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>\ud83d\udd10 \u0425\u044d\u0448 {}</p></body></html>", None))
+        self.nameInfoLabel.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>📡 RedRPA - \u0441\u0435\u0440\u0432\u0435\u0440</p></body></html>", None))
+        self.versionInfoLabel.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>💡 \u0412\u0435\u0440\u0441\u0438\u044f 1.0 &quot;Asuka&quot;</p></body></html>", None))
+        self.hashInfoLabel.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>🔐 \u0425\u044d\u0448 {}</p></body></html>", None))
         self.licenseInfoLabel.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt;\">\u00a9\u00ae Boost Software License - Version 1.0 - August 17th, 2003</span></p></body></html>", None))
-        self.additionalInfoLabel.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>\ud83d\udcdc  \u0420\u0435\u0430\u043b\u0438\u0437\u0430\u0446\u0438\u044f \u0441\u0435\u0440\u0432\u0435\u0440\u043d\u043e\u0433\u043e \u043f\u0440\u0438\u043b\u043e\u0436\u0435\u043d\u0438\u044f \u043d\u0430 \u043e\u0441\u043d\u043e\u0432\u0435 \u0444\u0440\u0435\u0439\u043c\u0432\u043e\u0440\u043a\u0430 RedRPA. \u041f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0430 \u043b\u0438\u0446\u0435\u043d\u0437\u0438\u0440\u043e\u0432\u0430\u043d\u0430 Boost Software License 1.0.</p></body></html>", None))
-        self.hostLabel.setText(QCoreApplication.translate("MainWindow", u"\u0410\u0434\u0440\u0435\u0441 \u0445\u043e\u0441\u0442\u0430:", None))
-        self.setHostButton.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0431\u043d\u043e\u0432\u0438\u0442\u044c", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.infoTab), QCoreApplication.translate("MainWindow", u"\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438", None))
-        self.menu.setTitle(QCoreApplication.translate("MainWindow", u"\u0424\u0430\u0439\u043b", None))
-        self.menu_2.setTitle(QCoreApplication.translate("MainWindow", u"\u041e\u043f\u0446\u0438\u0438", None))
+        self.additionalInfoLabel.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>📜  \u0420\u0435\u0430\u043b\u0438\u0437\u0430\u0446\u0438\u044f \u0441\u0435\u0440\u0432\u0435\u0440\u043d\u043e\u0433\u043e \u043f\u0440\u0438\u043b\u043e\u0436\u0435\u043d\u0438\u044f \u043d\u0430 \u043e\u0441\u043d\u043e\u0432\u0435 \u0444\u0440\u0435\u0439\u043c\u0432\u043e\u0440\u043a\u0430 RedRPA. \u041f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0430 \u043b\u0438\u0446\u0435\u043d\u0437\u0438\u0440\u043e\u0432\u0430\u043d\u0430 Boost Software License 1.0.</p></body></html>", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.infoTab), QCoreApplication.translate("MainWindow", u"Инфо", None))
+        self.menu.setTitle(QCoreApplication.translate("MainWindow", u"📁 \u0424\u0430\u0439\u043b", None))
+        self.menu_2.setTitle(QCoreApplication.translate("MainWindow", u"🎲 \u041e\u043f\u0446\u0438\u0438", None))
         self.dataWidget.setWindowTitle(QCoreApplication.translate("MainWindow", u"\u0414\u043e\u043f\u043e\u043b\u043d\u0438\u0442\u0435\u043b\u044c\u043d\u043e", None))
         self.windowsListViewLabel.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043f\u0438\u0441\u043e\u043a \u043e\u043a\u043e\u043d:", None))
         self.refreshWindowsListButton.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0431\u043d\u043e\u0432\u0438\u0442\u044c \u0441\u043f\u0438\u0441\u043e\u043a \u043e\u043a\u043e\u043d", None))
@@ -365,7 +386,10 @@ class Ui_MainWindow(object):
         self.statusHeaderLabel.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0435\u043a\u0443\u0449\u0438\u0439 \u0441\u0442\u0430\u0442\u0443\u0441:", None))
         self.currentStatusLabel.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0436\u0438\u0434\u0430\u043d\u0438\u0435...", None))
         self.startScenarioButton.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u043f\u0443\u0441\u0442\u0438\u0442\u044c \u0441\u0446\u0435\u043d\u0430\u0440\u0438\u0439", None))
+        self.showBottomButton.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u043a\u0430\u0437\u0430\u0442\u044c", None))
         self.infoDataWidget.setWindowTitle(QCoreApplication.translate("MainWindow", u"\u0418\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u044f", None))
         self.showButton.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u043a\u0430\u0437\u0430\u0442\u044c", None))
+        self.infoErrosTabWidget.setTabText(self.infoErrosTabWidget.indexOf(self.infoInfoTab), QCoreApplication.translate("MainWindow", u"\u0418\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u044f", None))
+        self.infoErrosTabWidget.setTabText(self.infoErrosTabWidget.indexOf(self.infoErrorsTab), QCoreApplication.translate("MainWindow", u"\u041e\u0448\u0438\u0431\u043a\u0438", None))
     # retranslateUi
 
