@@ -87,3 +87,13 @@ class AbstractTranslationPolicy(ABC):
     @abstractmethod
     def translate_number_literal(node):
         pass
+
+    @staticmethod
+    @abstractmethod
+    def translate_return(node):
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def translate_return_arg(node):
+        pass

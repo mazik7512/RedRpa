@@ -243,9 +243,14 @@ class Ui_MainWindow(object):
 
         self.startScenarioButton = QPushButton(self.verticalLayoutWidget_3)
         self.startScenarioButton.setObjectName(u"startScenarioButton")
+        self.startScenarioButton.setCursor(QCursor(Qt.PointingHandCursor))
         icon9 = QIcon()
         icon9.addFile(u":/icons/Icons/start-icon.png", QSize(), QIcon.Normal, QIcon.Off)
         self.startScenarioButton.setIcon(icon9)
+        self.startScenarioButton.setStyleSheet("#startScenarioButton"
+                                               "{transition: all 0.3s ease-in-out; border-radius: 0;}"
+                                               "#startScenarioButton:hover{color: black; background-color: white; "
+                                               "border-radius: 10px;}")
 
         self.horizontalLayout_2.addWidget(self.startScenarioButton)
 
