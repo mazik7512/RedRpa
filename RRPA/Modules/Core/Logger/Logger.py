@@ -1,10 +1,11 @@
+from RRPA.Modules.Core.Abstract.Logger.Logger import AbstractLogger
 from RRPA.Modules.Core.Logger.LogColors import CmdColorizer
 from datetime import datetime
 from RRPA.Modules.Core.Logger.OutputWrapper import Output
 import threading
 
 
-class Logger:
+class Logger(AbstractLogger):
     Colorizer = CmdColorizer
     __ERROR = "[ОШИБКА]"
     __WARNING = "[ПРЕДУПРЕЖДЕНИЕ]"
