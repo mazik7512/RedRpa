@@ -36,13 +36,10 @@ class STDRSLCompilePolicy(AbstractCompilePolicy):
 
     def compile(self, scenario):
         rex_generator = STDREXGenerator()
-        try:
-            import_data, init_data, user_code_data = self._compile(scenario)
-            rex_generator.add_section("import", import_data)
-            rex_generator.add_section("init", init_data)
-            rex_generator.add_section("user_code", user_code_data)
-        except:
-            pass
+        import_data, init_data, user_code_data = self._compile(scenario)
+        rex_generator.add_section("import", import_data)
+        rex_generator.add_section("init", init_data)
+        rex_generator.add_section("user_code", user_code_data)
         rex = STDRedExecutable(rex_generator.generate_executable_sections())
         return rex
 
