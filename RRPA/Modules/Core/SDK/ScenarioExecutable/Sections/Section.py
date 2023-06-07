@@ -16,7 +16,8 @@ class STDSection(AbstractSection):
     def get_section_data(self):
         result = ""
         for key in self._table_data:
-            result += self._table_data[key] + "\n"
+            if self._table_data[key]:
+                result += self._table_data[key] + "\n"
         return result
 
     def add(self, name, data_to_add):

@@ -70,13 +70,14 @@ class STDRSLSyntaxParser(AbstractSyntaxParser):
 
     def _generate_ast(self):
         header_node = STDRSLScenarioNode(None)
-        header_node.set_left_node(self._create_line_node())
-        cur_node = header_node.get_left_node()
-        while self._cur_token_pos < len(self._tokens):
-            next_node = self._create_line_node()
-            next_node.set_parent(cur_node)
-            cur_node.set_right_node(next_node)
-            cur_node = cur_node.get_right_node()
+        if len(self._tokens) > 0:
+            header_node.set_left_node(self._create_line_node())
+            cur_node = header_node.get_left_node()
+            while self._cur_token_pos < len(self._tokens):
+                next_node = self._create_line_node()
+                next_node.set_parent(cur_node)
+                cur_node.set_right_node(next_node)
+                cur_node = cur_node.get_right_node()
         return header_node
 
     def _error(self, error_data):
