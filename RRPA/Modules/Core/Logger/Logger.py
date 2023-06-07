@@ -5,6 +5,7 @@ import threading
 
 
 class Logger:
+    Colorizer = CmdColorizer
     __ERROR = "[ОШИБКА]"
     __WARNING = "[ПРЕДУПРЕЖДЕНИЕ]"
     __SUCCESS = "[УСПЕШНО]"
@@ -18,7 +19,7 @@ class Logger:
         Logger.__OUTPUTS.append(ow)
 
     @staticmethod
-    def __print(*data, color_start, time, event_type, color_end=CmdColorizer.DEFAULT, output_params=None):
+    def __print(*data, color_start, time, event_type, color_end=Colorizer.DEFAULT, output_params=None):
         Logger.__locker.acquire()
         output_streams = Logger.__OUTPUTS
         if output_params:
@@ -41,23 +42,23 @@ class Logger:
     @staticmethod
     def error(*data, output_params=None) -> None:
         cur_time = datetime.now()
-        Logger.__print(*data, color_start=CmdColorizer.FAIL, time=cur_time,
+        Logger.__print(*data, color_start=Logger.Colorizer.FAIL, time=cur_time,
                        event_type=Logger.__ERROR, output_params=output_params)
 
     @staticmethod
     def success(*data, output_params=None) -> None:
         cur_time = datetime.now()
-        Logger.__print(*data, color_start=CmdColorizer.OKGREEN, time=cur_time,
+        Logger.__print(*data, color_start=Logger.Colorizer.OKGREEN, time=cur_time,
                        event_type=Logger.__SUCCESS, output_params=output_params)
 
     @staticmethod
     def warning(*data, output_params=None) -> None:
         cur_time = datetime.now()
-        Logger.__print(*data, color_start=CmdColorizer.WARNING, time=cur_time,
+        Logger.__print(*data, color_start=Logger.Colorizer.WARNING, time=cur_time,
                        event_type=Logger.__WARNING, output_params=output_params)
 
     @staticmethod
     def info(*data, output_params=None) -> None:
         cur_time = datetime.now()
-        Logger.__print(*data, color_start=CmdColorizer.HEADER, time=cur_time,
+        Logger.__print(*data, color_start=Logger.Colorizer.HEADER, time=cur_time,
                        event_type=Logger.__INFO, output_params=output_params)
