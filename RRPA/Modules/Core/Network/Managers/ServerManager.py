@@ -1,3 +1,4 @@
+from RRPA.Modules.Core.Abstract.Logger.Logger import AbstractLogger
 from RRPA.Modules.Core.Abstract.Network.Protocols.Protocol import AbstractTransferProtocol
 from RRPA.Modules.Core.Policies.NetworkPolicies.ApplicationLevel.SendPolicy import AbstractAppLevelSendPolicy
 from RRPA.Modules.Core.Abstract.Network.Managers.ServerManager import AbstractServerManager
@@ -11,33 +12,33 @@ MODULE_PREFIX = "[STD] [Managers] [Server manager]"
 class STDServerManager(AbstractServerManager):
 
     def __init__(self, AppLevelSendPolicy: AbstractAppLevelSendPolicy, cryptographer: AbstractCryptographer,
-                 logger):
+                 logger: AbstractLogger):
         super().__init__(AppLevelSendPolicy)
         self._cryptographer = cryptographer
         self._logger = logger
 
     def setup_connection(self):
-        self._logger.debug(MODULE_PREFIX, "Устанавливаю Red-соединение с клиентом")
+        self._logger.info(MODULE_PREFIX, "Устанавливаю Red-соединение с клиентом")
         rsa_key = self._als_policy.start_session()
         self._cryptographer.set_keys(rsa_key, None)
         self.refresh_session_key()
-        self._logger.debug(MODULE_PREFIX, "Red-соединение установлено")
+        self._logger.info(MODULE_PREFIX, "Red-соединение установлено")
 
     def refresh_session_key(self):
-        self._logger.debug(MODULE_PREFIX, "Процедура обновления сессионного ключа начата")
+        self._logger.info(MODULE_PREFIX, "Процедура обновления сессионного ключа начата")
         _, aes_key = self._cryptographer.generate_keys()
         self._cryptographer.set_keys(None, aes_key)
         key_packet = STDRDTRefreshSessKeySendProtocol(aes_key)
         self.send(key_packet)
-        self._logger.debug(MODULE_PREFIX, "Процедура обновления сессионного ключа завершена")
+        self._logger.info(MODULE_PREFIX, "Процедура обновления сессионного ключа завершена")
 
     def reset_connection(self, data):
         self.send(data)
         self._als_policy.end_session()
-        self._logger.debug(MODULE_PREFIX, "Red-соединение с клиентом завершено")
+        self._logger.info(MODULE_PREFIX, "Red-соединение с клиентом завершено")
 
     def send(self, data: AbstractTransferProtocol):
-        self._logger.debug(MODULE_PREFIX, "Отправка данных клиенту")
+        self._logger.info(MODULE_PREFIX, "Отправка данных клиенту")
         encrypted_data = self._preprocess_send_data(data)
         self._als_policy.send_data(encrypted_data)
 
@@ -50,7 +51,7 @@ class STDServerManager(AbstractServerManager):
         return decrypted_data
 
     def get(self):
-        self._logger.debug(MODULE_PREFIX, "Получение данных от клиента")
+        self._logger.info(MODULE_PREFIX, "Получение данных от клиента")
         encrypted_data = self._als_policy.get_data()
         answer = self._preprocess_get_data(encrypted_data)
         return answer

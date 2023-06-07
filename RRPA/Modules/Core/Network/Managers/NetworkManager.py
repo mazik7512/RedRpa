@@ -1,6 +1,7 @@
 from RRPA.Modules.Core.Abstract.Network.Managers.NetworkManager import AbstractNetworkManager
 from RRPA.Modules.Core.Abstract.Network.Managers.Types import WORK_TYPES
 from RRPA.Modules.Core.Abstract.Network.Managers.Manager import AbstractManager
+from RRPA.Modules.Core.Abstract.Logger.Logger import AbstractLogger
 from RRPA.Modules.Core.Exceptions.Exceptions import STDRedConnectionStopException
 from RRPA.Modules.Core.Network.Protocols.RDT.v1.sv0.RDTProtocol import STDRDTReceiveProtocol
 from RRPA.Modules.Core.Network.Protocols.RDT.v1.sv0.ExtendedRDTProtocol import STDRDTExecutionSendProtocol
@@ -15,17 +16,17 @@ MODULE_PREFIX = "[STD] [Managers] [Network manager]"
 
 class STDNetworkManager(AbstractNetworkManager):
 
-    def __init__(self, manager: AbstractManager, logger):
+    def __init__(self, manager: AbstractManager, logger: AbstractLogger):
         super().__init__(manager)
         self._logger = logger
         self._info = []
 
     def start(self):
-        self._logger.debug(MODULE_PREFIX, "Запуск сетевой службы")
+        self._logger.info(MODULE_PREFIX, "Запуск сетевой службы")
         self._manager.setup_connection()
 
     def end(self):
-        self._logger.debug(MODULE_PREFIX, "Остановка сетевой службы")
+        self._logger.info(MODULE_PREFIX, "Остановка сетевой службы")
         end_packet = STDRDTEndSendProtocol()
         self._manager.reset_connection(end_packet)
 
@@ -36,7 +37,7 @@ class STDNetworkManager(AbstractNetworkManager):
     def send_scenario(self, scenario):
         if self._manager.get_type() != WORK_TYPES.SERVER:
             return None
-        self._logger.debug(MODULE_PREFIX, "Отправляю сценарий для выполнения")
+        self._logger.info(MODULE_PREFIX, "Отправляю сценарий для выполнения")
         scenario_packet = STDRDTExecutionSendProtocol(scenario)
         self._manager.send(scenario_packet)
         op_type, answer = self.__serve(MAX_TRY_FOR_ANSWER)
@@ -46,7 +47,7 @@ class STDNetworkManager(AbstractNetworkManager):
     def __serve(self, max_try=1):
         if max_try == 0:
             return None, None
-        self._logger.debug(MODULE_PREFIX, "Ожидаю данные... осталось попыток:", max_try)
+        self._logger.info(MODULE_PREFIX, "Ожидаю данные... осталось попыток:", max_try)
         raw_data = self._manager.get()
         protocol_object = self._specify_protocol(raw_data)
         op_type = protocol_object.get_operation()
@@ -55,7 +56,7 @@ class STDNetworkManager(AbstractNetworkManager):
             return op_type, buffer_data
         else:
             max_try = max_try - 1
-            self._logger.debug(MODULE_PREFIX, "Данные повреждены")
+            self._logger.info(MODULE_PREFIX, "Данные повреждены")
             return self.__serve(max_try)
 
     def serve(self, info=None):
@@ -63,7 +64,7 @@ class STDNetworkManager(AbstractNetworkManager):
             return None
         if info:
             self.__send_info(info)
-        self._logger.debug(MODULE_PREFIX, "Ожидаю сценарий на выполнение")
+        self._logger.info(MODULE_PREFIX, "Ожидаю сценарий на выполнение")
         while True:
             op_type, data = self.__serve()
             if op_type == STDOperationsCodes.EXECUTE:

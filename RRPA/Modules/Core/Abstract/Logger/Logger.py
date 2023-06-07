@@ -10,20 +10,20 @@ class AbstractLogger(ABC):
 
     @staticmethod
     @abstractmethod
-    def error(data, *args):
+    def error(*data, output_params):
         pass
 
     @staticmethod
     @abstractmethod
-    def success(data, *args):
+    def success(*data, output_params):
         pass
 
     @staticmethod
     @abstractmethod
-    def warning(data, *args):
+    def warning(*data, output_params):
         pass
 
     @staticmethod
     @abstractmethod
-    def info(data, *args):
+    def info(*data, output_params):
         pass

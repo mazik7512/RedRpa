@@ -1,3 +1,4 @@
+from RRPA.Modules.Core.Abstract.Logger.Logger import AbstractLogger
 from RRPA.Modules.Core.Abstract.Policies.NetworkPolicies.ApplicationLevel.SendPolicy import AbstractAppLevelSendPolicy
 from RRPA.Modules.Core.Abstract.Policies.NetworkPolicies.TransportLevel.SendPolicy import AbstractTransportLevelSendPolicy
 from RRPA.Modules.Core.Abstract.Network.Protocols.RDT.RedDataTransferProtocol import AbstractRDTProtocol
@@ -9,7 +10,7 @@ MODULE_PREFIX = "[STD] [App Level] [Send Policy]"
 
 class STDAppLevelSendPolicy(AbstractAppLevelSendPolicy):
 
-    def __init__(self, TransportLevelSendPolicy: AbstractTransportLevelSendPolicy, logger):
+    def __init__(self, TransportLevelSendPolicy: AbstractTransportLevelSendPolicy, logger: AbstractLogger):
         super().__init__(TransportLevelSendPolicy)
         self._size_len = SIZE_LEN
         self._logger = logger
@@ -21,29 +22,29 @@ class STDAppLevelSendPolicy(AbstractAppLevelSendPolicy):
         return int.from_bytes(data, "big")
 
     def start_session(self):
-        self._logger.debug(MODULE_PREFIX, "Попытка начать сессию связи")
+        self._logger.info(MODULE_PREFIX, "Попытка начать сессию связи")
         self._tls_policy.connect()
         rsa_key = self._get_rsa_key()
         return rsa_key
 
     def _get_rsa_key(self):
         rsa_key = self.get_data()
-        self._logger.debug(MODULE_PREFIX, "RSA-ключ получен")
+        self._logger.info(MODULE_PREFIX, "RSA-ключ получен")
         return rsa_key
 
     def end_session(self):
         self._tls_policy.disconnect()
-        self._logger.debug(MODULE_PREFIX, "Сессия связи окончена")
+        self._logger.info(MODULE_PREFIX, "Сессия связи окончена")
 
     def send_data(self, data):
-        self._logger.debug(MODULE_PREFIX, "Процедура отправки пакета начата")
+        self._logger.info(MODULE_PREFIX, "Процедура отправки пакета начата")
         self._send_data(data)
-        self._logger.debug(MODULE_PREFIX, "Процедура отправка пакета завершена")
+        self._logger.info(MODULE_PREFIX, "Процедура отправка пакета завершена")
 
     def get_data(self) -> AbstractRDTProtocol:
-        self._logger.debug(MODULE_PREFIX, "Процедура получения пакета начата")
+        self._logger.info(MODULE_PREFIX, "Процедура получения пакета начата")
         raw_data = self._get_data()
-        self._logger.debug(MODULE_PREFIX, "Процедура получения пакета завершена")
+        self._logger.info(MODULE_PREFIX, "Процедура получения пакета завершена")
         return raw_data
 
     def _send_data(self, data):
