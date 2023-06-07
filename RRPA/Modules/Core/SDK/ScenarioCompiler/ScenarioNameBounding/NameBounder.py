@@ -1,4 +1,4 @@
-from RRPA.Modules.Core.Abstract.SDK.ScenarioCompiler.ScenarioSemanticAnalyzer.NameBounder import AbstractNameBounder
+from RRPA.Modules.Core.Abstract.SDK.ScenarioCompiler.ScenarioNameBounding.NameBounder import AbstractNameBounder
 from RRPA.Modules.Core.Policies.CompilerPolicies.NameBoundingPolicies.ImportPolicy import STDImportPolicy
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioTokens.Tokens import STDNameBounderTokens
 from RRPA.Modules.Core.Logger.Logger import Logger
