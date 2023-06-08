@@ -1,4 +1,4 @@
-from RRPA.Modules.Core.Abstract.SDK.ScenarioCompiler.LexicalAnalyzer.Lexer import AbstractLexer
+from RRPA.Modules.Core.Abstract.SDK.ScenarioCompiler.ScenarioLexicalAnalyzer.Lexer import AbstractLexer
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioTokens.Tokens import STDLexerTokens
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.LexicalObjects.Lexeme import STDLexema
 from RRPA.Modules.Core.General.DataStructures.WorkResult import STDWorkResult

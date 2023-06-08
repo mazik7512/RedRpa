@@ -1,4 +1,4 @@
-from RRPA.Modules.Core.Abstract.SDK.ScenarioCompiler.SyntaxAnalyzer.Parser import AbstractSyntaxParser
+from RRPA.Modules.Core.Abstract.SDK.ScenarioCompiler.ScenarioSyntaxAnalyzer.Parser import AbstractSyntaxParser
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.SyntaxNode import STDRSLSyntaxNode
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioObjects.SyntaxObjects.SyntaxTree import STDRSLSyntaxTree
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioTokens.Tokens import STDSyntaxTokens

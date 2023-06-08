@@ -2,7 +2,7 @@ from RRPA.Modules.Core.Abstract.Policies.VMPolicies.LinkPolicy import AbstractLi
 from RRPA.Modules.Core.Abstract.SDK.APICollector.APICollector import AbstractAPICollector
 from RRPA.Modules.Core.Abstract.SDK.VirtualMachine.VM import AbstractVirtualMachine
 from RRPA.Modules.Core.Exceptions.Exceptions import STDRVMRuntimeException, STDREXCorruptionException
-from RRPA.Modules.Core.Policies.VMPolicies.LinkPolicy import STDLinkPolicy
+from RRPA.Modules.Core.Policies.VMPolicies.LinkPolicy import STDREXLinkPolicy
 from RRPA.Modules.Core.SDK.ScenarioExecutable.Executable import STDRedExecutable
 from RRPA.Modules.Core.Crypto.StribogHasher import STDHasher
 from RRPA.Modules.Core.Logger.Logger import Logger
@@ -11,7 +11,7 @@ from RRPA.Modules.Core.Logger.Logger import Logger
 class STDRedVirtualMachine(AbstractVirtualMachine):
 
     def __init__(self, tools: dict = None, api_collector: AbstractAPICollector = None,
-                 link_policy: AbstractLinkPolicy = STDLinkPolicy):
+                 link_policy: AbstractLinkPolicy = STDREXLinkPolicy):
         self._errors = []
         self._tools = tools
         self._collector = api_collector
