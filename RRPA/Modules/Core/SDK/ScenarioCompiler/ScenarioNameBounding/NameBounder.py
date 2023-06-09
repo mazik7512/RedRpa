@@ -1,5 +1,6 @@
 from RRPA.Modules.Core.Abstract.SDK.ScenarioCompiler.ScenarioNameBounding.NameBounder import AbstractNameBounder
 from RRPA.Modules.Core.Policies.CompilerPolicies.NameBoundingPolicies.ImportPolicy import STDImportPolicy
+from RRPA.Modules.Core.Policies.CompilerPolicies.NameBoundingPolicies.InitPolicy import STDInitPolicy
 from RRPA.Modules.Core.SDK.ScenarioCompiler.ScenarioTokens.Tokens import STDNameBounderTokens
 from RRPA.Modules.Core.Logger.Logger import Logger
 from RRPA.Modules.Core.General.DataStructures.WorkResult import STDWorkResult
@@ -20,13 +21,15 @@ def get_func_calls(func_call_node, api_calls_list, func_calls_list, func_def_lis
 
 class STDRSLNameBounder(AbstractNameBounder):
 
-    def __init__(self, syntax_tree=None, api_collector=None, tools=None, import_policy=STDImportPolicy, logger=Logger):
+    def __init__(self, syntax_tree=None, api_collector=None, tools=None, import_policy=STDImportPolicy,
+                 init_policy=STDInitPolicy, logger=Logger):
         # self._os_utils = tools['os']
         # self._web_utils = tools['web']
         self._tools = tools
         self._tree = syntax_tree
         self._stdlib = api_collector
         self._import_policy = import_policy
+        self._init_policy = init_policy
         self._logger = logger
         self._errors = []
 
@@ -89,14 +92,14 @@ class STDRSLNameBounder(AbstractNameBounder):
 
     def _generate_api_init_section(self, api_name, tools_name, section_data):
         api_init_name = "api_init_" + api_name.lower()
-        init_string = api_init_name + " = " + api_name + "({})".format(tools_name)
+        init_string = self._init_policy.generate_init_api(api_init_name, api_name, tools_name)
         init_section = {'init_name': api_init_name, 'init_code': init_string}
         section_data[api_name] = init_section
 
     def _generate_tools_init_section(self, section_data):
         tools_init_name = "tools_init"
-        init_string = tools_init_name + " = " + "{'os': " + self._tools['os'].get_tools_name() + \
-                      ", 'web': " + self._tools['web'].get_tools_name() + "}"
+        init_string = self._init_policy.generate_init_tools(tools_init_name, self._tools['os'].get_tools_name(),
+                                                            self._tools['web'].get_tools_name())
         init_section = {'init_name': tools_init_name, 'init_code': init_string}
         section_data['tools_init'] = init_section
         return tools_init_name
