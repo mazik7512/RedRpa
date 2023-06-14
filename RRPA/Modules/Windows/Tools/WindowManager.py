@@ -3,6 +3,7 @@ from RRPA.Modules.Core.Abstract.OS.Tools.Window import AbstractWindow
 from RRPA.Modules.Windows.Tools.WinObjects.Button import STDButton
 from RRPA.Modules.Windows.Tools.WinObjects.InputField import STDInputField
 from RRPA.Modules.Windows.Actions.WindowActions import WindowActionizer
+from RRPA.Modules.Core.General.Algorithms.StringComparator import STDStringComparator
 import numpy as np
 import cv2
 
@@ -76,6 +77,7 @@ class STDWindowManager(AbstractWindowManager):
 
     def find_object_by_text(self, _text):
         for i in range(len(self.objects)):
-            if self.objects[i].get_text() == _text:
+            if self.objects[i].get_text() and \
+                    STDStringComparator.compare_strings(self.objects[i].get_text(), _text) > 80:
                 return i
         return -1
