@@ -18,3 +18,6 @@ class STDWebButton(AbstractWebObject):
 
     def hover(self):
         WebObjectActionizer.move_to_element(self._actions, self._handle)
+
+    def get_instance(self):
+        return self._handle

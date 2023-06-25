@@ -21,3 +21,6 @@ class STDWebLink(AbstractWebObject):
 
     def get_url(self):
         return WebObjectActionizer.get_attr(self._handle, "href")
+
+    def get_instance(self):
+        return self._handle

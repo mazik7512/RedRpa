@@ -8,30 +8,30 @@ from RRPA.AppData.Configs.WebDriverConfig import WEB_DRIVER_PATH
 class WebObjectActionizer:
     @staticmethod
     def click(actions: ActionChains, elem):
-        actions.click(elem)
+        actions.click(elem).perform()
 
     @staticmethod
     def double_click(actions: ActionChains, elem):
-        actions.double_click(elem)
+        actions.double_click(elem).perform()
 
     @staticmethod
     def click_and_hold(actions: ActionChains, elem):
-        actions.click_and_hold(elem)
+        actions.click_and_hold(elem).perform()
 
     @staticmethod
     def release(actions: ActionChains, elem):
-        actions.release(elem)
+        actions.release(elem).perform()
 
     @staticmethod
     def move_to_element(actions: ActionChains, elem):
-        actions.move_to_element(elem)
+        actions.move_to_element(elem).perform()
 
     @staticmethod
-    def get_text(elem):
+    def get_text(actions, elem):
         return elem.text
 
     @staticmethod
-    def input_text(elem, text):
+    def input_text(actions, elem, text):
         elem.text = text
 
     @staticmethod

@@ -25,7 +25,7 @@ class STDWebPageManager(AbstractWebPageManager):
 
     def object_action(self, web_object, web_action, *params):
         action = getattr(WebObjectActionizer, web_action)
-        action(self._objects[web_object], *params)
+        action(self._actions, self._objects[web_object].get_instance(), *params)
 
     def scan_for_objects(self):
         buttons = WebPageActionizer.scan_for_objects(self._driver, self._w_page.get_page_handle(), "button")
@@ -38,14 +38,14 @@ class STDWebPageManager(AbstractWebPageManager):
     def _add_buttons_objects(self, objects):
         for obj in objects:
             spec_obj = STDWebButton(self._w_page, obj, self._actions)
-            self._objects[WebObjectActionizer.get_attr(obj, 'value')] = spec_obj
+            self._objects[WebObjectActionizer.get_attr(obj, 'innerText')] = spec_obj
 
     def _add_links_objects(self, objects):
         for obj in objects:
             spec_obj = STDWebLink(self._w_page, obj, self._actions)
-            self._objects[WebObjectActionizer.get_attr(obj, 'value')] = spec_obj
+            self._objects[WebObjectActionizer.get_attr(obj, 'innerText')] = spec_obj
 
     def _add_inputs_objects(self, objects):
         for obj in objects:
             spec_obj = STDWebInputField(self._w_page, obj, self._actions)
-            self._objects[WebObjectActionizer.get_attr(obj, 'value')] = spec_obj
+            self._objects[WebObjectActionizer.get_attr(obj, 'innerText')] = spec_obj

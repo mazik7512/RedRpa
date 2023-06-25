@@ -24,3 +24,6 @@ class STDWebInputField(AbstractWebObject):
 
     def input_text(self, text):
         WebObjectActionizer.input_text(self._handle, text)
+
+    def get_instance(self):
+        return self._handle

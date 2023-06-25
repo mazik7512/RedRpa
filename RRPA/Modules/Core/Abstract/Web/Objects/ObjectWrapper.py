@@ -15,3 +15,7 @@ class AbstractWebObject(ABC):
     def hover(self):
         pass
 
+    @abstractmethod
+    def get_instance(self):
+        pass
+
