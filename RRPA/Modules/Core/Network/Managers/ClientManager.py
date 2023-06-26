@@ -18,17 +18,20 @@ class STDClientManager(AbstractClientManager):
 
     def setup_connection(self):
         self._logger.info(MODULE_PREFIX, "Ожидаю red-соединения с сервером")
-        rsa_key, _ = self._cryptographer.generate_keys()
+        rsa_key = self._cryptographer.generate_keys("rsa")
         self._cryptographer.set_keys(rsa_key, None)
+        self._logger.info(MODULE_PREFIX, "Ключ соединения установлен")
         self._alr_policy.wait_for_session(rsa_key)
+        self._logger.info(MODULE_PREFIX, "Сессионный ключ установлен")
         self.refresh_session_key()
         self._connected = True
 
     def refresh_session_key(self):
         self._logger.info(MODULE_PREFIX, "Процедура обновления сессионного ключа начата")
-        raw_data = self.get()
-        key_packet = STDRDTRefreshSessKeyReceiveProtocol(raw_data)
-        self._cryptographer.set_keys(None, key_packet.deserialize_from_object())
+        raw_data = self._alr_policy.get_data()
+        key_packet = STDRDTRefreshSessKeyReceiveProtocol(raw_data.decode('utf-8'))
+        aes_key = key_packet.deserialize_from_object()
+        self._cryptographer.set_keys(None, aes_key)
         self._logger.info(MODULE_PREFIX, "Процедура обновления сессионного ключа завершена")
 
     def reset_connection(self, data):

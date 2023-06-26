@@ -1,7 +1,8 @@
 from RRPA.Modules.Core.Network.Protocols.RDT.v1.sv0.RDTProtocol import STDRDTReceiveProtocol
 from RRPA.Modules.Core.Network.Protocols.RDT.v1.sv0.RDTProtocol import STDRDTSendProtocol
-from RRPA.Modules.Core.Network.Protocols.RDT.v1.sv0.RDTPObjects import STDRDTPKeySendObject
+from RRPA.Modules.Core.Network.Protocols.RDT.v1.sv0.RDTPObjects import STDRDTPKeySendObject, STDRDTKeyReceiveObject
 from RRPA.Modules.Core.Network.Protocols.RDT.v1.sv0.RDTPOperations import STDOperationsCodes
+from RRPA.Modules.Core.Network.Utils.NetworkUtils import STDUtils
 
 
 class STDRDTExecutionSendProtocol(STDRDTSendProtocol):
@@ -55,6 +56,11 @@ class STDRDTRefreshSessKeySendProtocol(STDRDTSendProtocol):
 class STDRDTRefreshSessKeyReceiveProtocol(STDRDTReceiveProtocol):
     def __init__(self, key):
         super().__init__(key, STDOperationsCodes.REFRESH_SESSION_KEY)
+
+    def serialize_to_object(self, raw_data):
+        _op, _data, _hash = STDUtils.parse_protocol(raw_data)
+        self._operation = _op
+        return STDRDTKeyReceiveObject(_data, _hash)
 
     def deserialize_from_object(self):
         return self._object_data.get_data_view()

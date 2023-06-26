@@ -8,7 +8,7 @@ class AbstractCryptographer(ABC):
         pass
 
     @abstractmethod
-    def generate_keys(self):
+    def generate_keys(self, key_type=None):
         pass
 
     @abstractmethod

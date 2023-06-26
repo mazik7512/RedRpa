@@ -16,7 +16,7 @@ class STDRSACryptographer(AbstractCryptographer):
         if keys[1]:
             self._rsa_private_key = rsa.PrivateKey.load_pkcs1(keys[1])
 
-    def generate_keys(self):
+    def generate_keys(self, key_type=None):
         (self._rsa_public_key, self._rsa_private_key) = rsa.newkeys(self._rsa_key_size)
         public_pem = self._rsa_public_key.save_pkcs1()
         return public_pem

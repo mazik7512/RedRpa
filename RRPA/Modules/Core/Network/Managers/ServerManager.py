@@ -26,10 +26,10 @@ class STDServerManager(AbstractServerManager):
 
     def refresh_session_key(self):
         self._logger.info(MODULE_PREFIX, "Процедура обновления сессионного ключа начата")
-        _, aes_key = self._cryptographer.generate_keys()
-        self._cryptographer.set_keys(None, aes_key)
+        aes_key = self._cryptographer.generate_keys("aes")
         key_packet = STDRDTRefreshSessKeySendProtocol(aes_key)
-        self.send(key_packet)
+        key_data = key_packet.deserialize_from_object().encode('utf-8')
+        self._als_policy.send_data(key_data)
         self._logger.info(MODULE_PREFIX, "Процедура обновления сессионного ключа завершена")
 
     def reset_connection(self, data):

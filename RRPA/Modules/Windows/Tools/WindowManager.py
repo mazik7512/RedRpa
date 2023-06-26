@@ -1,5 +1,6 @@
 from RRPA.Modules.Core.Abstract.OS.Tools.WindowManager import AbstractWindowManager
 from RRPA.Modules.Core.Abstract.OS.Tools.Window import AbstractWindow
+from RRPA.Modules.Windows.Actions.ObjectActions import ObjectActionizer
 from RRPA.Modules.Windows.Tools.WinObjects.Button import STDButton
 from RRPA.Modules.Windows.Tools.WinObjects.InputField import STDInputField
 from RRPA.Modules.Windows.Actions.WindowActions import WindowActionizer
@@ -61,6 +62,9 @@ class STDWindowManager(AbstractWindowManager):
     def object_action(self, _object_id, _action, *params):
         object_action = getattr(self.objects[_object_id], _action)
         object_action(*params)
+
+    def click_on_points(self, x, y):
+        ObjectActionizer.click_on_points(self.window.get_window(), x, y)
 
     def find_object(self, _object):
         if type(_object) == str:

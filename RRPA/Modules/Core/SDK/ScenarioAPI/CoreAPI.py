@@ -27,6 +27,10 @@ class STDScenarioAPI(AbstractScenarioAPI):
         wnd = self._create_window_manager_object(window)
         wnd.os_scan_for_objects()
 
+    def click_on_points(self, window: str, x: int, y: int):
+        wnd = self._find_window_in_pool(window)
+        wnd.click_on_points(x, y)
+
     def click_on_object(self, window: str, _object: str):
         wnd = self._find_window_in_pool(window)
         _obj = wnd.find_object(_object)

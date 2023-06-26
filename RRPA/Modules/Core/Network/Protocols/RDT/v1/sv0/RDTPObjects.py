@@ -7,19 +7,20 @@ import base64
 class STDRDTPSendObject(AbstractSendObject):
 
     def __init__(self, raw_data):
-        super().__init__(raw_data)
+        data = base64.b64encode(raw_data.encode('utf-8'))
+        super().__init__(data)
 
     def _hash_data(self, raw_data):
         return STDUtils.hash_data(raw_data)
 
     def get_data_view(self):
-        return str(self._data) + ":" + str(self._hash)
+        return str(self._data.decode('utf-8')) + ":" + str(self._hash)
 
 
 class STDRDTPReceiveObject(AbstractReceiveObject):
 
     def __init__(self, raw_data, _hash):
-        super().__init__(raw_data, _hash)
+        super().__init__(raw_data.encode('utf-8'), _hash)
 
     def _check_data_validity(self):
         if int(self._hash) == self._hash_data(self._data):
@@ -32,7 +33,7 @@ class STDRDTPReceiveObject(AbstractReceiveObject):
 
     def get_data_view(self):
         if self._valid_data:
-            return self._data
+            return base64.b64decode(self._data).decode('utf-8')
         else:
             return None
 
@@ -47,13 +48,13 @@ class STDRDTPKeySendObject(AbstractSendObject):
         return STDUtils.hash_data(raw_data)
 
     def get_data_view(self):
-        return str(self._data) + ":" + str(self._hash)
+        return str(self._data.decode('utf-8')) + ":" + str(self._hash)
 
 
 class STDRDTKeyReceiveObject(AbstractReceiveObject):
 
     def __init__(self, raw_data, _hash):
-        super().__init__(raw_data, _hash)
+        super().__init__(raw_data.encode('utf-8'), _hash)
 
     def _check_data_validity(self):
         if int(self._hash) == self._hash_data(self._data):

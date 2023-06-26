@@ -11,11 +11,15 @@ class STDAESRSACryptographer(AbstractCryptographer):
         self._aes = STDAESCryptographer()
         self._rsa = STDRSACryptographer()
 
-    def generate_keys(self):
-        rsa_public_key = self._rsa.generate_keys()
-        _aes_key = self._aes.generate_keys()
-        aes_key = self._rsa.encrypt(_aes_key)
-        return rsa_public_key, aes_key
+    def generate_keys(self, key_type=None):
+        if key_type.lower() == "rsa":
+            rsa_public_key = self._rsa.generate_keys()
+            return rsa_public_key
+        elif key_type.lower() == "aes":
+            _aes_key = self._aes.generate_keys()
+            self._aes.set_keys(_aes_key)
+            aes_key = self._rsa.encrypt(_aes_key)
+            return aes_key
 
     def set_keys(self, *keys):
         if keys[0]:

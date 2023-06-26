@@ -26,13 +26,26 @@ class STDManagerGenerator(AbstractManagerGenerator):
         al_send_policy = STDAppLevelSendPolicy(tl_send_policy, self._logger)
         return al_send_policy, al_receive_policy
 
+    def generate_app_level_send_policy(self):
+        tl_send_policy = self.generate_transport_level_send_policy()
+        al_send_policy = STDAppLevelSendPolicy(tl_send_policy, self._logger)
+        return al_send_policy
+
     def generate_transport_level_policies(self):
         tl_receive_policy = STDTransportLevelReceivePolicy(self._pt_object, self._logger)
         tl_send_policy = STDTransportLevelSendPolicy(self._pt_object, self._logger)
         return tl_send_policy, tl_receive_policy
 
+    def generate_transport_level_receive_policy(self):
+        tl_receive_policy = STDTransportLevelReceivePolicy(self._pt_object, self._logger)
+        return tl_receive_policy
+
+    def generate_transport_level_send_policy(self):
+        tl_send_policy = STDTransportLevelSendPolicy(self._pt_object, self._logger)
+        return tl_send_policy
+
     def generate_server_manager(self):
-        al_send_policy, _ = self.generate_app_level_policies()
+        al_send_policy = self.generate_app_level_send_policy()
         server_manager = STDServerManager(al_send_policy, self._cryptographer, self._logger)
         return server_manager
 

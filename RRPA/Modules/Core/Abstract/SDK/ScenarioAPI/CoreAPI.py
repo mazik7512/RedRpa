@@ -54,3 +54,8 @@ class AbstractScenarioAPI(ABC):
     @abstractmethod
     def input_text(self, window, _object, text):
         pass
+
+    @abstractmethod
+    def click_on_points(self, window, x, y):
+        pass
+    

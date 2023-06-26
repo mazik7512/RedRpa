@@ -28,7 +28,7 @@ CLIENT_STATES_COLOR_SCHEMES = ["background-color: green;color: black;border: 1px
 class ServerApp:
     _info_count = 0
     _current_host = "127.0.0.1"
-    _current_port = 5551
+    _current_port = 5555
     clients_count = 1
     api_collector = STDAPICollector(API_PATH)
 
@@ -93,7 +93,7 @@ class ServerApp:
         return code_editor
 
     def __init_app_model(self):
-        self._model = ServerModel("127.0.0.1", 5551)
+        self._model = ServerModel("127.0.0.1", 5555)
 
     def __init_app_info(self):
         server_path = os.getcwd() + "\\Apps\\ServerApp\\"

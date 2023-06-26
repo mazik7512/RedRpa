@@ -17,8 +17,14 @@ class STDUtils(AbstractUtils):
     @staticmethod
     def parse_protocol(raw_data):
         temp_data = raw_data.split(":")
-        if len(temp_data) != 3:
+        len_tmp = len(temp_data)
+        if len_tmp < 3:
             return None, None, None
+        elif len_tmp > 3:
+            data = temp_data[1]
+            for i in range(2, len_tmp - 1):
+                data += temp_data[i]
+            return temp_data[0], data, temp_data[len_tmp - 1]
         operation_type = temp_data[0]
         raw_data = temp_data[1]
         _hash = temp_data[2]

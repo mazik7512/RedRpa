@@ -1,6 +1,8 @@
 import datetime
 import os
 import sys
+import threading
+import time
 from threading import Thread
 import PySide2.QtWidgets
 from PIL.ImageQt import ImageQt
@@ -92,7 +94,7 @@ class ClientApp:
         #self._highlighter = RSLHighlighter(self._client.scenarioEditor.document(), api_funcs.get_all_api_methods())
 
     def __init_app_model(self):
-        self._model = ClientModel("127.0.0.1", 5551)
+        self._model = ClientModel("127.0.0.1", 5558)
 
     def __init_app_info(self):
         client_path = os.getcwd() + "\\Apps\\ClientApp\\"
@@ -175,14 +177,14 @@ class ClientApp:
         self.__set_client_current_state(1)
         self._client.infoTabsWidget.setTabText(0, "Ошибки")
         self._client.errorsView.clear()
-        self.__inactive_app()
+        #self.__inactive_app()
         try:
             self._model.compile_and_execute(self._client.scenarioEditor.toPlainText())
             self.__add_info_to_info_panel(["[{}] Сценарий успешно выполнен.".format(datetime.datetime.now())])
         except STDException as exception:
             self.__add_errors_to_info_panel(exception.get_exception_data())
         finally:
-            self.__active_app()
+            #self.__active_app()
             self.__set_client_current_state(0)
 
     def __open_scenario_from_file(self, s):

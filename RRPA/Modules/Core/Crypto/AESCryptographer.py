@@ -17,7 +17,7 @@ class STDAESCryptographer(AbstractCryptographer):
         self._aes_key = keys[0]
         self._init_aes()
 
-    def generate_keys(self):
+    def generate_keys(self, key_type=None):
         self._aes_key = get_random_bytes(self._aes_key_size)
         return self._aes_key
 
