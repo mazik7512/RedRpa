@@ -1,6 +1,27 @@
-# Проект RedRpa
+# Проект RedRpa 
 
 **RedRPA - Framework** - библиотека с открытым исходным кодом на Python, предназначенная для разработки RPA-роботов.
+
+- [Проект RedRpa](#проект-redrpa)
+- [Состав проекта](#состав-проекта)
+- [Описание](#описание)
+  * [Ядро. SDK. Язык сценариев (RSL)](#ядро-sdk-язык-сценариев)
+  * [Ядро. SDK. Компилятор](#ядро-sdk-компилятор)
+  * [Ядро. SDK. REX](#ядро-sdk-rex)
+  * [Ядро. SDK. Red Virtual Machine](#ядро-sdk-red-virtual-machine)
+  * [Ядро. SDK. Набор библиотек языка RSL](#ядро-sdk-набор-библиотек-языка-rsl)
+
+
+
+
+![OpenCV](https://img.shields.io/badge/opencv-%23white.svg?style=for-the-badge&logo=opencv&logoColor=white)
+![Keras](https://img.shields.io/badge/Keras-%23D00000.svg?style=for-the-badge&logo=Keras&logoColor=white)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white)
+![Qt](https://img.shields.io/badge/Qt-%23217346.svg?style=for-the-badge&logo=Qt&logoColor=white)
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![C](https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white)
+![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
+
 
 # Состав проекта
 
@@ -41,7 +62,7 @@
    -	модуль взаимодействия с Web-окружением,
    -	модуль компьютерного зрения.
 
-## Ядро. SDK. Язык сценариев (RSL).
+## Ядро. SDK. Язык сценариев (RSL)
 Ниже представленна грамматика языка RSL в расширенной форме Бэкуса-Наура.
 ```
 SCENARIO := LINES
@@ -140,3 +161,15 @@ REX - является исполняемым файлом Red Virtual Machine. 
 **Секции импорта и инициализации** генерируются в процессе компиляции на этапе связывания имён - предназначение этих секций довольно очевидно (они содержат данные о подключаемых модулях, и их инициализации соотвественно). 
 
 **Секция пользовательского кода** содержит скомпилированный код языка RSL (что тоже довольно очевидно).
+Секции представлены в виде json - структуры.
+
+## Ядро. SDK. Red Virtual Machine
+
+RVM принимает на вход файлы формата REX и анализирует их. Первоначально производится контроль целостности файла путем сравнения хэшей. Далее секции импорта, инициализации и пользовательского когда передаются на выполнение. В данном случае выполнением занимается Python, так как RSL по-умолчанию транслируется именно в него.
+
+## Ядро. SDK. Набор библиотек языка RSL
+
+На данный момент в фреймворке реализованы три библиотеки языка RSL:
+   1. Универсальная *(на основе машинного зрения)* - позволяет работать с любыми приложениями.
+   2. Web - позволяет взаимодействовать с Web - приложениями.
+   3. General - набор общих функций, не связанных с автоматизацией напрямую.
