@@ -1,6 +1,8 @@
 # Проект RedRpa
 
-![Static Badge](https://img.shields.io/badge/RedRPA-red)
+![Static Badge](https://img.shields.io/badge/Red-red)
+![Static Badge](https://img.shields.io/badge/RPA-blue)
+
 
 ![OpenCV](https://img.shields.io/badge/opencv-%23white.svg?style=for-the-badge&logo=opencv&logoColor=white)
 ![Keras](https://img.shields.io/badge/Keras-%23D00000.svg?style=for-the-badge&logo=Keras&logoColor=white)
