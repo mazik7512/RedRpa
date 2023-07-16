@@ -16,7 +16,9 @@
 ![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 
 **RedRPA - Framework** - библиотека с открытым исходным кодом на Python, предназначенная для разработки RPA-роботов.
+
 **Client RRPA App** - демонстрационная реализация клиентского приложения на основе фреймворка RedRPA.
+
 **Server RRPA App** - демонстрационная реализация серверного приложения на основе фреймворка RedRPA.
 
 - [Проект RedRpa](#проект-redrpa)
