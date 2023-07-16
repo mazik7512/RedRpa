@@ -86,6 +86,8 @@
 ## Ядро. SDK. Язык сценариев
 
 ![Static Badge](https://img.shields.io/badge/Core-green)
+![Static Badge](https://img.shields.io/badge/SDK-white)
+![Static Badge](https://img.shields.io/badge/RSL-cornsilk)
 
 Ниже представленна грамматика языка RSL в расширенной форме Бэкуса-Наура.
 ```
@@ -155,6 +157,8 @@ loop(2){
 ## Ядро. SDK. Компилятор
 
 ![Static Badge](https://img.shields.io/badge/Core-green)
+![Static Badge](https://img.shields.io/badge/SDK-white)
+![Static Badge](https://img.shields.io/badge/Compiler-aquamarine)
 
 Компиляция состоит из 6 этапов:
 1.	Лексический анализ.
@@ -175,10 +179,11 @@ loop(2){
 
 ## Ядро. SDK. REX
 
-REX - является исполняемым файлом Red Virtual Machine. Структура файла являет собой секции *(по-умолчанию 4)*.
-
 ![Static Badge](https://img.shields.io/badge/Core-green)
+![Static Badge](https://img.shields.io/badge/SDK-white)
+![Static Badge](https://img.shields.io/badge/REX-red)
 
+REX - является исполняемым файлом Red Virtual Machine. Структура файла являет собой секции *(по-умолчанию 4)*.
 
    - Секция информации.
    - Секция импорта.
@@ -197,7 +202,8 @@ REX - является исполняемым файлом Red Virtual Machine. 
 ## Ядро. SDK. Red Virtual Machine
 
 ![Static Badge](https://img.shields.io/badge/Core-green)
-
+![Static Badge](https://img.shields.io/badge/SDK-white)
+![Static Badge](https://img.shields.io/badge/RVM-darkred)
 
 RVM принимает на вход файлы формата REX и анализирует их. Первоначально производится контроль целостности файла путем сравнения хэшей. Если хэши совпадают производится импорт требуемых модулей из секции импорта выполняемого REX.
 
@@ -206,7 +212,8 @@ RVM принимает на вход файлы формата REX и анали
 ## Ядро. SDK. Набор библиотек языка RSL
 
 ![Static Badge](https://img.shields.io/badge/Core-green)
-
+![Static Badge](https://img.shields.io/badge/SDK-white)
+![Static Badge](https://img.shields.io/badge/API-yellow)
 
 На данный момент в фреймворке реализованы три библиотеки языка RSL:
    1. Универсальная *(на основе машинного зрения)* - позволяет работать с любыми приложениями.
@@ -218,6 +225,8 @@ RVM принимает на вход файлы формата REX и анали
 ### Ядро. Криптография. Шифрование
 
 ![Static Badge](https://img.shields.io/badge/Core-green)
+![Static Badge](https://img.shields.io/badge/Crypto-navy)
+![Static Badge](https://img.shields.io/badge/CryptoAlghoritms-chocolate)
 
 
 В библиотеку по умолчанию включены реализации двух алгоритмов шифрования: AES и RSA. Оба этих алгоритма используются в сетевом модуле для защищенной передачи данных. Общая идея описана ниже:
@@ -229,7 +238,8 @@ RVM принимает на вход файлы формата REX и анали
 ### Ядро. Криптография. Хэширование
 
 ![Static Badge](https://img.shields.io/badge/Core-green)
-
+![Static Badge](https://img.shields.io/badge/Crypto-navy)
+![Static Badge](https://img.shields.io/badge/HashAlghoritms-goldenrod)
 
 Хэш-функцией по-умолчанию в данной реализации является ГОСТ 34.11 "Стрибог" [в реализации Олега Казимирова](https://github.com/okazymyrov/stribog/tree/master) на языке C. Для имлементирования в программу на языке Python была написана небольшая DLL-обертка.
 
@@ -240,6 +250,8 @@ RVM принимает на вход файлы формата REX и анали
 ### Ядро. Работа с сетью. Сетевые менеджеры
 
 ![Static Badge](https://img.shields.io/badge/Core-green)
+![Static Badge](https://img.shields.io/badge/Network-indigo)
+![Static Badge](https://img.shields.io/badge/NetManagers-coral)
 
 
 Для работы с сетью были реализованы "менеджеры":
@@ -269,7 +281,8 @@ RVM принимает на вход файлы формата REX и анали
 ### Ядро. Работа с сетью. Сетевые протоколы
 
 ![Static Badge](https://img.shields.io/badge/Core-green)
-
+![Static Badge](https://img.shields.io/badge/Network-indigo)
+![Static Badge](https://img.shields.io/badge/NetProtocols-crimson)
 
 Для стандартизации передаваемых данных был разработан протокол **RDTP** - Red Data Transfer Protocol, описывающий структуру передаваемых данных:
 
@@ -294,7 +307,7 @@ RVM принимает на вход файлы формата REX и анали
 ## Ядро. Политики взаимодействия
 
 ![Static Badge](https://img.shields.io/badge/Core-green)
-
+![Static Badge](https://img.shields.io/badge/ActionsPolitics-cadetblue)
 
 Политики взаимодействия призваны решить проблему расширяемости и гибкости фреймворка. Сейчас используется 3 подвида политик:
 - Политики компиляции.
@@ -367,6 +380,7 @@ RVM принимает на вход файлы формата REX и анали
 ## Внешние модули. Машинное зрение
 
 ![Static Badge](https://img.shields.io/badge/External--Modules-orange)
+![Static Badge](https://img.shields.io/badge/ComputerVision-fuchsia)
 
 Формально процесс поиска объекта на изображении можно разбить на 3 этапа:
 
@@ -388,7 +402,7 @@ RVM принимает на вход файлы формата REX и анали
 ## Внешние модули. Модуль взаимодействия с Windows
 
 ![Static Badge](https://img.shields.io/badge/External--Modules-orange)
-
+![Static Badge](https://img.shields.io/badge/Windows-skyblue)
 
 Данный модуль содержит в себе два подмодуля: **Actions** и **Tools**.
 
@@ -405,7 +419,7 @@ RVM принимает на вход файлы формата REX и анали
 ## Внешние модули. Модуль взаимодействия с Web - окружением
 
 ![Static Badge](https://img.shields.io/badge/External--Modules-orange)
-
+![Static Badge](https://img.shields.io/badge/Web-moccasin)
 
 Данный модуль похож по структуре на модуль взаимодействия с ОС, описанный выше.
 
