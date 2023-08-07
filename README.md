@@ -56,9 +56,9 @@
    
    1.3. Комплект средств разработки сценариев *(SDK - Scenario Development Kit)*.
    
-      - Компилятор языка сценариев **RSL** *(Red Scenario Language)*.
+      - Компилятор языка сценариев **RSL** *(Red Scenario Language)* **RSLC**.
    
-      - Набор API - библиотек для языка **RSL**.
+      - Набор стандартных библиотек языка **RSL**.
    
       - Виртуальная машина *(RVM - Red Virtual Machine)*.
    
@@ -159,6 +159,9 @@ loop(2){
 ![Static Badge](https://img.shields.io/badge/Core-green)
 ![Static Badge](https://img.shields.io/badge/SDK-white)
 ![Static Badge](https://img.shields.io/badge/Compiler-aquamarine)
+![Static Badge](https://img.shields.io/badge/RSLC-red)
+
+**RSLC** - Red Scenario Language Compiler.
 
 Компиляция состоит из 6 этапов:
 1.	Лексический анализ.
