@@ -216,7 +216,7 @@ RVM принимает на вход файлы формата REX и анали
 
 ![Static Badge](https://img.shields.io/badge/Core-green)
 ![Static Badge](https://img.shields.io/badge/SDK-white)
-![Static Badge](https://img.shields.io/badge/API-yellow)
+![Static Badge](https://img.shields.io/badge/STDLib-yellow)
 
 На данный момент в фреймворке реализованы три библиотеки языка RSL:
    1. Универсальная *(на основе машинного зрения)* - позволяет работать с любыми приложениями.
