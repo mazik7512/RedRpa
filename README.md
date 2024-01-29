@@ -56,7 +56,7 @@
    
    1.3. Комплект средств разработки сценариев *(SDK - Scenario Development Kit)*.
    
-      - Компилятор языка сценариев **RSL** *(Red Scenario Language)* **RSLC**.
+      - Компилятор языка сценариев **RSL** *(Red Scenario Language)* **RSLc**.
    
       - Набор стандартных библиотек языка **RSL**.
    
